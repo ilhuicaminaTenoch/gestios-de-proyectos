@@ -3,7 +3,7 @@
 
 <div class="row">
 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-		{{-- <h3>Códigos <a href="/Codigos/Barras/create"><button class="btn btn-success">Nuevo</button></a></h3> --}}
+		@include('Codigos.Barras.search')
 	</div>
 </div>
 <div class="row">
@@ -33,7 +33,7 @@
 </div>
 <div class="row">
 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-		<h3>Códigos <a href="/pdfDownload"><button class="btn btn-primary">Descargar</button></a></h3>
+		<h3> <a href="/pdfDownload"><button class="btn btn-primary">Descargar</button></a></h3>
 	</div>
 </div>
 @endsection

@@ -10783,10 +10783,7 @@ a.text-dark:focus {
 .invisible {
   visibility: hidden !important;
 }
-.qr-code {
-    max-width: 200px;
-    margin: 10px;
-}
+
 @media print {
   *,
   *::before,
@@ -10883,6 +10880,5 @@ a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
-
 }
 

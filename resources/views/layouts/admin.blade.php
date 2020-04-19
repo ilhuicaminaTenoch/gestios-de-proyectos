@@ -97,8 +97,6 @@
                     <ul class="treeview-menu">
                         <li><a href="/Catalogos/Cat_Puestos"><i class="fa fa-circle-o"></i> Puestos</a></li>
                         <li><a href="/Catalogos/Cat_Empresas"><i class="fa fa-circle-o"></i> Compañias</a></li>
-                        <li><a href="/Catalogos/Cat_Usuarios"><i class="fa fa-circle-o"></i> Usuarios</a></li>
-
 
                     </ul>
                 </li>
@@ -112,26 +110,12 @@
                     <ul class="treeview-menu">
                         <li><a href="/Catalogos/Cat_Contratistas"><i class="fa fa-circle-o"></i> Contratistas</a></li>
                         <li><a href="/Codigos/Barras"><i class="fa fa-circle-o"></i> Códigos de Acceso</a></li>
-                        <li><a href="/Catalogos/Cat_Contratistas"><i class="fa fa-circle-o"></i> Códigos de Acceso</a>
+                        <li><a href="/Catalogos/Cat_Contratistas"><i class="fa fa-circle-o"></i> Códigos de Habilidades</a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-th"></i>
-                        <span>Tareas por Realizar</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-
-                        <li><a href="/tareas/analista"><i class="fa fa-circle-o"></i> Por Generar</a></li>
-                        <li><a href="/tareas/revisor"><i class="fa fa-circle-o"></i> Por Revisar</a></li>
-                        <li><a href="/tareas/lider"><i class="fa fa-circle-o"></i> Por Validar</a></li>
-                        <li><a href="/datos/proyect"><i class="fa fa-circle-o"></i> Por Auditar</a></li>
-                    </ul>
-                </li>
-
+               
 
                 <li class="treeview">
                     <a href="#">
@@ -139,7 +123,7 @@
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="/seguridad/usuario"><i class="fa fa-circle-o"></i> Usuarios</a></li>
+                        <li><a href="/Catalogos/Cat_Usuarios"><i class="fa fa-circle-o"></i> Usuarios</a></li>
                     </ul>
                 </li>
                 <li>
@@ -193,7 +177,7 @@
     <div class="pull-right hidden-xs">
         <b>Version</b> 1.0.0
     </div>
-    <strong>Copyright &copy; 2020 <a href="www.incanatoit.com">TIV</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2020 <a href="www.unilever.com.mx">Unilever</a>.</strong> All rights reserved.
 </footer>
 
 

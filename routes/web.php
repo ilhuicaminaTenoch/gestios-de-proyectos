@@ -32,7 +32,10 @@ Route::post('/Cat_Usuarios/create','UsuarioController@store');
 //CONTRATISTAS
 Route::resource('Catalogos/Cat_Contratistas','ContratistaController');
 Route::resource('/Cat_Contratistas/create','ContratistaController@store');
-Route::get('/Catalogos/Cat_Contratistas/mod/{id_compania}','ContratistaController@agregarH');
+Route::get('/Catalogos/Cat_Contratistas/agregarH/{id_contratista}','ContratistaController@agregarH');
+Route::post('/Catalogos/Cat_Contratistas/{id_contratista}','ContratistaController@updateHabilidad');
+// Route::get('/Catalogos/Cat_Contratistas/{id_compania}/agregarH','ContratistaController@agregarH')
+// ->name('Cat_Contratistas.updateHabilidad');
 
 //BARRAS
 Route::resource('Codigos/Barras','BarrasController');

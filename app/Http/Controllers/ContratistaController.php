@@ -6,6 +6,7 @@ use App\Http\Requests\ContratistaFormRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Contratista;
+use App\Gestion;
 
 
 use Illuminate\Support\Facades\Redirect;
@@ -111,11 +112,7 @@ class ContratistaController extends Controller
 
     }
 
-    // public function show($id)
-    // {
-    //     $Contratistas=Contratista::findOrFail($id);
-    //     return view("Catalogos.Cat_Contratistas.show",["Contratistas"=>Contratista::findOrFail($id)]);
-    // }
+    
     public function destroy($id)
     {
         $Contratistas = Contratista::findOrFail($id);
@@ -127,30 +124,163 @@ class ContratistaController extends Controller
 
     public function agregarH($id)
     {
-        $Contratistas = Contratista::findOrFail($id);
-        $HamilidaDES = DB::table('gestion as a')
-            ->join('contratistas as b', 'a.id_contratista', '=', 'b.id_contratista')
-            ->select('a.id_contratista', 'a.id_gestion', 'a.induccion', 'a.examen_medico', 'a.diciembre', 'a.febrero', 'a.abril', 'a.junio', 'a.agosto', 'a.octubre', 'a.alturas', 'a.armado_a', 'a.plataforma_e', 'a.gruas_i', 'a.montacargas', 'a.equipo_aux', 'a.maquinaria_p', 'a.e_confinados', 'a.t_caliente', 'a.t_electricos', 'a.loto', 'a.apertura_I', 'a.amoniaco', 'a.quimicos', 'a.temperatura_e', 'a.temperatura_a')
-            ->where('a.id_contratista', '=', 'b.id_contratista')
-            ->orderBy('id_contratista', 'asc');
-
-        return view("Catalogos.Cat_Contratistas.agregarH", ["Contratistas" => $Contratistas]);
-
+        $Contratistas=Contratista::findOrFail($id);
+        //$Habilidades =DB::table('gestion')->where('id_contratista','=',$id)->get();
+       $Habilidades =DB::table('contratistas as a')
+                    ->leftjoin('gestion as d','a.id_contratista','=','d.id_contratista')
+                    ->select('a.id_contratista','a.nombre','a.tipo', 'a.RFC','a.codigo', 'a.activo','d.id_gestion','d.induccion','d.examen_medico','d.diciembre','d.febrero','d.abril', 'd.junio','d.agosto', 'd.octubre', 'd.alturas', 'd.armado_a', 'd.plataforma_e', 'd.gruas_i', 'd.montacargas', 'd.equipo_aux', 'd.maquinaria_p', 'd.e_confinados', 'd.t_caliente', 'd.t_electricos', 'd.loto', 'd.apertura_l', 'd.amoniaco', 'd.quimicos', 'd.temperatura_e', 'd.temperatura_a')      
+       ->where('a.id_contratista','=',$id)->get();
+            // dd($Habilidades);
+            return view("Catalogos.Cat_Contratistas.agregarH",["Contratistas"=>$Contratistas,"Habilidades"=>$Habilidades]);
     }
 
     public function updateHabilidad(Request $request, $id)
     {
+
         $Contratistas = Contratista::findOrFail($id);
+        $valida = DB::table('gestion')->where('id_contratista', '=',$id)->count();  
 
-        $Contratistas->nombre = $request->get('nombre');
-        $Contratistas->id_compania = $request->get('id_compania');
-        $Contratistas->id_puesto = $request->get('id_puesto');
-        $Contratistas->tipo = $request->get('tipo');
-        $Contratistas->RFC = $request->get('RFC');
-        $Contratistas->activo = '1';
-        $Contratistas->update();
+        $Habilidades=DB::table('contratistas as a')
+                    ->leftjoin('gestion as d','a.id_contratista','=','d.id_contratista')
+                    ->select('a.id_contratista','a.nombre','a.tipo', 'a.RFC','a.codigo', 'a.activo','d.id_gestion','d.induccion','d.examen_medico','d.diciembre','d.febrero','d.abril', 'd.junio','d.agosto', 'd.octubre', 'd.alturas', 'd.armado_a', 'd.plataforma_e', 'd.gruas_i', 'd.montacargas', 'd.equipo_aux', 'd.maquinaria_p', 'd.e_confinados', 'd.t_caliente', 'd.t_electricos', 'd.loto', 'd.apertura_l', 'd.amoniaco', 'd.quimicos', 'd.temperatura_e', 'd.temperatura_a')      
+                    ->where('a.id_contratista','=',$id)->get();
+           
+        $resultD = $request->input('diciembre');
 
+        if($resultD=='on')
+        {
+            $resultD=1;
+        }
+        else
+        {
+            $resultD=0;
+        }
+
+        $resultF = $request->input('febrero');
+        if($resultF=='on')
+            $resultF=1;
+        else
+            $resultF=0;
+
+        $resultA = $request->input('abril');
+        if($resultA=='on')
+            $resultA=1;
+        else
+            $resultA=0;
+
+        $resultJ = $request->input('junio');
+        if($resultJ=='on')
+            $resultJ=1;
+        else
+            $resultJ=0;
+
+        $resultAg = $request->input('agosto');
+        if($resultAg=='on')
+            $resultAg=1;
+        else
+            $resultAg=0;
+
+        $resultO = $request->input('octubre');
+        if($resultO=='on')
+            $resultO=1;
+        else
+            $resultO=0;
+
+        if ($valida!=0) {
+            
+            $afectadas=DB::table('gestion')
+        ->where('id_contratista',$id)
+        ->update(['diciembre'=>$resultD
+                ,'febrero'=>$resultF
+                ,'abril'=>$resultA
+                ,'junio'=>$resultJ
+                ,'agosto'=>$resultAg
+                ,'octubre'=>$resultO
+                ,'induccion'=>$request->get('induccion')
+                ,'examen_medico'=>$request->get('examen_medico')
+                ,'alturas'=>$request->get('alturas')
+                ,'armado_a'=>$request->get('armado_a')
+                ,'plataforma_e'=>$request->get('plataforma_e')
+                ,'gruas_i'=>$request->get('gruas_i')
+                ,'montacargas'=>$request->get('montacargas')
+                ,'equipo_aux'=>$request->get('equipo_aux')
+                ,'maquinaria_p'=>$request->get('maquinaria_p')
+                ,'e_confinados'=>$request->get('e_confinados')
+                ,'t_caliente'=>$request->get('t_caliente')
+                ,'t_electricos'=>$request->get('t_electricos')
+                ,'loto'=>$request->get('loto')
+                ,'apertura_l'=>$request->get('apertura_l')
+                ,'amoniaco'=>$request->get('amoniaco')
+                ,'quimicos'=>$request->get('quimicos')
+                ,'temperatura_e'=>$request->get('temperatura_e')
+                ,'temperatura_a'=>$request->get('temperatura_a')
+                ]);
+         
+        }
+        else
+        {
+            //dd($id);
+            // DB::table('gestion')->insert(
+            // [   'id_contratista',$id
+            //     ,'diciembre'=>$resultD
+            //     ,'febrero'=>$resultF
+            //     ,'abril'=>$resultA
+            //     ,'junio'=>$resultJ
+            //     ,'agosto'=>$resultAg
+            //     ,'octubre'=>$resultO
+            //     ,'induccion'=>$request->get('induccion')
+            //     ,'examen_medico'=>$request->get('examen_medico')
+            //     ,'alturas'=>$request->get('alturas')
+            //     ,'armado_a'=>$request->get('armado_a')
+            //     ,'plataforma_e'=>$request->get('plataforma_e')
+            //     ,'gruas_i'=>$request->get('gruas_i')
+            //     ,'montacargas'=>$request->get('montacargas')
+            //     ,'equipo_aux'=>$request->get('equipo_aux')
+            //     ,'maquinaria_p'=>$request->get('maquinaria_p')
+            //     ,'e_confinados'=>$request->get('e_confinados')
+            //     ,'t_caliente'=>$request->get('t_caliente')
+            //     ,'t_electricos'=>$request->get('t_electricos')
+            //     ,'loto'=>$request->get('loto')
+            //     ,'apertura_l'=>$request->get('apertura_l')
+            //     ,'amoniaco'=>$request->get('amoniaco')
+            //     ,'quimicos'=>$request->get('quimicos')
+            //     ,'temperatura_e'=>$request->get('temperatura_e')
+            //     ,'temperatura_a'=>$request->get('temperatura_a')
+            //     ]);
+            //es un insert
+            DB::insert('INSERT INTO gestion (id_contratista,diciembre,febrero,abril,junio,agosto,octubre,
+                        induccion,examen_medico,alturas,armado_a,plataforma_e,gruas_i,montacargas,equipo_aux, 
+                       maquinaria_p,e_confinados,t_caliente,t_electricos,loto,apertura_l,amoniaco,quimicos,
+                       temperatura_e,temperatura_a) VALUES (:id_contratista,:diciembre,:febrero,:abril,
+                        :junio,:agosto,:octubre,:induccion,:examen_medico,:alturas,:armado_a,:plataforma_e, 
+                        :gruas_i,:montacargas,:equipo_aux,:maquinaria_p,:e_confinados,:t_caliente,:t_electricos,
+                        :loto,:apertura_l,:amoniaco,:quimicos,:temperatura_e,:temperatura_a)', ['id_contratista' =>$id,'diciembre'=>$resultD,'febrero'=>$resultF,'abril'=>$resultA 
+                    ,'junio'=>$resultJ
+                ,'agosto'=>$resultAg
+                ,'octubre'=>$resultO
+                ,'induccion'=>$request->get('induccion')
+                ,'examen_medico'=>$request->get('examen_medico')
+                ,'alturas'=>$request->get('alturas')
+                ,'armado_a'=>$request->get('armado_a')
+                ,'plataforma_e'=>$request->get('plataforma_e')
+                ,'gruas_i'=>$request->get('gruas_i')
+                ,'montacargas'=>$request->get('montacargas')
+                ,'equipo_aux'=>$request->get('equipo_aux')
+                ,'maquinaria_p'=>$request->get('maquinaria_p')
+                ,'e_confinados'=>$request->get('e_confinados')
+                ,'t_caliente'=>$request->get('t_caliente')
+                ,'t_electricos'=>$request->get('t_electricos')
+                ,'loto'=>$request->get('loto')
+                ,'apertura_l'=>$request->get('apertura_l')
+                ,'amoniaco'=>$request->get('amoniaco')
+                ,'quimicos'=>$request->get('quimicos')
+                ,'temperatura_e'=>$request->get('temperatura_e')
+                ,'temperatura_a'=>$request->get('temperatura_a')]);
+
+        }
+
+        //dd($resultD);
+        
         return Redirect::to('Catalogos/Cat_Contratistas');
-
     }
 }

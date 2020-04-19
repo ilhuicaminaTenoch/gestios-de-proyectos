@@ -40,7 +40,11 @@
 					<td>
 
 						<a href="{{URL::action('ContratistaController@edit',$contra->id_contratista)}}"><button class="btn btn-info">Editar</button></a>
+					</td>
+					<td >
 						<a href="{{URL::action('ContratistaController@agregarH',$contra->id_contratista)}}"><button class="btn btn-info">Habilidad</button></a>
+					</td>
+					<td >
 						<a href="" data-target="#modal-delete-{{$contra->id_contratista}}" data-toggle="modal">
 						<button class="btn btn-danger">Eliminar</button></a>
 					</td>
