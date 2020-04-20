@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 Auth::routes();
@@ -49,4 +49,9 @@ Route::get('/gestion/searchPerson', 'GestionController@searchBarCode');
 //PDF
 Route::get('/pdf_form', 'PdfController@pdfForm');
 Route::post('/pdf_download', 'PdfController@pdfDownload');
+
+//qr habilidades
+Route::resource('Codigos/QR','HabilidadesController');
+Route::get('/pdfDownloadH', 'HabilidadesController@pdfDownloadH');
+
 

@@ -7,8 +7,15 @@ use Illuminate\Support\Facades\DB;
 
 class BarrasController extends Controller
 {
+
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(Request $request)
     {
+
     	if ($request){
 
             $query=trim($request->get('searchText'));

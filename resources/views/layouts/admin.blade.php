@@ -65,10 +65,17 @@
 
                             <!-- Menu Footer-->
                             <li class="user-footer">
-
                                 <div class="pull-right">
-
-                                </div>
+                                <a href=" {{route('logout')}}" class="btn btn-default btn-flat" 
+                                onclick="event.preventDefault(); 
+                                    document.getElementById('logout-form').submit();">
+                                        {{ __('Cerrar') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                 </form>
+                    </div>
+                            
                             </li>
                         </ul>
                     </li>
@@ -97,7 +104,7 @@
                     <ul class="treeview-menu">
                         <li><a href="/Catalogos/Cat_Puestos"><i class="fa fa-circle-o"></i> Puestos</a></li>
                         <li><a href="/Catalogos/Cat_Empresas"><i class="fa fa-circle-o"></i> Compañias</a></li>
-
+                        <li><a href="/Catalogos/Cat_Usuarios"><i class="fa fa-circle-o"></i> Usuarios</a></li>
                     </ul>
                 </li>
 
@@ -110,7 +117,7 @@
                     <ul class="treeview-menu">
                         <li><a href="/Catalogos/Cat_Contratistas"><i class="fa fa-circle-o"></i> Contratistas</a></li>
                         <li><a href="/Codigos/Barras"><i class="fa fa-circle-o"></i> Códigos de Acceso</a></li>
-                        <li><a href="/Catalogos/Cat_Contratistas"><i class="fa fa-circle-o"></i> Códigos de Habilidades</a>
+                        <li><a href="/Codigos/QR"><i class="fa fa-circle-o"></i> Códigos de Habilidades</a>
                         </li>
                     </ul>
                 </li>
@@ -123,7 +130,7 @@
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="/Catalogos/Cat_Usuarios"><i class="fa fa-circle-o"></i> Usuarios</a></li>
+                        <li><a href="/gestion"><i class="fa fa-circle-o"></i> Ingreso </a></li>
                     </ul>
                 </li>
                 <li>

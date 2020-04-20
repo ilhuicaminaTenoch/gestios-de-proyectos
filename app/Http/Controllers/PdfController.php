@@ -7,6 +7,11 @@ use Redirect;
 use PDF;
 class PdfController extends Controller
 {
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function pdfForm()
     {
         return view('pdfForm');

@@ -21,6 +21,10 @@ use Milon\Barcode\DNS2D;
 
 class ContratistaController extends Controller
 {
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(Request $request)
     {
         if ($request) {

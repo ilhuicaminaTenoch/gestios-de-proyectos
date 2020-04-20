@@ -17,11 +17,12 @@
 <body>
 
 <table class="table table-striped">
-    @foreach($contratistas as $contratista)
+    @foreach($Habilidades as $hab)
         <tr>
-            <td>{{ $contratista->nombre }}</td>
+            <td>{{ $hab->nombre }}</td>
+            
             <td>
-                <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($contratista->nombre, 'QRCODE', 10,10)}}"
+                <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($hab->QR, 'QRCODE', 5,5)}}"
                      alt="barcode"/>
             </td>
         </tr>
