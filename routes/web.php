@@ -13,45 +13,76 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth/login');
+
+Route::group(['middleware' => ['guest']], function () {
+    Route::get('/', function () {
+        return view('auth/login');
+    });
+    //Route::match(array('GET', 'POST'), 'login', 'Auth\LoginController@login')->name('login');
+    Auth::routes();
 });
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => ['auth']], function () {
+    Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+    /*Route::get('/main', function () {
+        return view('contenido/contenido');
+    })->name('main');*/
+
+
+    Route::group(['middleware' => ['Administrator']], function () {
+        //Gestiones
+        Route::get('/gestion', 'GestionController@index');
+        Route::get('/gestion/searchPerson', 'GestionController@searchBarCode');
+
+
+
+
+
+
+
+        Route::get('/home', 'HomeController@index')->name('home');
 //PUESTOS
-Route::resource('/Catalogos/Cat_Puestos','PuestoController');
-Route::post('/Cat_Puestos/create','PuestoController@store');
+        Route::resource('/Catalogos/Cat_Puestos','PuestoController');
+        Route::post('/Cat_Puestos/create','PuestoController@store');
 //EMPRESAS
-Route::resource('/Catalogos/Cat_Empresas','EmpresaController');
-Route::post('/Cat_Empresas/create','EmpresaController@store');
+        Route::resource('/Catalogos/Cat_Empresas','EmpresaController');
+        Route::post('/Cat_Empresas/create','EmpresaController@store');
 //USUARIOS
-Route::resource('Catalogos/Cat_Usuarios','UsuarioController');
-Route::post('/Cat_Usuarios/create','UsuarioController@store');
+        Route::resource('Catalogos/Cat_Usuarios','UsuarioController');
+        Route::post('/Cat_Usuarios/create','UsuarioController@store');
 //CONTRATISTAS
-Route::resource('Catalogos/Cat_Contratistas','ContratistaController');
-Route::resource('/Cat_Contratistas/create','ContratistaController@store');
-Route::get('/Catalogos/Cat_Contratistas/agregarH/{id_contratista}','ContratistaController@agregarH');
-Route::post('/Catalogos/Cat_Contratistas/{id_contratista}','ContratistaController@updateHabilidad');
+        Route::resource('Catalogos/Cat_Contratistas','ContratistaController');
+        Route::resource('/Cat_Contratistas/create','ContratistaController@store');
+        Route::get('/Catalogos/Cat_Contratistas/agregarH/{id_contratista}','ContratistaController@agregarH');
+        Route::post('/Catalogos/Cat_Contratistas/{id_contratista}','ContratistaController@updateHabilidad');
 // Route::get('/Catalogos/Cat_Contratistas/{id_compania}/agregarH','ContratistaController@agregarH')
 // ->name('Cat_Contratistas.updateHabilidad');
 
 //BARRAS
-Route::resource('Codigos/Barras','BarrasController');
-Route::get('/pdfDownload', 'BarrasController@pdfDownload');
+        Route::resource('Codigos/Barras','BarrasController');
+        Route::get('/pdfDownload', 'BarrasController@pdfDownload');
 
-//Gestiones
-Route::get('/gestion', 'GestionController@index');
-Route::get('/gestion/searchPerson', 'GestionController@searchBarCode');
+
 
 
 //PDF
-Route::get('/pdf_form', 'PdfController@pdfForm');
-Route::post('/pdf_download', 'PdfController@pdfDownload');
+        Route::get('/pdf_form', 'PdfController@pdfForm');
+        Route::post('/pdf_download', 'PdfController@pdfDownload');
 
 //qr habilidades
-Route::resource('Codigos/QR','HabilidadesController');
-Route::get('/pdfDownloadH', 'HabilidadesController@pdfDownloadH');
+        Route::resource('Codigos/QR','HabilidadesController');
+        Route::get('/pdfDownloadH', 'HabilidadesController@pdfDownloadH');
+
+    });
+
+
+});
+
+
+
+
+
+
 
 
