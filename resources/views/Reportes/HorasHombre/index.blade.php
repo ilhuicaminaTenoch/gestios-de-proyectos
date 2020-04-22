@@ -2,7 +2,7 @@
 @section('contenido')
 <div class="row">
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-		<h3>Accesos</h3>
+		<h3>Reportes</h3>
 		@if (count($errors)>0)
 			<div class="alert alert-danger">
 				<ul>
@@ -12,5 +12,38 @@
 				</ul>
 			</div>
 		@endif
-	</div>
 </div>
+</div>
+		    {!!Form::open(array('url'=>'Catalogos\Cat_Contratistas','method'=>'POST','autocomplete'=>'off'))!!}
+            {{Form::token()}}
+					<div class="row">
+	                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+	                    <div class="form-group">
+	                        <label for="nombre">Fecha Inicial</label>
+	                        <input type="date" name="FechaInicial" id="FechaInicial" class="form-control" value="">
+					 
+	                    </div>
+	                </div>
+	                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+	                    <div class="form-group">
+	                        <label for="nombre">Fecha Final</label>
+	                        <input type="date" name="FechaFinal" id="FechaFinal" class="form-control" value="">
+					 
+	                    </div>
+	                </div>
+	                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group">
+                        <label>Compañia</label>
+                        <select id="tipo" name="tipo" class="form-control">
+
+                            <option value="1">Tipo1</option>
+                            <option value="2">Tipo2</option>
+
+                        </select>
+                    </div>
+                </div>
+                
+            	</div>
+             {!!Form::close()!!}
+	
+@endsection

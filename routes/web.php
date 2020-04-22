@@ -54,4 +54,6 @@ Route::post('/pdf_download', 'PdfController@pdfDownload');
 Route::resource('Codigos/QR','HabilidadesController');
 Route::get('/pdfDownloadH', 'HabilidadesController@pdfDownloadH');
 
+//reportes 
+Route::resource('/Reportes/HorasHombre','ReportesController');
 
