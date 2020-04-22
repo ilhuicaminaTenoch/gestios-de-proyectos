@@ -35,12 +35,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/gestion', 'GestionController@index');
         Route::get('/gestion/searchPerson', 'GestionController@searchBarCode');
 
-
-
-
-
-
-
         Route::get('/home', 'HomeController@index')->name('home');
 //PUESTOS
         Route::resource('/Catalogos/Cat_Puestos','PuestoController');
@@ -74,6 +68,29 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('Codigos/QR','HabilidadesController');
         Route::get('/pdfDownloadH', 'HabilidadesController@pdfDownloadH');
 
+    });
+    Route::group(['middleware' => ['Operador']], function () {
+        //CONTRATISTAS
+        Route::resource('Catalogos/Cat_Contratistas','ContratistaController');
+        Route::resource('/Cat_Contratistas/create','ContratistaController@store');
+        Route::get('/Catalogos/Cat_Contratistas/agregarH/{id_contratista}','ContratistaController@agregarH');
+        Route::post('/Catalogos/Cat_Contratistas/{id_contratista}','ContratistaController@updateHabilidad');
+
+        //BARRAS
+        Route::resource('Codigos/Barras','BarrasController');
+        Route::get('/pdfDownload', 'BarrasController@pdfDownload');
+
+        //qr habilidades
+        Route::resource('Codigos/QR','HabilidadesController');
+        Route::get('/pdfDownloadH', 'HabilidadesController@pdfDownloadH');
+
+
+    });
+
+    Route::group(['middleware' => ['Seguridad']], function () {
+        //Gestiones
+        Route::get('/gestion', 'GestionController@index');
+        Route::get('/gestion/searchPerson', 'GestionController@searchBarCode');
     });
 
 
