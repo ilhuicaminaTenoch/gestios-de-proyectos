@@ -97,7 +97,7 @@
 
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-laptop"></i>
+                        <i class="fa fa-folder"></i>
                         <span>Catálogos</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
@@ -110,7 +110,7 @@
 
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-shopping-cart"></i>
+                        <i class="fa fa-users"></i>
                         <span>Gestion Contratistas</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
@@ -121,24 +121,30 @@
                         </li>
                     </ul>
                 </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-file"></i>
+                        <span>Reportes</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/Catalogos/Cat_Contratistas"><i class="fa fa-circle-o"></i>Horas Hombre </a></li>
+                        
+                    </ul>
+                </li>
 
                
 
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-folder"></i> <span>Acceso</span>
+                        <i class="fa fa-unlock"></i> <span>Acceso</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="/gestion"><i class="fa fa-circle-o"></i> Ingreso </a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-plus-square"></i> <span>Ayuda</span>
-                        <small class="label pull-right bg-red">PDF</small>
-                    </a>
-                </li>
+               
                 <li>
                     <a href="#">
                         <i class="fa fa-info-circle"></i> <span>Acerca De...</span>
