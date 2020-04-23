@@ -51,7 +51,7 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <small class="bg-red">Online</small>
-                            <span class="hidden-xs">Jessica MOra </span>
+                            <span class="hidden-xs">{{ Auth::user()->name }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -66,16 +66,17 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-right">
-                                <a href=" {{route('logout')}}" class="btn btn-default btn-flat" 
-                                onclick="event.preventDefault(); 
+                                    <a href=" {{route('logout')}}" class="btn btn-default btn-flat"
+                                       onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
                                         {{ __('Cerrar') }}
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                          style="display: none;">
                                         @csrf
-                                 </form>
-                    </div>
-                            
+                                    </form>
+                                </div>
+
                             </li>
                         </ul>
                     </li>
@@ -86,6 +87,7 @@
         </nav>
     </header>
     <!-- Left side column. contains the logo and sidebar -->
+
     <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
@@ -159,6 +161,21 @@
 
 
     <!--Contenido-->
+
+@if(Auth::check())
+    @if(Auth::user()->id_perfil == 1 )
+        @include('layouts.administrador')
+    @elseif(Auth::user()->id_perfil == 2)
+        @include('layouts.operador')
+    @elseif(Auth::user()->id_perfil == 3)
+        @include('layouts.seguridad')
+    @else
+    @endif
+@endif
+
+
+<!--Contenido-->
+
     <!-- Content Wrapper. Contains page content -->
     <section class="content-wrapper">
         <!-- Main content -->
