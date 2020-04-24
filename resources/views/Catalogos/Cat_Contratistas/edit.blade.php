@@ -89,7 +89,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">RFC</label>
+                            <label for="inputEmail3" class="col-sm-2 control-label">Seguro Social</label>
 
                             <div class="col-sm-10">
                                 <input type="text" name="RFC" class="form-control" value="{{$Contratistas->RFC}}" placeholder="RFC...">

@@ -17,7 +17,7 @@
 					<th>Compañia</th>
 					<th>Puesto</th>
 					<th>Tipo</th>
-					<th>RFC</th>
+					<th>Seguro Social</th>
 					{{-- <th>codigo</th> --}}
 					<th>activo</th>
 					<th>Opciones</th>

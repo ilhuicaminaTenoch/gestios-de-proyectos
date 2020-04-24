@@ -28,7 +28,8 @@ class ContratistaFormRequest extends FormRequest
             'nombre'=>'required',
             'id_compania'=>'required',
             'id_puesto'=>'required',
-            'tipo'=>'required'
+            'tipo'=>'required',
+            'RFC'=>'required'
             
             
                //codigo  
