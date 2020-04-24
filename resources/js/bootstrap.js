@@ -10,6 +10,7 @@ try {
     window.Popper = require('popper.js').default;
 
     require('moment');
+    require('sweetalert');
     require('overlayscrollbars');
     require('bootstrap');
 } catch (e) {}

@@ -37,8 +37,10 @@
         data() {
             return {
                 id: 0,
+                fecha: '',
                 persons: [],
                 messages: [],
+                messageRegister: '',
             }
         },
         methods: {
@@ -61,44 +63,68 @@
                 var iconMedicalExam;
                 var iconSua;
 
+
                 let dateNow = moment(new Date());
+                let endMont = new moment().endOf("month");
                 let month = moment(new Date()).format('MM');
                 let monthBd = this.monthDataBase(month);
-                let oneYearInduccion = moment(persons[0]['induccion']).add(1, 'year');
-                let oneYearMedicalExam = moment(persons[0]['examen_medico']).add(1, 'year');
+                let oneYearInduccion = moment(persons[0]['induccion'])
+                let oneYearMedicalExam = moment(persons[0]['examen_medico']);
 
-                if (dateNow.diff(oneYearInduccion) > 0) {
-                    messageInduccion = 'Curso de induccion vijente';
-                    alertInduccion = 'alert-success';
-                    iconInduccion = 'fa-check';
-                } else {
+                if (dateNow.diff(oneYearInduccion,'years', true) > 1) {
                     messageInduccion = 'Curso de inducción no está vigente';
                     alertInduccion = 'alert-danger';
                     iconInduccion = 'fa-ban';
+                } else {
+                    messageInduccion = 'Curso de induccion vijente';
+                    alertInduccion = 'alert-success';
+                    iconInduccion = 'fa-check';
                 }
 
-                if (dateNow.diff(oneYearMedicalExam) > 0) {
-                    messageMedicalExam = 'Examen médico vigente';
-                    alertMedicalExam = 'alert-success';
-                    iconMedicalExam = 'fa-check';
-                } else {
+                if (dateNow.diff(oneYearMedicalExam,'years', true) > 1) {
                     messageMedicalExam = 'Examen médico ya no esta vigente';
                     alertMedicalExam = 'alert-danger';
                     iconMedicalExam = 'fa-ban';
-                }
-                if (persons[0][monthBd]) {
-                    messageSua = 'SUA al corriente';
-                    alertSua = 'alert-success';
-                    iconSua = 'fa-check';
                 } else {
-                    messageSua = 'No has entregado el SUA correspondiente';
-                    alertSua = 'alert-danger';
-                    iconSua = 'fa-ban';
-
+                    messageMedicalExam = 'Examen médico vigente';
+                    alertMedicalExam = 'alert-success';
+                    iconMedicalExam = 'fa-check';
                 }
+
+
+
+                if (persons[0].hasOwnProperty(monthBd)){ // valida que el mes este en la BD ( diciembre, febrero, abril, junio, agosto, octubre )
+                    if (dateNow > endMont) {
+                        messageSua = 'No has entregado el SUA correspondiente';
+                        alertSua = 'alert-danger';
+                        iconSua = 'fa-ban';
+                    } else {
+                        messageSua = 'SUA al corriente';
+                        alertSua = 'alert-success';
+                        iconSua = 'fa-check';
+                    }
+                }else{ // meses faltantes (enero, marzo, mayo, julio, septiembre y noviembre)
+                    const monthNoBD = this.monthNotDataBase(month);
+                    if (persons[0][monthNoBD]){
+                        messageSua = 'SUA al corriente';
+                        alertSua = 'alert-success';
+                        iconSua = 'fa-check';
+                    }else{
+                        messageSua = 'No has entregado el SUA correspondiente';
+                        alertSua = 'alert-danger';
+                        iconSua = 'fa-ban';
+                    }
+                }
+
+                //insert
+                if (alertInduccion == 'alert-success' && alertMedicalExam == 'alert-success' && alertSua == 'alert-success'){
+                    this.fecha = moment().format("YYYY-MM-DD HH:mm:ss");
+                    this.register(this.id, this.fecha)
+                }
+
 
                 const messageData = {
-                    induccion : {
+                    induccion: {
                         message: messageInduccion,
                         activeClass: alertInduccion,
                         iconClass: iconInduccion
@@ -118,9 +144,49 @@
                 return messageData;
 
 
-
             },
-            monthDataBase(month){
+            monthDataBase(month) {
+                let monthString = '';
+                switch (month) {
+                    case '01':
+                        monthString = 'enero';
+                        break;
+                    case '02':
+                        monthString = 'febrero';
+                        break;
+                    case '03':
+                        monthString = 'marzo'
+                    case '04':
+                        monthString = 'abril';
+                        break;
+                    case '05':
+                        monthString = 'mayo';
+                        break;
+                    case '06':
+                        monthString = 'junio';
+                        break;
+                    case '07':
+                        monthString = 'julio';
+                        break;
+                    case '08':
+                        monthString = 'agosto';
+                        break;
+                    case '09':
+                        monthString = 'septiembre';
+                        break;
+                    case '10':
+                        monthString = 'octubre';
+                        break;
+                    case '11':
+                        monthString = 'noviembre';
+                        break;
+                    case '12':
+                        monthString = 'diciembre';
+                        break;
+                }
+                return monthString;
+            },
+            monthNotDataBase(month){
                 let monthString = '';
                 if (month == '12' || month == '01'){
                     monthString = 'diciembre';
@@ -134,8 +200,15 @@
                     monthString = 'agosto';
                 }
                 return monthString;
-            }
+            },
+            register(id_contratista, fecha){
+                var url = '/gestion/register?id_contratista=' + id_contratista + '&fecha=' + fecha;
+                axios.get(url).then(response => {
+                    console.log('se inserto');
+                    swal("Registro Guardado!", "Se ha registrado un contratista", "success");
 
+                });
+            }
         }
     }
 </script>

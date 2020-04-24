@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Gestion;
+use App\Registro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -99,5 +100,13 @@ class GestionController extends Controller
             ->where('gestion.id_contratista', $idContratista)->get();
 
         return [ 'persons' => $persons];
+    }
+
+    public function register(Request $request){
+        if (!$request->ajax()) return redirect('/');
+        $contratistas = new Registro();
+        $contratistas->id_contratista = $request->id_contratista;
+        $contratistas->fecha = $request->fecha;
+        $contratistas->save();
     }
 }

@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth']], function () {
         //Gestiones
         Route::get('/gestion', 'GestionController@index');
         Route::get('/gestion/searchPerson', 'GestionController@searchBarCode');
+        Route::get('/gestion/register', 'GestionController@register');
 
         Route::get('/home', 'HomeController@index')->name('home');
 //PUESTOS
@@ -102,6 +103,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-//reportes 
+//reportes
 Route::resource('/Reportes/HorasHombre','ReportesController');
 
