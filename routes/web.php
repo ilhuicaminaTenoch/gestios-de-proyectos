@@ -31,6 +31,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     Route::group(['middleware' => ['Administrator']], function () {
+
+        Route::get('Default', 'ReportesController@principal');
         //Gestiones
         Route::get('/gestion', 'GestionController@index');
         Route::get('/gestion/searchPerson', 'GestionController@searchBarCode');

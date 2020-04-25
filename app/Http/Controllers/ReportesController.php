@@ -33,4 +33,9 @@ class ReportesController extends Controller
         return Excel::download(new ContratistasExport, 'HorasHombre.xlsx');
     }
 
+    public function principal(Request $request)
+    {
+        return view('Default.principal');
+    }
+
 }

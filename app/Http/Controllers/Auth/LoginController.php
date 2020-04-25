@@ -25,7 +25,7 @@ class LoginController extends Controller
 
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect()->intended('gestion');
+            return redirect()->intended('Default');
         }
 
         return back()
