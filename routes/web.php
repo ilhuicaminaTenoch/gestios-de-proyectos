@@ -58,7 +58,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('Codigos/Barras','BarrasController');
         Route::get('/pdfDownload', 'BarrasController@pdfDownload');
 
-
+//REPORTES
+        Route::resource('Reportes/HorasHombre/index','ReportesController@store');
 
 
 //PDF
@@ -101,8 +102,4 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-
-
-//reportes
-Route::resource('/Reportes/HorasHombre','ReportesController');
 

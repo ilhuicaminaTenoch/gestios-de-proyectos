@@ -14,7 +14,7 @@
 		@endif
 </div>
 </div>
-		    {!!Form::open(array('url'=>'Catalogos\Cat_Contratistas','method'=>'POST','autocomplete'=>'off'))!!}
+		    {!!Form::open(array('url'=>'Reportes\HorasHombre','method'=>'POST','autocomplete'=>'off'))!!}
             {{Form::token()}}
 					<div class="row">
 	                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -42,7 +42,12 @@
                         </select>
                     </div>
                 </div>
-                
+                		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Generar</button>
+                        <a href="/Reportes/ReporteHH" class="btn btn-danger">Cancelar</a>
+                    </div>
+                </div>
             	</div>
              {!!Form::close()!!}
 	

@@ -59,7 +59,7 @@ class UsuarioController extends Controller
     {
     	$usuarios=User::findOrFail($id);
     	$usuarios->name=$request->get('name');
-    	$usuarios->email=$request->get('email');
+    	//$usuarios->email=$request->get('email');
     	$usuarios->id_perfil=$request->get('id_perfil');
     	$usuarios->password=bcrypt($request->get('password'));
     	$usuarios->update();

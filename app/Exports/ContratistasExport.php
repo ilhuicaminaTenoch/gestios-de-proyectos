@@ -2,10 +2,11 @@
 
 namespace App\Exports;
 
-use App\Contratista;
+use App\ReporteHH;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Milon\Barcode\DNS1D;
+
+
 use DB;
 class ContratistasExport implements FromCollection,WithHeadings
 {
@@ -13,16 +14,16 @@ class ContratistasExport implements FromCollection,WithHeadings
     {
         return [
             
-            'Nombre',
-            'codigo',
+            'Compañias',
+            'HorasHombre',
+            'No. Personas',
         ];
     }
     public function collection()
     {
-    	 $barra = new DNS1D();
-         
-         $Contratistas = DB::table('contratistas')->select('nombre','codigo')->get();
-         return $Contratistas;
+    	 
+         $ReporteHH = DB::table('reportehh')->select('empresa','horashombre','personas')->get();
+         return $ReporteHH;
         
     }
 }
