@@ -93,11 +93,11 @@ class GestionController extends Controller
     public function searchBarCode(Request $request){
         if (!$request->ajax()) return redirect('/');
 
-        $idContratista = $request->id;
+        $name = $request->name;
         $persons = Gestion::join('contratistas', 'contratistas.id_contratista', '=', 'gestion.id_contratista')
             ->select('contratistas.nombre', 'gestion.induccion', 'gestion.examen_medico', 'gestion.diciembre', 'gestion.febrero',
                 'gestion.abril', 'gestion.junio', 'gestion.agosto', 'gestion.id_contratista', 'gestion.id_gestion')
-            ->where('gestion.id_contratista', $idContratista)->get();
+            ->where('contratistas.nombre', $name)->get();
 
         return [ 'persons' => $persons];
     }

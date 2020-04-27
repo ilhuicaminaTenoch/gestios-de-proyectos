@@ -4,8 +4,8 @@
             <h3 class="box-title">Buscador de personal</h3>
         </div>
         <div class="box-body">
-            <input class="form-control input-lg" type="text" placeholder="Codigo" @keyup.enter="searchPerson(id)"
-                   v-model="id">
+            <input class="form-control input-lg" type="text" placeholder="Codigo" @keyup.enter="searchPerson(name)"
+                   v-model="name">
         </div>
         <!-- /.box-body -->
         <div class="box box-solid">
@@ -36,7 +36,8 @@
     export default {
         data() {
             return {
-                id: 0,
+                id:0,
+                name: '',
                 fecha: '',
                 persons: [],
                 messages: [],
@@ -44,8 +45,8 @@
             }
         },
         methods: {
-            searchPerson(id) {
-                var url = '/gestion/searchPerson?id=' + id;
+            searchPerson(name) {
+                var url = '/gestion/searchPerson?name=' + name;
                 axios.get(url).then(response => {
                     this.persons = response.data.persons;
                     this.messages = this.message(this.persons);
