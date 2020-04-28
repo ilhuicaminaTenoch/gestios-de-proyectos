@@ -61,6 +61,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pdfDownload', 'BarrasController@pdfDownload');
 
 //REPORTES
+        Route::resource('Reportes/HorasHombre','ReportesController');
         Route::resource('Reportes/HorasHombre/index','ReportesController@store');
 
 
