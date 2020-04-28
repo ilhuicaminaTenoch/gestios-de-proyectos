@@ -18,7 +18,7 @@ class UsuarioController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index(Request $request)
     {
             if ($request) {
@@ -52,21 +52,19 @@ class UsuarioController extends Controller
     	$usuarios=User::findOrFail($id);
     	$perfiles=DB::table('perfiles')->where('activo','=','1')->get();
     	return view("Catalogos.Cat_Usuarios.edit",["usuarios"=>$usuarios, "perfiles"=>$perfiles]);
-    	
+
     }
 
     public function update(UsuarioFormRequest $request, $id)
     {
     	$usuarios=User::findOrFail($id);
     	$usuarios->name=$request->get('name');
-    	//$usuarios->email=$request->get('email');
     	$usuarios->id_perfil=$request->get('id_perfil');
     	$usuarios->password=bcrypt($request->get('password'));
     	$usuarios->update();
-    	
+
 
     	return Redirect::to('Catalogos/Cat_Usuarios');
-
     }
 
      public function destroy($id)
