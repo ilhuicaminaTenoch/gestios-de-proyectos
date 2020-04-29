@@ -19,18 +19,26 @@
 					<div class="row">
 	                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 	                    <div class="form-group">
-	                        <label for="nombre">Fecha Inicial</label>
-	                        <input type="date" name="FechaInicial" id="FechaInicial" class="form-control" value="">
-					 
+	                        <label for="nombre">Mes</label>
+	                        <select id="mes" name="mes" class="form-control">
+
+	                            <option value="1">Enero</option>
+	                            <option value="2">Febrero</option>
+								<option value="3">Marzo</option>
+								<option value="4">Abril</option>
+								<option value="5">Mayo</option>
+								<option value="6">Junio</option>
+								<option value="7">Julio</option>
+								<option value="8">Agosto</option>
+								<option value="9">Septiembre</option>
+								<option value="10">Octubre</option>
+								<option value="11">Noviembre</option>
+								<option value="12">Diciembre</option>
+
+                        	</select>
 	                    </div>
 	                </div>
-	                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-	                    <div class="form-group">
-	                        <label for="nombre">Fecha Final</label>
-	                        <input type="date" name="FechaFinal" id="FechaFinal" class="form-control" value="">
-					 
-	                    </div>
-	                </div>
+	               
 	                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                     <div class="form-group">
                         <label>Compañia</label>
