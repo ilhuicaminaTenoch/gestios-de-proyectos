@@ -77,7 +77,7 @@
                     alertInduccion = 'alert-danger';
                     iconInduccion = 'fa-ban';
                 } else {
-                    messageInduccion = 'Curso de induccion vijente';
+                    messageInduccion = 'Curso de induccion vigente';
                     alertInduccion = 'alert-success';
                     iconInduccion = 'fa-check';
                 }
