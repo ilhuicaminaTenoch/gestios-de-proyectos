@@ -61,10 +61,24 @@ class PuestoController extends Controller
 
      public function destroy($id)
     {
-        $Puesto=Puesto::findOrFail($id);
+         $valida = DB::table('puestos')->where('id_puesto', '=',$id)
+        ->where('activo','=',0)->count();  
+       if ($valida==0) {
+           $Puesto=Puesto::findOrFail($id);
+    
         $Puesto->activo='0';
         $Puesto->update();
 
+       }
+       else
+       {
+        $Puesto=Puesto::findOrFail($id);
+    
+        $Puesto->activo='1';
+        $Puesto->update();
+
+       }
+        
         return Redirect::to('Catalogos/Cat_Puestos');
     }
 }

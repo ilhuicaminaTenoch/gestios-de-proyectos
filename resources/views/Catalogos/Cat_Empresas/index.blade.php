@@ -30,7 +30,7 @@
 
 						<a href="{{URL::action('EmpresaController@edit',$emp->id_compania)}}"><button class="btn btn-info">Editar</button></a>
 						<a href="" data-target="#modal-delete-{{$emp->id_compania}}" data-toggle="modal">
-						<button class="btn btn-danger">Eliminar</button></a>
+						<button class="btn btn-danger">Activo/Inactivo</button></a>
 					</td>
 				</tr>
 				@include('Catalogos.Cat_Empresas.modal')

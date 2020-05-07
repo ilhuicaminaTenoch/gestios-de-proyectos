@@ -11,11 +11,11 @@ role="dialog" tabindex="-1" id="modal-delete-{{$usu->id}}">
                 <h4 class="modal-title">Eliminar Usuario</h4>
 			</div>
 			<div class="modal-body">
-				<p>Confirme si desea Eliminar al Usuario</p>
+				<p>Confirme si desea Eliminar al Usuario: {{ $usu->name }}</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-				<button type="submit" class="btn btn-primary">Confirmar</button>
+				<a href="{{URL::action('UsuarioController@destroy',$usu->id)}}"><button class="btn btn-info">Confirmar</button></a>
 			</div>
 		</div>
 	</div>

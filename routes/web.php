@@ -40,17 +40,25 @@ Route::group(['middleware' => ['auth']], function () {
 //PUESTOS
         Route::resource('/Catalogos/Cat_Puestos','PuestoController');
         Route::post('/Cat_Puestos/create','PuestoController@store');
+        Route::get('/Catalogos/Cat_Puestos/destroy/{id_puesto}','PuestoController@destroy');
+
 //EMPRESAS
         Route::resource('/Catalogos/Cat_Empresas','EmpresaController');
         Route::post('/Cat_Empresas/create','EmpresaController@store');
+        Route::get('/Catalogos/Cat_Empresas/destroy/{id_compania}','EmpresaController@destroy');
+
 //USUARIOS
         Route::resource('Catalogos/Cat_Usuarios','UsuarioController');
         Route::post('/Cat_Usuarios/create','UsuarioController@store');
+        Route::get('/Catalogos/Cat_Usuarios/destroy/{id}','UsuarioController@destroy');
+
 //CONTRATISTAS
         Route::resource('Catalogos/Cat_Contratistas','ContratistaController');
         Route::resource('/Cat_Contratistas/create','ContratistaController@store');
         Route::get('/Catalogos/Cat_Contratistas/agregarH/{id_contratista}','ContratistaController@agregarH');
         Route::post('/Catalogos/Cat_Contratistas/{id_contratista}','ContratistaController@updateHabilidad');
+        Route::get('/Catalogos/Cat_Contratistas/destroy/{id}','ContratistaController@destroy');
+
 // Route::get('/Catalogos/Cat_Contratistas/{id_compania}/agregarH','ContratistaController@agregarH')
 // ->name('Cat_Contratistas.updateHabilidad');
 

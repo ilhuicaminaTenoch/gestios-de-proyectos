@@ -119,10 +119,22 @@ class ContratistaController extends Controller
     
     public function destroy($id)
     {
-        $Contratistas = Contratista::findOrFail($id);
-        $Contratistas->Activo = '0';
-        $Contratistas->update();
+        $valida = DB::table('contratistas')->where('id_contratista', '=',$id)
+        ->where('activo','=',0)->count();  
+        if ($valida==0) {
+             $Contratistas = Contratista::findOrFail($id);
+             $Contratistas->Activo = '0';
+             $Contratistas->update();
 
+        }
+        else
+        {
+            $Contratistas = Contratista::findOrFail($id);
+            $Contratistas->Activo = '1';
+            $Contratistas->update();
+
+        }
+       
         return Redirect::to('Catalogos/Cat_Contratistas');
     }
 

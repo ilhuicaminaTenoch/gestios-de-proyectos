@@ -261,7 +261,7 @@
 					@php $fecha=date('Y-m-d',strtotime($hab->t_caliente));
 					@endphp
 					@if($hab->t_caliente!=null)
-						<input type="date" name="t_caliente" class="form-control" value="">
+						<input type="date" name="t_caliente" class="form-control" value="{{ $fecha }}">
 					@else 
 						<input type="date" name="t_caliente" class="form-control" value="">
 					@endif

@@ -63,10 +63,22 @@ class EmpresaController extends Controller
 
      public function destroy($id)
     {
-        $Compania=Empresa::findOrFail($id);
+         $valida = DB::table('empresas')->where('id_compania', '=',$id)
+        ->where('activo','=',0)->count();  
+       if ($valida==0) {
+           $Compania=Empresa::findOrFail($id);
         $Compania->activo='0';
         $Compania->update();
 
+       }
+       else
+       {
+        $Compania=Empresa::findOrFail($id);
+        $Compania->activo='1';
+        $Compania->update();
+
+       }
+        
         return Redirect::to('Catalogos/Cat_Empresas');
     }
 }

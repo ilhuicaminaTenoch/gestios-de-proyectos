@@ -11,11 +11,12 @@ role="dialog" tabindex="-1" id="modal-delete-{{$contra->id_contratista}}">
                 <h4 class="modal-title">Desactivar Contratista</h4>
 			</div>
 			<div class="modal-body">
-				<p>Confirme si desea dar de baja al contratista</p>
+				<p>Confirme si desea activar/desactivar al contratista: {{ $contra->nombre }}</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-				<button type="submit" class="btn btn-primary">Confirmar</button>
+				<a href="{{URL::action('ContratistaController@destroy',$contra->id_contratista)}}"><button class="btn btn-info">Confirmar</button></a>
+		
 			</div>
 		</div>
 	</div>

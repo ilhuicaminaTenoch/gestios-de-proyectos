@@ -30,7 +30,7 @@
 
 						<a href="{{URL::action('PuestoController@edit',$pues->id_puesto)}}"><button class="btn btn-info">Editar</button></a>
 						<a href="" data-target="#modal-delete-{{$pues->id_puesto}}" data-toggle="modal">
-						<button class="btn btn-danger">Eliminar</button></a>
+						<button class="btn btn-danger">Activo/Inactivo</button></a>
 					</td>
 				</tr>
 				@include('Catalogos.Cat_Puestos.modal')
