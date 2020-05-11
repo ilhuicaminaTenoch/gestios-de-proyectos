@@ -36,7 +36,7 @@
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 				<div class="form-group">
-					<label for="nombre">Examén Médico</label>
+					<label for="nombre">Examen Médico</label>
 					@foreach ($Habilidades as $hab) 
 					@php $fecha2=date('Y-m-d',strtotime($hab->examen_medico));
 					@endphp

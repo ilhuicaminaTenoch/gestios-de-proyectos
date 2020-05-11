@@ -22,7 +22,7 @@
 				<tr>
 					<td>{{$contra->id_contratista}}</td>
 					<td>{{$contra->nombre}}</td>
-					<td> <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($contra->id_contratista, 'QRCODE', 5,5)}}"
+					<td> <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($contra->nombre, 'QRCODE', 5,5)}}"
                               alt="barcode"/></td>
 				</tr>
 				@endforeach
