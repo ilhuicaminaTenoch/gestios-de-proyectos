@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>hola</title>
+    <title></title>
     <style>
         table {
             font-family: arial, sans-serif;

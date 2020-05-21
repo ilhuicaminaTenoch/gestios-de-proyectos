@@ -20,6 +20,7 @@
     @foreach($contratistas as $contratista)
         <tr>
             <td>{{ $contratista->nombre }}</td>
+            <td>{{ $contratista->compania }}</td>
             <td>
                 <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($contratista->nombre, 'QRCODE', 5,5)}}"
                      alt="barcode"/>

@@ -40,11 +40,22 @@ class HabilidadesController extends Controller
             ->where('id_compania','=',$id)
             ->get();
         
-    $pdf = \PDF::loadView('pdf_downloadH', ['Habilidades'=>$Habilidades])
+    $resultados =DB::table('vw_habilidades')
+            ->select('id_contratista','nombre','QR','compania')
+            ->orderBy('id_contratista','asc')
+            ->where('id_compania','=',$id)->count();
+
+            if ($resultados > 1){
+                $pdf = \PDF::loadView('pdf_downloadH', ['Habilidades'=>$Habilidades])
             ->setPaper('a4', 'landscape');
 
         return $pdf->download('Habilidades.pdf');
-    //return view('Codigos.Barras.edit',["Compania"=>$Compania]);
+    
+            }
+    else{
+        return view("Codigos.QR.mensaje", ["errores" => "No hay registros que exportar"]);
+
+    }
             
             
 }
