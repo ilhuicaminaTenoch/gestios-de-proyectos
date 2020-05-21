@@ -13,24 +13,27 @@
 				<thead>
 					<th>Id</th>
 					<th>Nombre</th>
-					<th>Código</th>
+					<th>Opción</th>
 				</thead>				
-				@foreach ($Habilidades as $hab)
+				@foreach ($Compania as $compa)
 				<tr>
-					<td>{{$hab->id_contratista}}</td>
-					<td>{{$hab->nombre}}</td>
-					<td> <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($hab->QR, 'QRCODE', 5,5)}}"
-                              alt="barcode"/></td>
+					<td>{{$compa->id_compania}}</td>
+					<td>{{$compa->compania}}</td>
+					<td>
+
+						<a href="{{URL::action('HabilidadesController@Buscar',$compa->id_compania)}}"><button class="btn btn-info">Descargar</button></a>
+					</td>
+					
 				</tr>
 				@endforeach
 			</table>
 		</div>
-		{{$Habilidades->render()}}
+		{{$Compania->render()}}
 	</div>
 </div>
-<div class="row">
+{{-- <div class="row">
 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 		<h3> <a href="/pdfDownloadH"><button class="btn btn-primary">Descargar</button></a></h3>
 	</div>
 </div>
-@endsection
+ --}}@endsection

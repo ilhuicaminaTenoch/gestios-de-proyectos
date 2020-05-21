@@ -64,6 +64,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 //BARRAS
         Route::resource('Codigos/Barras','BarrasController');
+        Route::get('/Codigos/Barras/edit/{id_compania}', 'BarrasController@Buscar');
         Route::get('/pdfDownload', 'BarrasController@pdfDownload');
 
 //REPORTES
@@ -77,6 +78,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 //qr habilidades
         Route::resource('Codigos/QR','HabilidadesController');
+        Route::get('/Codigos/QR/edit/{id_compania}', 'HabilidadesController@Buscar');
+        
         Route::get('/pdfDownloadH', 'HabilidadesController@pdfDownloadH');
 
     });

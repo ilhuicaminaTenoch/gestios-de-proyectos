@@ -46,7 +46,7 @@
 					</td>
 					<td >
 						<a href="" data-target="#modal-delete-{{$contra->id_contratista}}" data-toggle="modal">
-						<button class="btn btn-danger">Activa/Inactivo</button></a>
+						<button class="btn btn-danger">Eliminar</button></a>
 					</td>
 				</tr>
 				@include('Catalogos.Cat_Contratistas.modal')

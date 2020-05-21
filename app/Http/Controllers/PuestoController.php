@@ -23,6 +23,7 @@ class PuestoController extends Controller
              if ($request) {
 			$query=trim($request->get('searchText'));
 			$Puesto=DB::table('puestos')->where('puesto','LIKE','%'.$query.'%')
+            ->where('activo','=',1)
 			->orderBy('id_puesto','asc')
 			->paginate(7);
 			return view('Catalogos.Cat_Puestos.index',["Puesto"=>$Puesto,"searchText"=>$query]);
@@ -61,24 +62,10 @@ class PuestoController extends Controller
 
      public function destroy($id)
     {
-         $valida = DB::table('puestos')->where('id_puesto', '=',$id)
-        ->where('activo','=',0)->count();  
-       if ($valida==0) {
-           $Puesto=Puesto::findOrFail($id);
-    
+        
+        $Puesto=Puesto::findOrFail($id);
         $Puesto->activo='0';
         $Puesto->update();
-
-       }
-       else
-       {
-        $Puesto=Puesto::findOrFail($id);
-    
-        $Puesto->activo='1';
-        $Puesto->update();
-
-       }
-        
         return Redirect::to('Catalogos/Cat_Puestos');
     }
 }

@@ -21,7 +21,7 @@
         <tr>
             <td>{{ $contratista->nombre }}</td>
             <td>
-                <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($contratista->id_contratista, 'QRCODE', 5,5)}}"
+                <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($contratista->nombre, 'QRCODE', 5,5)}}"
                      alt="barcode"/>
             </td>
         </tr>

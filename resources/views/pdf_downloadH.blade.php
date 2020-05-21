@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>hola</title>
     <style>
         table {
             font-family: arial, sans-serif;
@@ -20,6 +21,7 @@
     @foreach($Habilidades as $hab)
         <tr>
             <td>{{ $hab->nombre }}</td>
+            <td>{{ $hab->compania }}</td>
             
             <td>
                 <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($hab->QR, 'QRCODE', 5,5)}}"

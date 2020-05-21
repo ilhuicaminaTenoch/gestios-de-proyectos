@@ -23,7 +23,7 @@ class EmpresaController extends Controller
              if ($request) {
 			$query=trim($request->get('searchText'));
 			$Compania=DB::table('empresas')->where('compania','LIKE','%'.$query.'%')
-			
+			->where('activo','=',1)
 			->orderBy('id_compania','asc')
 			->paginate(7);
 			return view('Catalogos.Cat_Empresas.index',["Compania"=>$Compania,"searchText"=>$query]);
@@ -63,22 +63,10 @@ class EmpresaController extends Controller
 
      public function destroy($id)
     {
-         $valida = DB::table('empresas')->where('id_compania', '=',$id)
-        ->where('activo','=',0)->count();  
-       if ($valida==0) {
-           $Compania=Empresa::findOrFail($id);
+        $Compania=Empresa::findOrFail($id);
         $Compania->activo='0';
         $Compania->update();
-
-       }
-       else
-       {
-        $Compania=Empresa::findOrFail($id);
-        $Compania->activo='1';
-        $Compania->update();
-
-       }
-        
+    
         return Redirect::to('Catalogos/Cat_Empresas');
     }
 }

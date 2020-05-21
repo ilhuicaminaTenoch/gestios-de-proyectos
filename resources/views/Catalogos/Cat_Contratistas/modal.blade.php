@@ -8,10 +8,10 @@ role="dialog" tabindex="-1" id="modal-delete-{{$contra->id_contratista}}">
 				aria-label="Close">
                      <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title">Desactivar Contratista</h4>
+                <h4 class="modal-title">Eliminar Contratista</h4>
 			</div>
 			<div class="modal-body">
-				<p>Confirme si desea activar/desactivar al contratista: {{ $contra->nombre }}</p>
+				<p>Confirme si desea eliminar al contratista: {{ $contra->nombre }}</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
