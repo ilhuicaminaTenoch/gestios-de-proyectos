@@ -34,17 +34,23 @@ class HabilidadesController extends Controller
     $Empresa = Empresa::findOrFail($id);
 
             //dd($Empresa);
-    $Habilidades =DB::table('vw_habilidades')
+    // $Habilidades =DB::table('vw_habilidades')
+    //         ->select('id_contratista','nombre','QR','compania')
+    //         ->orderBy('id_contratista','asc')
+    //         ->where('id_compania','=',$id)
+    //         ->get();
+    $data=DB::statement('call obtiene_QR_Habilidades(?)' ,array($id));
+        
+    $Habilidades =DB::table('vistaHabilidades')
             ->select('id_contratista','nombre','QR','compania')
             ->orderBy('id_contratista','asc')
             ->where('id_compania','=',$id)
             ->get();
-        
-    $resultados =DB::table('vw_habilidades')
-            ->select('id_contratista','nombre','QR','compania')
-            ->orderBy('id_contratista','asc')
-            ->where('id_compania','=',$id)->count();
 
+
+    $resultados =DB::table('vistaHabilidades')->count();
+        
+            
             if ($resultados > 1){
                 $pdf = \PDF::loadView('pdf_downloadH', ['Habilidades'=>$Habilidades])
             ->setPaper('a4', 'landscape');
