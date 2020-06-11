@@ -208,7 +208,7 @@
                 axios.get(url).then(response => {
                     console.log('se inserto');
                     swal("Registro Guardado!", "Se ha registrado un contratista", "success");
-
+                    this.name = '';
                 });
             }
         }
