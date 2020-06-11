@@ -120,7 +120,8 @@
                 //insert
                 if (alertInduccion == 'alert-success' && alertMedicalExam == 'alert-success' && alertSua == 'alert-success'){
                     this.fecha = moment().format("YYYY-MM-DD HH:mm:ss");
-                    this.register(this.id, this.fecha)
+                    this.register(this.id, this.fecha);
+                    this.name = '';
                 }
 
 
