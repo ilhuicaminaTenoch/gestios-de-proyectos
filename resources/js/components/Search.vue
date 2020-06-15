@@ -36,7 +36,7 @@
     export default {
         data() {
             return {
-                id:0,
+                id: 0,
                 name: '',
                 fecha: '',
                 persons: [],
@@ -73,16 +73,15 @@
                 let oneYearInduccion = moment(persons[0]['induccion']);
                 let oneYearMedicalExam = moment(persons[0]['examen_medico']);
 
-                let diciembre=moment(persons[0]['diciembre']);
-                let febrero=moment(persons[0]['febrero']);
-                let abril=moment(persons[0]['abril']);
-                let junio=moment(persons[0]['junio']);
-                let agosto=moment(persons[0]['agosto']);
-                let octubre=moment(persons[0]['octubre']);
+                let diciembre = persons[0]['diciembre'];
+                let febrero = persons[0]['febrero'];
+                let abril = persons[0]['abril'];
+                let junio = persons[0]['junio'];
+                let agosto = persons[0]['agosto'];
+                let octubre = persons[0]['octubre'];
 
 
-
-                if (dateNow.diff(oneYearInduccion,'years', true) > 1) {
+                if (dateNow.diff(oneYearInduccion, 'years', true) > 1) {
                     messageInduccion = 'Curso de inducción no está vigente';
                     alertInduccion = 'alert-danger';
                     iconInduccion = 'fa-ban';
@@ -92,7 +91,7 @@
                     iconInduccion = 'fa-check';
                 }
 
-                if (dateNow.diff(oneYearMedicalExam,'years', true) > 1) {
+                if (dateNow.diff(oneYearMedicalExam, 'years', true) > 1) {
                     messageMedicalExam = 'Examen médico ya no esta vigente';
                     alertMedicalExam = 'alert-danger';
                     iconMedicalExam = 'fa-ban';
@@ -103,93 +102,91 @@
                 }
 
 
+                if (persons[0].hasOwnProperty(monthBd)) { // valida que el mes este en la BD ( diciembre, febrero, abril, junio, agosto, octubre )
 
-                if (persons[0].hasOwnProperty(monthBd)){ // valida que el mes este en la BD ( diciembre, febrero, abril, junio, agosto, octubre )
-                
                     const monthYesBD = this.monthYesDataBase(month);
                     console.log(monthYesBD);
 
-                    switch(monthYesBD){
+                    switch (monthYesBD) {
                         case 'diciembre':
-                        if (diciembre==1){
-                            messageSua = 'SUA al corriente';
-                            alertSua = 'alert-success';
-                            iconSua = 'fa-check';
-                            }else{
+                            if (diciembre == 1) {
+                                messageSua = 'SUA al corriente';
+                                alertSua = 'alert-success';
+                                iconSua = 'fa-check';
+                            } else {
                                 messageSua = 'No has entregado el SUA correspondiente';
                                 alertSua = 'alert-danger';
                                 iconSua = 'fa-ban';
                             }
-                        break;
+                            break;
                         case 'febrero':
-                        if (febrero==1){
-                            messageSua = 'SUA al corriente';
-                            alertSua = 'alert-success';
-                            iconSua = 'fa-check';
-                            }else{
+                            if (febrero == 1) {
+                                messageSua = 'SUA al corriente';
+                                alertSua = 'alert-success';
+                                iconSua = 'fa-check';
+                            } else {
                                 messageSua = 'No has entregado el SUA correspondiente';
                                 alertSua = 'alert-danger';
                                 iconSua = 'fa-ban';
                             }
-                        break;
+                            break;
                         case 'abril':
-                            if (abril==1){
-                            messageSua = 'SUA al corriente';
-                            alertSua = 'alert-success';
-                            iconSua = 'fa-check';
-                            }else{
+                            if (abril == 1) {
+                                messageSua = 'SUA al corriente';
+                                alertSua = 'alert-success';
+                                iconSua = 'fa-check';
+                            } else {
                                 messageSua = 'No has entregado el SUA correspondiente';
                                 alertSua = 'alert-danger';
                                 iconSua = 'fa-ban';
                             }
                             break;
                         case 'junio':
-                            if (junio==1){
-                            messageSua = 'SUA al corriente';
-                            alertSua = 'alert-success';
-                            iconSua = 'fa-check';
-                            }else{
+                            if (junio == 1) {
+                                messageSua = 'SUA al corriente';
+                                alertSua = 'alert-success';
+                                iconSua = 'fa-check';
+                            } else {
                                 messageSua = 'No has entregado el SUA correspondiente';
                                 alertSua = 'alert-danger';
                                 iconSua = 'fa-ban';
                             }
                             break;
                         case 'agosto':
-                            if (agosto==1){
-                            messageSua = 'SUA al corriente';
-                            alertSua = 'alert-success';
-                            iconSua = 'fa-check';
-                            }else{
+                            if (agosto == 1) {
+                                messageSua = 'SUA al corriente';
+                                alertSua = 'alert-success';
+                                iconSua = 'fa-check';
+                            } else {
                                 messageSua = 'No has entregado el SUA correspondiente';
                                 alertSua = 'alert-danger';
                                 iconSua = 'fa-ban';
                             }
                             break;
                         case 'octubre':
-                            if (octubre==1){
-                            messageSua = 'SUA al corriente';
-                            alertSua = 'alert-success';
-                            iconSua = 'fa-check';
-                            }else{
+                            if (octubre == 1) {
+                                messageSua = 'SUA al corriente';
+                                alertSua = 'alert-success';
+                                iconSua = 'fa-check';
+                            } else {
                                 messageSua = 'No has entregado el SUA correspondiente';
                                 alertSua = 'alert-danger';
                                 iconSua = 'fa-ban';
                             }
                             break;
-                        
-                    
+
+
                     }
 
-                    
-                    
-                }else{ // meses faltantes (enero, marzo, mayo, julio, septiembre y noviembre)
+
+                } else { // meses faltantes (enero, marzo, mayo, julio, septiembre y noviembre)
                     const monthNoBD = this.monthNotDataBase(month);
 
-                    if (persons[0][monthNoBD]){
+                    if (persons[0][monthNoBD]) {
                         messageSua = 'SUA al corriente';
                         alertSua = 'alert-success';
                         iconSua = 'fa-check';
-                    }else{
+                    } else {
                         messageSua = 'No has entregado el SUA correspondiente';
                         alertSua = 'alert-danger';
                         iconSua = 'fa-ban';
@@ -197,13 +194,11 @@
                 }
 
                 //insert
-                if (alertInduccion == 'alert-success' && alertMedicalExam == 'alert-success' && alertSua == 'alert-success'){
+                if (alertInduccion == 'alert-success' && alertMedicalExam == 'alert-success' && alertSua == 'alert-success') {
                     this.fecha = moment().format("YYYY-MM-DD HH:mm:ss");
                     this.register(this.id, this.fecha);
                     this.name = '';
-                }
-                else
-                {
+                } else {
                     swal("Accesso Denegado!", "No cumple con los criterios de validación", "error");
                     this.name = '';
                 }
@@ -272,44 +267,44 @@
                 }
                 return monthString;
             },
-            monthNotDataBase(month){
+            monthNotDataBase(month) {
                 let monthString = '';
-                if (month == '12' || month == '01'){
+                if (month == '12' || month == '01') {
                     monthString = 'diciembre';
-                }else if(month == '02' || month == '03'){
+                } else if (month == '02' || month == '03') {
                     monthString = 'febrero';
-                }else if(month == '04' || month == '05'){
+                } else if (month == '04' || month == '05') {
                     monthString = 'abril';
-                }else if(month == '06' || month == '07'){
+                } else if (month == '06' || month == '07') {
                     monthString = 'junio';
-                }else if(month == '08' || month == '09'){
+                } else if (month == '08' || month == '09') {
                     monthString = 'agosto';
-                }else if(month == '10' || month == '11'){
+                } else if (month == '10' || month == '11') {
                     monthString = 'octubre';
                 }
                 return monthString;
             },
 
-            monthYesDataBase(month){
+            monthYesDataBase(month) {
                 let monthString = '';
-                if (month == '01' || month == '02'){
+                if (month == '01' || month == '02') {
                     monthString = 'diciembre';
-                }else if(month == '03' || month == '04'){
+                } else if (month == '03' || month == '04') {
                     monthString = 'febrero';
-                }else if(month == '05' || month == '06'){
+                } else if (month == '05' || month == '06') {
                     monthString = 'abril';
-                }else if(month == '07' || month == '08'){
+                } else if (month == '07' || month == '08') {
                     monthString = 'junio';
-                }else if(month == '09' || month == '10'){
+                } else if (month == '09' || month == '10') {
                     monthString = 'agosto';
-                }else if(month == '11' || month == '12'){
+                } else if (month == '11' || month == '12') {
                     monthString = 'octubre';
                 }
                 return monthString;
             },
-            
 
-            register(id_contratista, fecha){
+
+            register(id_contratista, fecha) {
                 var url = '/gestion/register?id_contratista=' + id_contratista + '&fecha=' + fecha;
                 axios.get(url).then(response => {
                     console.log('se inserto');
