@@ -39,16 +39,16 @@ class HabilidadesController extends Controller
     //         ->orderBy('id_contratista','asc')
     //         ->where('id_compania','=',$id)
     //         ->get();
-    //$data=DB::statement('call obtiene_QR_Habilidades(?)' ,array($id));
-    $data = DB::select('exec obtiene_QR_Habilidades(?)', array($id));  
-    $Habilidades =DB::table('vistaHabilidades')
+    $data=DB::statement('call obtiene_QR_Habilidades(?)' ,array($id));
+    //$data = DB::select('exec obtiene_QR_Habilidades(?)', array($id));  
+    $Habilidades =DB::table('vistahabilidades')
             ->select('id_contratista','nombre','QR','compania')
             ->orderBy('id_contratista','asc')
             ->where('id_compania','=',$id)
             ->get();
 
 
-    $resultados =DB::table('vistaHabilidades')->count();
+    $resultados =DB::table('vistahabilidades')->count();
         
             
             if ($resultados > 1){
