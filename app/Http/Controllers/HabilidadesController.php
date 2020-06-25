@@ -39,8 +39,8 @@ class HabilidadesController extends Controller
     //         ->orderBy('id_contratista','asc')
     //         ->where('id_compania','=',$id)
     //         ->get();
-    $data=DB::statement('call obtiene_QR_Habilidades(?)' ,array($id));
-        
+    //$data=DB::statement('call obtiene_QR_Habilidades(?)' ,array($id));
+    $data = DB::select('exec obtiene_QR_Habilidades(?)', array($id));  
     $Habilidades =DB::table('vistaHabilidades')
             ->select('id_contratista','nombre','QR','compania')
             ->orderBy('id_contratista','asc')
