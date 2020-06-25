@@ -105,7 +105,7 @@
                 if (persons[0].hasOwnProperty(monthBd)) { // valida que el mes este en la BD ( diciembre, febrero, abril, junio, agosto, octubre )
 
                     const monthYesBD = this.monthYesDataBase(month);
-                    console.log(monthYesBD);
+                    
 
                     switch (monthYesBD) {
                         case 'diciembre':
@@ -196,6 +196,7 @@
                 //insert
                 if (alertInduccion == 'alert-success' && alertMedicalExam == 'alert-success' && alertSua == 'alert-success') {
                     this.fecha = moment().format("YYYY-MM-DD HH:mm:ss");
+                    this.id = persons[0].id_contratista
                     this.register(this.id, this.fecha);
                     this.name = '';
                 } else {
@@ -307,7 +308,7 @@
             register(id_contratista, fecha) {
                 var url = '/gestion/register?id_contratista=' + id_contratista + '&fecha=' + fecha;
                 axios.get(url).then(response => {
-                    console.log('se inserto');
+                    
                     swal("Acceso Permitido!", "Se registro el acceso correctamente", "success");
 
                 });
