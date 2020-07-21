@@ -39,20 +39,7 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body no-padding">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th>Contratista</th>
-                                <th>Fecha inicio</th>
-                                <th>Fecha termino</th>
-                            </tr>
-                            <tr v-for="contratista in contratistas" :key="contratista.id_contratista">
-                                <td v-text="contratista.contratista"></td>
-                                <td v-text="contratista.fecha_inicial"></td>
-                                <td v-text="contratista.fecha_final"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    git 
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
