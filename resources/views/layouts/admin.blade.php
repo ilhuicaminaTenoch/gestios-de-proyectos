@@ -121,6 +121,7 @@
                         <li><a href="/Codigos/Barras"><i class="fa fa-circle-o"></i> Códigos de Acceso</a></li>
                         <li><a href="/Codigos/QR"><i class="fa fa-circle-o"></i> Códigos de Habilidades</a>
                         </li>
+                       
                     </ul>
                 </li>
                 <li class="treeview">

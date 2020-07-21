@@ -11,6 +11,7 @@ use App\Gestion;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Crypt;
 use Milon\Barcode\DNS1D;
 
 use App\Exports\ContratistasExport;
@@ -18,6 +19,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 use DB;
 use Milon\Barcode\DNS2D;
+use PDF;
 
 class ContratistaController extends Controller
 {
@@ -291,4 +293,34 @@ class ContratistaController extends Controller
         
         return Redirect::to('Catalogos/Cat_Contratistas');
     }
+
+    public function horarios(){
+        return view('Codigos.horarios');
+    }
+
+    public function consultaHorarios(Request $request){
+        if (!$request->ajax()) return redirect('/');
+
+        $nombre = $request->nombre;
+        $fechaInicial = $request->fechaInicio;
+        $fechaFinal = $request->fechaTermino;
+
+        $model = new Contratista();
+        $sp = DB::select('call sp_reporte_horariosC(?,?,?)', [$fechaInicial, $fechaFinal, $nombre]);
+        return $sp;
+    }
+
+    public function generatePDF(Request $request){
+        $nombre = $request->nombre;
+        $fechaInicial = $request->fechaInicio;
+        $fechaFinal = $request->fechaTermino;
+
+        $model = new Contratista();
+        $consulta = DB::select('call sp_reporte_horariosC(?,?,?)', [$fechaInicial, $fechaFinal, $nombre]);
+        $data = ['datum' => $consulta];
+        $pdf = PDF::loadView('pdfs.myPDF', $data);
+        return $pdf->download('horarios_contratistas.pdf');
+       
+       
+    }   
 }

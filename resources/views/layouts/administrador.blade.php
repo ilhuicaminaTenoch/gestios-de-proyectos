@@ -31,6 +31,8 @@
                         <li><a href="/Codigos/Barras"><i class="fa fa-circle-o"></i> Códigos de Acceso</a></li>
                         <li><a href="/Codigos/QR"><i class="fa fa-circle-o"></i> Códigos de Habilidades</a>
                         </li>
+                        <li><a href="/Codigos/horarios"><i class="fa fa-circle-o"></i> Verifica Horarios</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="treeview">
