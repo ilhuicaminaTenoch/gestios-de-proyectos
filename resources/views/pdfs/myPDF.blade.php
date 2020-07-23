@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Hi</title>
-</head>
-<body>
+@extends('layouts.master_pdf')
+@section('content')
     <table class="table">
         <tbody>
             <tr>
@@ -21,5 +17,4 @@
             @endforeach
         </tbody>
     </table>
-</body>
-</html>
+@endsection
