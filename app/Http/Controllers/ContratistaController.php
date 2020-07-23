@@ -311,7 +311,10 @@ class ContratistaController extends Controller
     }
 
     public function generatePDF(Request $request){
-        $nombre = $request->nombre;
+        $data = base64_decode($request->data);
+        dd($data);
+        
+        /*$nombre = $request->nombre;
         $fechaInicial = $request->fechaInicio;
         $fechaFinal = $request->fechaTermino;
 
@@ -319,7 +322,7 @@ class ContratistaController extends Controller
         $consulta = DB::select('call sp_reporte_horariosC(?,?,?)', [$fechaInicial, $fechaFinal, $nombre]);
         $data = ['datum' => $consulta];
         $pdf = PDF::loadView('pdfs.myPDF', $data);
-        return $pdf->download('horarios_contratistas.pdf');
+        return $pdf->download('horarios_contratistas.pdf');*/
        
        
     }   
