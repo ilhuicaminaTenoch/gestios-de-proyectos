@@ -332,11 +332,27 @@ class ContratistaController extends Controller
     public function reporteMedicoInduccion(Request $request){
         if (!$request->ajax()) return redirect('/');
 
-        $nombre = $request->mes;
+        $mes = $request->mes;
+       
+
         $model = new Contratista();
-        $sp = DB::select('call sp_reporte_vencimiento_accesos(?)', [$mes]);
-        return $sp;
-    
-        
+        $results = DB::select('call sp_reporte_vencimiento_accesos(?)', [$mes]);
+
+        $page = request('page', 1);
+        $pageSize = 5;
+        $offset = ($page * $pageSize) - $pageSize;
+        $data = array_slice($results, $offset, $pageSize, true);
+        $paginator = new \Illuminate\Pagination\LengthAwarePaginator($data, count($results), $pageSize, $page);
+        return [
+            'pagination' => [
+                'total'         => $paginator->total(),
+                'current_page'  => $paginator->currentPage(),
+                'per_page'      => $paginator->perPage(),
+                'last_page'     => $paginator->lastPage(),
+                'from'          => $paginator->firstItem(),
+                'to'            => $paginator->lastItem()
+            ],
+            'results' => $paginator->items()
+        ];        
     }
 }
