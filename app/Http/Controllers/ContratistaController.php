@@ -323,7 +323,20 @@ class ContratistaController extends Controller
         $data = ['datum' => $consulta];
         $pdf = PDF::loadView('pdfs.myPDF', $data);
         return $pdf->download($nombrePdf);
-       
-       
     }   
+
+    public function examenMedicoInduccion(Request $request){
+        return view('Codigos.examenMedicoInduccion');
+    }
+
+    public function reporteMedicoInduccion(Request $request){
+        if (!$request->ajax()) return redirect('/');
+
+        $nombre = $request->mes;
+        $model = new Contratista();
+        $sp = DB::select('call sp_reporte_vencimiento_accesos(?)', [$mes]);
+        return $sp;
+    
+        
+    }
 }

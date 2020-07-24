@@ -61,6 +61,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/Codigos/verifica-horarios','ContratistaController@consultaHorarios');
         Route::get('/Codigos/generate-pdf','ContratistaController@generatePDF');
         Route::get('/Catalogos/Cat_Contratistas/destroy/{id}','ContratistaController@destroy');
+        Route::get('/Codigos/examen-medico-e-induccion','ContratistaController@examenMedicoInduccion');
+        Route::get('/Codigos/reporte-medico-e-induccion','ContratistaController@reporteMedicoInduccion');
 
 // Route::get('/Catalogos/Cat_Contratistas/{id_compania}/agregarH','ContratistaController@agregarH')
 // ->name('Cat_Contratistas.updateHabilidad');
