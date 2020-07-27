@@ -69,6 +69,7 @@
         <div class="col-md-6">
             <div class="box">
                 <div class="box-header">
+                    <h3 class="box-title">Contratistas Encontrados</h3>
                     <div class="box-tools">
                         <ul class="pagination pagination-sm no-margin pull-right">
                             <li v-if="pagination.current_page > 1">
