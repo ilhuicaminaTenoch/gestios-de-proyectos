@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/Catalogos/Cat_Contratistas/destroy/{id}','ContratistaController@destroy');
         Route::get('/Codigos/examen-medico-e-induccion','ContratistaController@examenMedicoInduccion');
         Route::get('/Codigos/reporte-medico-e-induccion','ContratistaController@reporteMedicoInduccion');
+        Route::get('/Codigos/reporte-pdf-medico-induccion','ContratistaController@reportePdfMedicoInduccion');
 
 // Route::get('/Catalogos/Cat_Contratistas/{id_compania}/agregarH','ContratistaController@agregarH')
 // ->name('Cat_Contratistas.updateHabilidad');

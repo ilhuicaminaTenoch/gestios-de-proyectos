@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ContratistaFormRequest;
-use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Contratista;
+use DB;
+use PDF;
 use App\Gestion;
+use App\Utilities;
+use App\Contratista;
 
 
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Crypt;
+use App\Http\Requests;
 use Milon\Barcode\DNS1D;
+use Milon\Barcode\DNS2D;
+use Illuminate\Http\Request;
 
 use App\Exports\ContratistasExport;
 use Maatwebsite\Excel\Facades\Excel;
 
-use DB;
-use Milon\Barcode\DNS2D;
-use PDF;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\ContratistaFormRequest;
 
 class ContratistaController extends Controller
 {
@@ -354,5 +355,21 @@ class ContratistaController extends Controller
             ],
             'results' => $paginator->items()
         ];        
+    }
+
+    public function reportePdfMedicoInduccion(Request $request){
+        $utilities = new Utilities();
+        $variables = $utilities->decodeVars($request->data);
+    
+        $nombrePdf = 'reporte_medico_induccion'.date('Y-m-d_H:i:s').'.pdf';
+        $model = new Contratista();
+        $consulta = DB::select('call sp_reporte_vencimiento_accesos(?)', [
+            $variables['mes']
+        ]);
+        $data = ['datum' => $consulta];
+        $pdf = PDF::loadView('pdfs.reporte_medico_induccion', $data);
+        return $pdf->download($nombrePdf);
+
+
     }
 }

@@ -2,9 +2,18 @@
 <html>
     <head>
         <style>
+            * {
+                font-family: Verdana, Arial, sans-serif;
+            }
             @page {
                 margin: 0cm 0cm;
-                font-family: Arial;
+            }
+            table{
+                font-size: x-small;
+            }
+            tfoot tr td{
+                font-weight: bold;
+                font-size: x-small;
             }
     
             body {
@@ -50,7 +59,7 @@
     </head>
     <body>
         <header>
-            <img src="images/logoUnilever.png" alt="Unilever" width="100" height="75">
+            <img src="images/logoUnilever.png" alt="Unilever" height="150">
             <h1>Unilever</h1>
             
         </header>
