@@ -12,6 +12,13 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 use DB;
 class ContratistasExport implements FromCollection,WithHeadings,WithTitle
 {
+    protected $fechaInicial;
+    protected $fechaFinal;
+    
+    public function __construct($fechaInicialP, $fechaFinalP){
+        $this->fechaInicial = $fechaInicialP;
+        $this->fechaFinal = $fechaFinalP;
+    }
     public function title(): string
     {
 
@@ -21,17 +28,15 @@ class ContratistasExport implements FromCollection,WithHeadings,WithTitle
     public function headings(): array
     {
         return [
-            
-            'Compañias',
-            'HorasHombre',
-            'No. Personas',
+            'Empresa',
+            'Tipo',
+            'Total_Horas_Hombre',
+            'No. Personas'
         ];
     }
     public function collection()
-    {
-    	 
-         $ReporteHH = DB::table('reportehh')->select('empresa','horashombre','personas')->get();
-         return $ReporteHH;
-        
+    { 
+       $data = collect(DB::select('call sp_reporte_horas_hombre_dos(?,?)' ,[$this->fechaInicial, $this->fechaFinal]));
+       if(count($data) > 0) return $data;   
     }
 }

@@ -24,21 +24,23 @@ class ReportesController extends Controller
 
     public function store(Request $request)
     {
-        $mes = $request->post('mes');
-        $Tipo = $request->post('tipo');
+        $input = $request->all();
 
+        $request->validate([
+            'fechaInicial' => 'required|date',
+            'fechaFinal' => 'required|date',
+        ]);
 
-        $data=DB::statement('call sp_reporte_horashombre(?,?)' ,array($mes,$Tipo));
-        //$data = DB::select('exec sp_reporte_horashombre(?,?)',array($mes,$Tipo));
-
-        $resultados = DB::table('reportehh')->count();
-        //dd($resultados);
-        if ($resultados > 1) {
+       
+        return Excel::download(new ContratistasExport($input['fechaInicial'],$input['fechaFinal']), 'HorasHombre.xlsx');
+        /*$data=DB::select('call sp_reporte_horas_hombre_dos(?,?)' ,array($input['fechaInicial'],$input['fechaFinal']));
+        
+        if ($cout > 1) {
             return Excel::download(new ContratistasExport, 'HorasHombre.xlsx');
         } else {
             return view("Reportes.HorasHombre.mensaje", ["errores" => "La consulta no arrojo ningún resultado"]);
 
-        }
+        }*/
 
     }
 
