@@ -29,7 +29,7 @@ class ReportesController extends Controller
         $input = $request->all();
 
         $request->validate([
-            'fechaInicial' => 'required|date|after:now',
+            'fechaInicial' => 'required|date',
             'fechaFinal' => 'required|date|after:fechaInicial',
         ]);
 
@@ -53,7 +53,7 @@ class ReportesController extends Controller
         $input = $request->all();
 
         $request->validate([
-            'fechaInicial' => 'required|date|after:now',
+            'fechaInicial' => 'required|date',
             'fechaFinal' => 'required|date|after:fechaInicial',
         ]);
         return Excel::download(new ContratistasAltasBajas($input['fechaInicial'],$input['fechaFinal']), 'contratistasAltasBajas.xlsx');
