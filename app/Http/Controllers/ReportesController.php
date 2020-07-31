@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\ContratistasExport;
-use Illuminate\Http\Request;
 use DB;
+use App\Utilities;
+use Illuminate\Http\Request;
+use App\Exports\ContratistasExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ContratistasAltasBajas;
 
 class ReportesController extends Controller
 {
@@ -27,26 +29,35 @@ class ReportesController extends Controller
         $input = $request->all();
 
         $request->validate([
-            'fechaInicial' => 'required|date',
-            'fechaFinal' => 'required|date',
+            'fechaInicial' => 'required|date|after:now',
+            'fechaFinal' => 'required|date|after:fechaInicial',
         ]);
 
        
         return Excel::download(new ContratistasExport($input['fechaInicial'],$input['fechaFinal']), 'HorasHombre.xlsx');
-        /*$data=DB::select('call sp_reporte_horas_hombre_dos(?,?)' ,array($input['fechaInicial'],$input['fechaFinal']));
-        
-        if ($cout > 1) {
-            return Excel::download(new ContratistasExport, 'HorasHombre.xlsx');
-        } else {
-            return view("Reportes.HorasHombre.mensaje", ["errores" => "La consulta no arrojo ningún resultado"]);
-
-        }*/
 
     }
 
     public function principal(Request $request)
     {
         return view('Default.principal');
+    }
+
+    public function altasBajas(Request $request)
+    {
+        return view('Reportes.altas-bajas');
+    }
+
+    public function consultaAltasBajas(Request $request)
+    {
+        $input = $request->all();
+
+        $request->validate([
+            'fechaInicial' => 'required|date|after:now',
+            'fechaFinal' => 'required|date|after:fechaInicial',
+        ]);
+        return Excel::download(new ContratistasAltasBajas($input['fechaInicial'],$input['fechaFinal']), 'contratistasAltasBajas.xlsx');
+        
     }
 
 }
