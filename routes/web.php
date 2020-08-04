@@ -60,7 +60,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/Codigos/horarios','ContratistaController@horarios');
         Route::get('/Codigos/verifica-horarios','ContratistaController@consultaHorarios');
         Route::get('/Codigos/generate-pdf','ContratistaController@generatePDF');
-        Route::get('/Catalogos/Cat_Contratistas/destroy/{id}','ContratistaController@destroy');
+        Route::get('/Catalogos/Cat_Contratistas/destroy-view/{id_contratista}','ContratistaController@destroyView');
+        Route::post('/Catalogos/activo','ContratistaController@activo');
+
         Route::get('/Codigos/examen-medico-e-induccion','ContratistaController@examenMedicoInduccion');
         Route::get('/Codigos/reporte-medico-e-induccion','ContratistaController@reporteMedicoInduccion');
         Route::get('/Codigos/reporte-pdf-medico-induccion','ContratistaController@reportePdfMedicoInduccion');

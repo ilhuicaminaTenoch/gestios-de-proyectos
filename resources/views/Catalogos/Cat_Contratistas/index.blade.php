@@ -45,15 +45,17 @@
 						<a href="{{URL::action('ContratistaController@agregarH',$contra->id_contratista)}}"><button class="btn btn-info">Habilidad</button></a>
 					</td>
 					<td >
-						<a href="" data-target="#modal-delete-{{$contra->id_contratista}}" data-toggle="modal">
-						<button class="btn btn-danger">Eliminar</button></a>
+						<a href="{{ URL::action('ContratistaController@destroyView', $contra->id_contratista) }}">
+							<button class="btn btn-danger">Eliminar</button
+						></a>
 					</td>
 				</tr>
-				@include('Catalogos.Cat_Contratistas.modal')
+				
 				@endforeach
 			</table>
 		</div>
 		{{$Contratistas->render()}}
 	</div>
 </div>
+
 @endsection

@@ -10,8 +10,6 @@ class Contratista extends Model
 
     protected $primaryKey="id_contratista";
 
-    public $timestamps=false;
-
     protected $fillable=[
         'nombre',
     	'id_compania',
@@ -19,7 +17,8 @@ class Contratista extends Model
         'tipo',
         'RFC',
         'activo',
-        'codigo'
+        'codigo',
+        'motivos'
     ];
 
     protected $guarded=[

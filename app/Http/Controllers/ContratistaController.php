@@ -61,9 +61,14 @@ class ContratistaController extends Controller
         $barra = new DNS2D();
 
         $Contratistas = new Contratista();
-        //$Contratistas = $barra->getBarcodeSVG("prueba", "C128");
-        //dd($Contratistas);
-        //validando existencia
+
+        $validatedData = $request->validate([
+            'nombre' => 'required|max:50',
+            'id_compania' => 'required',
+            'id_puesto' => 'required',
+            'tipo' => 'required',
+        ]);
+
         $valida = DB::table('contratistas')->where([
             ['id_compania', '=', $request->post('id_compania')],
             ['id_puesto', '=', $request->post('id_puesto')],
@@ -121,12 +126,19 @@ class ContratistaController extends Controller
     }
 
     
-    public function destroy($id)
+    public function destroyView($id, Request $request)
     {
-        $Contratistas =Contratista::find($id);
-        $Contratistas = Contratista::findOrFail($id);
-        $Contratistas->Activo = '0';
+        $Contratistas = DB::table('contratistas')->where('id_contratista', $id)->first();
+        return view("Catalogos.Cat_Contratistas.destroy-view",["contratistas" => $Contratistas]);
+    }
+
+    public function activo(Request $request)
+    {
+       $Contratistas = Contratista::findOrFail($request->input('idContratista'));
+        $Contratistas->activo = '0';
+        $Contratistas->motivos = $request->input('motivo');
         $Contratistas->update();
+
         return Redirect::to('Catalogos/Cat_Contratistas');
     }
 

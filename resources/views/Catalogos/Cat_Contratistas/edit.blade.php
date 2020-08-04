@@ -23,7 +23,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                {!!Form::model($Contratistas,['method'=>'PATCH', 'route'=>['Cat_Contratistas.update',$Contratistas->id_contratista], 'class'=>'form-horizontal'])!!}
+                {!!Form::model($Contratistas,['method'=>'GET', 'route'=>['Cat_Contratistas.update',$Contratistas->id_contratista], 'class'=>'form-horizontal'])!!}
                 {{Form::token()}}
                     <div class="box-body">
                         <div class="form-group">
@@ -93,6 +93,13 @@
 
                             <div class="col-sm-10">
                                 <input type="text" name="RFC" class="form-control" value="{{$Contratistas->RFC}}" placeholder="RFC...">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Motivos</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" name="RFC" class="form-control"  placeholder="RFC...">
                             </div>
                         </div>
                     </div>
