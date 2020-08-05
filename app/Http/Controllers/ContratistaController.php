@@ -20,6 +20,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\ContratistaFormRequest;
 
 class ContratistaController extends Controller
@@ -62,18 +63,31 @@ class ContratistaController extends Controller
 
         $Contratistas = new Contratista();
 
-        $validatedData = $request->validate([
-            'nombre' => 'required|max:50',
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'required',
             'id_compania' => 'required',
-            'id_puesto' => 'required',
             'tipo' => 'required',
+            'id_puesto' => 'required',
+            'RFC' => 'required'
         ]);
+
 
         $valida = DB::table('contratistas')->where([
             ['id_compania', '=', $request->post('id_compania')],
             ['id_puesto', '=', $request->post('id_puesto')],
             ['nombre', '=', $request->post('nombre')],
         ])->count();
+
+        if(Contratista::where('nombre', '=', $request->nombre)->exists()){
+            $dataContratista = DB::table('contratistas')
+                ->where([
+                    ['nombre', '=' , $request->nombre],
+                    ['activo', '=' , '1']
+                ])->get();
+            dd($dataContratista);
+            $validator->errors()->add('nombre', 'El contratista ya se encuentra resgitrado, solo que fue dado de baja por: '.$dataContratista->motivos);
+            return redirect('Catalogos/Cat_Contratistas/create')->withErrors($validator)->withInput();
+        }
 
         if ($valida == '0') {
             $idContratista = DB::getPdo()->lastInsertId();
