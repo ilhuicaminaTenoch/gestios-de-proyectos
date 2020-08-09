@@ -37,7 +37,7 @@
 				@endforeach
 			</table>
 		</div>
-		{{$Puesto->render()}}
+		{{$Puesto->appends(Request::only(['searchText']))->render()}}
 	</div>
 </div>
 
