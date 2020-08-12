@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 //CONTRATISTAS
         Route::resource('Catalogos/Cat_Contratistas','ContratistaController');
-        Route::resource('/Cat_Contratistas/create','ContratistaController@store');
+        //Route::resource('/Cat_Contratistas/create','ContratistaController@store');
         Route::get('/Catalogos/Cat_Contratistas/agregarH/{id_contratista}','ContratistaController@agregarH');
         Route::post('/Catalogos/Cat_Contratistas/{id_contratista}','ContratistaController@updateHabilidad');
         Route::get('/Codigos/horarios','ContratistaController@horarios');

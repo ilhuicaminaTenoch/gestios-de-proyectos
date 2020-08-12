@@ -20,6 +20,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\ContratistaFormRequest;
 
 class ContratistaController extends Controller
@@ -37,7 +38,7 @@ class ContratistaController extends Controller
             $Contratistas = DB::table('contratistas as a')
                 ->join('empresas as b', 'a.id_compania', '=', 'b.id_compania')
                 ->join('puestos as c', 'a.id_puesto', '=', 'c.id_puesto')
-                ->select('a.id_contratista', 'a.nombre', 'b.compania', 'b.id_compania', 'c.puesto', 'c.id_puesto', 'a.tipo', 'a.RFC', 'a.codigo', 'a.activo')
+                ->select('a.id_contratista', 'a.nombre', 'b.compania', 'b.id_compania', 'c.puesto', 'c.id_puesto', 'a.tipo', 'a.nss', 'a.codigo', 'a.activo')
                 ->where('a.nombre', 'LIKE', '%' . $query . '%')
                 ->where('a.activo','=',1)
                 ->orderBy('id_contratista', 'asc')
@@ -62,41 +63,47 @@ class ContratistaController extends Controller
 
         $Contratistas = new Contratista();
 
-        $validatedData = $request->validate([
-            'nombre' => 'required|max:50',
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'required',
             'id_compania' => 'required',
-            'id_puesto' => 'required',
             'tipo' => 'required',
+            'id_puesto' => 'required',
+            'nss' => [
+                'required',
+                'unique:contratistas,nss',
+                function ($attribute, $value, $fail) use ($request){
+                    $isExist = DB::table('contratistas')->where([
+                        ['nss','=', $request->nss],
+                        ['activo', '=', '0']
+                    ])->exists();
+
+                    $query = DB::table('contratistas')->select('motivos','nombre')->where([
+                        ['nss','=', $request->nss],
+                        ['activo', '=', '0']
+                    ])->get();
+                    
+                    if($isExist){
+                        $fail("El contratista {$query[0]->nombre} ya se encuentra resgitrado. Solo que fue dado de baja por: {$query[0]->motivos}" );
+                    }
+                }
+            ],
         ]);
 
-        $valida = DB::table('contratistas')->where([
-            ['id_compania', '=', $request->post('id_compania')],
-            ['id_puesto', '=', $request->post('id_puesto')],
-            ['nombre', '=', $request->post('nombre')],
-        ])->count();
-
-        if ($valida == '0') {
-            $idContratista = DB::getPdo()->lastInsertId();
-            $Contratistas->nombre = $request->post('nombre');
-            $Contratistas->id_compania = $request->post('id_compania');
-            $Contratistas->id_puesto = $request->post('id_puesto');
-            $Contratistas->tipo = $request->post('tipo');
-            if ($request->get('RFC') == null)
-                $Contratistas->RFC = 'Sin RFC';
-            else
-                $Contratistas->RFC = $request->get('RFC');
-
-            $Contratistas->activo = '1';
-            $Contratistas->codigo = $request->post('nombre');
-            $Contratistas->save();
-
-            return Redirect::to('Catalogos/Cat_Contratistas');
-        } else {
-            return view("Catalogos.Cat_Contratistas.error", ["errores" => "El proyecto ya tiene registrado el contratista"]);
-
+        if ($validator->fails()) {
+            return redirect('Catalogos/Cat_Contratistas/create')
+                        ->withErrors($validator)
+                        ->withInput();
         }
+        
+        $Contratistas->nombre = $request->nombre;
+        $Contratistas->id_compania = $request->id_compania;
+        $Contratistas->id_puesto = $request->id_puesto;
+        $Contratistas->tipo = $request->tipo;
+        $Contratistas->nss = $request->nss;
+        $Contratistas->activo = '1';
+        $Contratistas->save();
 
-
+        return Redirect::to('Catalogos/Cat_Contratistas');
     }
 
     public function edit($id)
@@ -117,7 +124,7 @@ class ContratistaController extends Controller
         $Contratistas->id_compania = $request->get('id_compania');
         $Contratistas->id_puesto = $request->get('id_puesto');
         $Contratistas->tipo = $request->get('tipo');
-        $Contratistas->RFC = $request->get('RFC');
+        $Contratistas->nss = $request->get('nss');
         $Contratistas->activo = '1';
         $Contratistas->update();
 
@@ -148,7 +155,7 @@ class ContratistaController extends Controller
         //$Habilidades =DB::table('gestion')->where('id_contratista','=',$id)->get();
        $Habilidades =DB::table('contratistas as a')
                     ->leftjoin('gestion as d','a.id_contratista','=','d.id_contratista')
-                    ->select('a.id_contratista','a.nombre','a.tipo', 'a.RFC','a.codigo', 'a.activo','d.id_gestion','d.induccion','d.examen_medico','d.diciembre','d.febrero','d.abril', 'd.junio','d.agosto', 'd.octubre', 'd.alturas', 'd.armado_a', 'd.plataforma_e', 'd.gruas_i', 'd.montacargas', 'd.equipo_aux', 'd.maquinaria_p', 'd.e_confinados', 'd.t_caliente', 'd.t_electricos', 'd.loto', 'd.apertura_l', 'd.amoniaco', 'd.quimicos', 'd.temperatura_e', 'd.temperatura_a')      
+                    ->select('a.id_contratista','a.nombre','a.tipo', 'a.nss','a.codigo', 'a.activo','d.id_gestion','d.induccion','d.examen_medico','d.diciembre','d.febrero','d.abril', 'd.junio','d.agosto', 'd.octubre', 'd.alturas', 'd.armado_a', 'd.plataforma_e', 'd.gruas_i', 'd.montacargas', 'd.equipo_aux', 'd.maquinaria_p', 'd.e_confinados', 'd.t_caliente', 'd.t_electricos', 'd.loto', 'd.apertura_l', 'd.amoniaco', 'd.quimicos', 'd.temperatura_e', 'd.temperatura_a')      
        ->where('a.id_contratista','=',$id)->get();
             // dd($Habilidades);
             return view("Catalogos.Cat_Contratistas.agregarH",["Contratistas"=>$Contratistas,"Habilidades"=>$Habilidades]);
@@ -162,7 +169,7 @@ class ContratistaController extends Controller
 
         $Habilidades=DB::table('contratistas as a')
                     ->leftjoin('gestion as d','a.id_contratista','=','d.id_contratista')
-                    ->select('a.id_contratista','a.nombre','a.tipo', 'a.RFC','a.codigo', 'a.activo','d.id_gestion','d.induccion','d.examen_medico','d.diciembre','d.febrero','d.abril', 'd.junio','d.agosto', 'd.octubre', 'd.alturas', 'd.armado_a', 'd.plataforma_e', 'd.gruas_i', 'd.montacargas', 'd.equipo_aux', 'd.maquinaria_p', 'd.e_confinados', 'd.t_caliente', 'd.t_electricos', 'd.loto', 'd.apertura_l', 'd.amoniaco', 'd.quimicos', 'd.temperatura_e', 'd.temperatura_a')      
+                    ->select('a.id_contratista','a.nombre','a.tipo', 'a.nss','a.codigo', 'a.activo','d.id_gestion','d.induccion','d.examen_medico','d.diciembre','d.febrero','d.abril', 'd.junio','d.agosto', 'd.octubre', 'd.alturas', 'd.armado_a', 'd.plataforma_e', 'd.gruas_i', 'd.montacargas', 'd.equipo_aux', 'd.maquinaria_p', 'd.e_confinados', 'd.t_caliente', 'd.t_electricos', 'd.loto', 'd.apertura_l', 'd.amoniaco', 'd.quimicos', 'd.temperatura_e', 'd.temperatura_a')      
                     ->where('a.id_contratista','=',$id)->get();
            
         $resultD = $request->input('diciembre');
