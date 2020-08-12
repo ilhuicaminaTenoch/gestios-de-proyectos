@@ -29,7 +29,7 @@
 					<td>{{$contra->compania}}</td>
 					<td>{{$contra->puesto}}</td>
 					<td>Tipo{{$contra->tipo}}</td>
-					<td>{{$contra->RFC}}</td>
+					<td>{{$contra->nss}}</td>
 					{{-- <td> {!! DNS1D::getBarcodeHTML($contra->nombre,"C128") !!}</td> --}}
 					@if ($contra->activo==1)
 						<td>Activo</td>
