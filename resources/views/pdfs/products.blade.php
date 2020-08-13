@@ -24,7 +24,7 @@
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-            ['Product Id', 'Sales', 'Quantity'],
+            ['Name', 'Sales', 'Quantity'],
 
             @php
               foreach($products as $product) {

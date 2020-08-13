@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/graficas/index', 'GraficasController@index');
             Route::post('/graficas/preview', 'GraficasController@preview');
             Route::get('/graficas/download/{fechaInicial}/{fechaFinal}', 'GraficasController@download')->name('download');
+            Route::get("/graficas/products", "GraficasController@prouductsListing");
 
         Route::get('Default', 'ReportesController@principal');
         //Gestiones

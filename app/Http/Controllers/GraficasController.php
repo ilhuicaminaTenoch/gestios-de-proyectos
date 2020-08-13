@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 //use PDF;
+use App\Product;
 use App\Contratista;
 use Illuminate\Http\Request;
 use mikehaertl\wkhtmlto\Pdf;
@@ -73,5 +74,10 @@ class GraficasController extends Controller
         $pdf->saveAs(public_path('report.pdf'));
    
         return response()->download(public_path('report.pdf'));
+    }
+
+    public function prouductsListing(){
+        $products = Product::all();
+        return view("pdfs.products", compact("products"));
     }
 }
