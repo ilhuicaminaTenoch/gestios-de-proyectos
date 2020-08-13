@@ -24,11 +24,16 @@ Route::group(['middleware' => ['guest']], function () {
 
 
 Route::group(['middleware' => ['auth']], function () {
+
     Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 
 
     Route::group(['middleware' => ['Administrator']], function () {
+            //GRAFICAS
+            Route::get('/graficas/index', 'GraficasController@index');
+            Route::post('/graficas/preview', 'GraficasController@preview');
+            Route::get('/graficas/download/{fechaInicial}/{fechaFinal}', 'GraficasController@download')->name('download');
 
         Route::get('Default', 'ReportesController@principal');
         //Gestiones
@@ -53,7 +58,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/Catalogos/Cat_Usuarios/destroy/{id}','UsuarioController@destroy');
 
 //CONTRATISTAS
-        Route::resource('Catalogos/Cat_Contratistas','ContratistaController');
+        //Route::resource('Catalogos/Cat_Contratistas','ContratistaController');
         //Route::resource('/Cat_Contratistas/create','ContratistaController@store');
         Route::get('/Catalogos/Cat_Contratistas/agregarH/{id_contratista}','ContratistaController@agregarH');
         Route::post('/Catalogos/Cat_Contratistas/{id_contratista}','ContratistaController@updateHabilidad');

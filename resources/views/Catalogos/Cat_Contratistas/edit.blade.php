@@ -19,11 +19,11 @@
         <div class="col-md-6">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">{{$Contratistas->id_contratista}}</h3>
+                    <h3 class="box-title">Editar </h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                {!!Form::model($Contratistas,['method'=>'GET', 'route'=>['Cat_Contratistas.update',$Contratistas->id_contratista], 'class'=>'form-horizontal'])!!}
+                {!!Form::model($Contratistas,['method'=>'PATCH', 'route'=>['Cat_Contratistas.update',$Contratistas->id_contratista], 'class'=>'form-horizontal'])!!}
                 {{Form::token()}}
                     <div class="box-body">
                         <div class="form-group">
@@ -92,14 +92,7 @@
                             <label for="inputEmail3" class="col-sm-2 control-label">Seguro Social</label>
 
                             <div class="col-sm-10">
-                                <input type="text" name="RFC" class="form-control" value="{{$Contratistas->RFC}}" placeholder="RFC...">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Motivos</label>
-
-                            <div class="col-sm-10">
-                                <input type="text" name="RFC" class="form-control"  placeholder="RFC...">
+                                <input type="text" name="nss" class="form-control" value="{{$Contratistas->nss}}" placeholder="NSS">
                             </div>
                         </div>
                     </div>
