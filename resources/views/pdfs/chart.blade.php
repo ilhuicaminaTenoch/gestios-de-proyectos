@@ -1,9 +1,6 @@
-<!DOCTYPE html>
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <script src="https://www.google.com/jsapi"></script>
     <style>
     .pie-chart {
         width: 600px;
@@ -66,12 +63,75 @@
     table.paleBlueRows tfoot td {
         font-size: 14px;
     }
+
+
+
+    table.chart {
+        border: 0;
+        border-collapse: collapse;
+        border-spacing: 0;
+        font: 14px/20px Roboto,Noto Sans,Noto Sans JP,Noto Sans KR,Noto Naskh Arabic,Noto Sans Thai,Noto Sans Hebrew,Noto Sans Bengali,sans-serif;
+        margin: 16px 0 15px;
+        width: 100%;
+    }
+
     </style>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+    google.charts.load('current', {
+        'packages': ['corechart']
+    });
+    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(barChart);
+
+    function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['Task', 'Hours per Day'],
+            ['Work', 11],
+            ['Eat', 2],
+            ['Commute', 2],
+            ['Watch TV', 2],
+            ['Sleep', 7]
+        ]);
+
+        var options = {
+            title: 'My Daily Activities'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+    }
+
+    function barChart() {
+       
+
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        
+        data.addRows([
+            @foreach($pieChart as $key  => $row)
+                ['{{ $key }}', {{ $row }}],
+            @endforeach
+        ]);
+  
+        var options = {
+            title: 'Distribución Por Tipo De Compañía',
+            width: 500,
+            height: 400
+        };
+
+        // Instantiate and draw the chart for Anthony's pizza.
+        var chart = new google.visualization.PieChart(document.getElementById('barChart'));
+        chart.draw(data, options);
+    }
+    </script>
 </head>
 
 <body>
-
-
     <table class="paleBlueRows" align="center">
         <thead>
             <tr>
@@ -81,7 +141,7 @@
         </thead>
         <tfoot>
             <tr>
-                @foreach($datum as $dato)
+                @foreach($head as $dato)
                 <td>{{ $dato->CONTRATISTAS }}</td>
                 <td>{{ $dato->EMPRESA }}</td>
                 @endforeach
@@ -89,51 +149,24 @@
             </tr>
         </tfoot>
     </table>
+    
+
+    <table class="chart">
+      <tr>
+        <td><div id="piechart"></div></td>
+        <td><div id="barChart"></div></td>
+      </tr>
+    </table>
 
 
 
-
-    <div id="chartDiv" class="pie-chart"></div>
 
 
 
     <div class="text-center">
-        <a href="{{ route('download', ['fechaInicial' => $params['fechaInicial'], 'fechaFinal' => $params['fechaFinal']]) }}">Download PDF File</a>
-        <h2>ItSolutionStuff.com.com</h2>
+        <a
+            href="{{ route('download', ['fechaInicial' => $params['fechaInicial'], 'fechaFinal' => $params['fechaFinal']]) }}">Descargar Archivo PDF</a>
     </div>
-
-
-
-    <script type="text/javascript">
-    window.onload = function() {
-        google.load("visualization", "1.1", {
-            packages: ["corechart"],
-            callback: 'drawChart'
-        });
-    };
-
-    function drawChart() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Pizza');
-        data.addColumn('number', 'Populartiy');
-        data.addRows([
-            ['Laravel', 33],
-            ['Codeigniter', 26],
-            ['Symfony', 22],
-            ['CakePHP', 10],
-            ['Slim', 9]
-        ]);
-
-        var options = {
-            title: 'Popularity of Types of Framework',
-            sliceVisibilityThreshold: .2
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('chartDiv'));
-        chart.draw(data, options);
-    }
-    </script>
-
 </body>
 
 </html>

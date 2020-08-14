@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 //use PDF;
 use App\Product;
+use App\Graficas;
 use App\Contratista;
 use Illuminate\Http\Request;
 use mikehaertl\wkhtmlto\Pdf;
@@ -38,34 +39,48 @@ class GraficasController extends Controller
             'fechaFinal' => 'required|date|after:fechaInicial',
         ]);
 
-        $model = new Contratista();
-        $consulta = DB::select('call sp_obtiene_distribucion_contra(?,?)', 
+        $queryHead = DB::select('call sp_obtiene_distribucion_contra(?,?)', 
         [
             $request->fechaInicial,
             $request->fechaFinal
         ]);
+
+        $pieChart = DB::select('call sp_obtiene_distribucion_tipo(?,?)', [$request->fechaInicial,$request->fechaFinal]);
         
-        $data = ['datum' => $consulta, 'params' => ['fechaInicial' => $request->fechaInicial, 'fechaFinal' => $request->fechaFinal]];
+        $modelGraficas = new Graficas();
+        $dataPieChart = $modelGraficas->pieChart(json_decode(json_encode($pieChart), true));
+        $data = [
+            'head' => $queryHead, 
+            'params' => [
+                'fechaInicial' => $request->fechaInicial, 
+                'fechaFinal' => $request->fechaFinal
+            ],
+            'pieChart' => $dataPieChart
+        ];
+
         return view('pdfs.chart',  $data);
     }
 
     public function download($fechaInicial, $fechaFinal)
     {
-        $model = new Contratista();
-        $consulta = DB::select('call sp_obtiene_distribucion_contra(?,?)', 
+        $queryHead = DB::select('call sp_obtiene_distribucion_contra(?,?)', 
         [
             $fechaInicial,
             $fechaFinal
         ]);
+
+        $pieChart = DB::select('call sp_obtiene_distribucion_tipo(?,?)', [$fechaInicial,$fechaFinal]);
         
+        $modelGraficas = new Graficas();
+        $dataPieChart = $modelGraficas->pieChart(json_decode(json_encode($pieChart), true));
         $data = [
-            'datum' => $consulta, 
+            'head' => $queryHead, 
             'params' => [
                 'fechaInicial' => $fechaInicial, 
                 'fechaFinal' => $fechaFinal
-            ]
+            ],
+            'pieChart' => $dataPieChart
         ];
-        
         $render = view('pdfs.chart', $data)->render();
     
         $pdf = new Pdf();
