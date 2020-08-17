@@ -15,53 +15,61 @@ class HabilidadesController extends Controller
 
     public function index(Request $request)
     {
+
         if ($request) {
 
             $query = trim($request->get('searchText'));
-            $Compania = DB::table('empresas')->where('compania', 'LIKE', '%' . $query . '%')
-                ->where('activo', '=', 1)
-                ->orderBy('id_compania', 'asc')
+
+            $Contratistas = DB::table('contratistas as a')
+                ->join('empresas as b', 'a.id_compania', '=', 'b.id_compania')
+                ->join('puestos as c', 'a.id_puesto', '=', 'c.id_puesto')
+                ->select('a.id_contratista', 'a.nombre', 'b.compania', 'b.id_compania', 'c.puesto', 'c.id_puesto', 'a.tipo', 'a.nss', 'a.codigo', 'a.activo')
+                ->where('a.nombre', 'LIKE', '%' . $query . '%')
+                ->where('a.activo','=',1)
+                ->orderBy('id_contratista', 'asc')
                 ->paginate(7);
-            // die();
-            return view('Codigos.QR.index', [
-                "Compania" => $Compania,
+
+             return view('Codigos.QR.index', [
+                "Contratistas" => $Contratistas,
                 "searchText" => $query
             ]);
+
+
         }
     }
 
     public function Buscar($id)
     {
-        $Empresa = Empresa::findOrFail($id);
+        $Contratistas=Contratistas::findOrFail($id);
 
-        // dd($Empresa);
-        // $Habilidades =DB::table('vw_habilidades')
-        // ->select('id_contratista','nombre','QR','compania')
-        // ->orderBy('id_contratista','asc')
-        // ->where('id_compania','=',$id)
-        // ->get();
-        $data = DB::statement('call obtiene_QR_Habilidades(?)', array(
+        //$Empresa = Empresa::findOrFail($id);
+
+        $consulta = DB::select('call obtiene_QR_Habilidades(?)', array(
             $id
         ));
+
+        $data = ['datum' => $consulta];
+        $pdf = PDF::loadView('pdfs.myPDF', $data);
+        return $pdf->download($nombrePdf); 
         // $data = DB::select('exec obtiene_QR_Habilidades(?)', array($id));
-        $Habilidades = DB::table('vistahabilidades')->select('id_contratista', 'nombre', 'QR', 'compania')
-            ->orderBy('id_contratista', 'asc')
-            ->where('id_compania', '=', $id)
-            ->get();
+        // $Habilidades = DB::table('vistahabilidades')->select('id_contratista', 'nombre', 'QR', 'compania')
+        //     ->orderBy('id_contratista', 'asc')
+        //     ->where('id_compania', '=', $id)
+        //     ->get();
 
-        $resultados = DB::table('vistahabilidades')->count();
+        // $resultados = DB::table('vistahabilidades')->count();
 
-        if ($resultados > 1) {
-            $pdf = \PDF::loadView('pdf_downloadH', [
-                'Habilidades' => $Habilidades
-            ])->setPaper('a4', 'landscape');
+        // if ($resultados > 1) {
+        //     $pdf = \PDF::loadView('pdf_downloadH', [
+        //         'Habilidades' => $Habilidades
+        //     ])->setPaper('a4', 'landscape');
 
-            return $pdf->download('Habilidades.pdf');
-        } else {
-            return view("Codigos.QR.mensaje", [
-                "errores" => "No hay registros que exportar"
-            ]);
-        }
+        //     return $pdf->download('Habilidades.pdf');
+        // } else {
+        //     return view("Codigos.QR.mensaje", [
+        //         "errores" => "No hay registros que exportar"
+        //     ]);
+        // }
     }
 
     public function pdfDownloadH()

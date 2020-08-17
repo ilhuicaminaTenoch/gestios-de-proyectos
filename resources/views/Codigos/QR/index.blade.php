@@ -13,22 +13,24 @@
 				<thead>
 					<th>Id</th>
 					<th>Nombre</th>
+					<th>Compañia</th>
 					<th>Opción</th>
 				</thead>				
-				@foreach ($Compania as $compa)
+				@foreach ($Contratistas as $compa)
 				<tr>
-					<td>{{$compa->id_compania}}</td>
+					<td>{{$compa->id_contratista}}</td>
+					<td>{{$compa->nombre}}</td>
 					<td>{{$compa->compania}}</td>
 					<td>
 
-						<a href="{{URL::action('HabilidadesController@Buscar',$compa->id_compania)}}"><button class="btn btn-info">Descargar</button></a>
+						<a href="{{URL::action('HabilidadesController@Buscar',$compa->id_contratista)}}"><button class="btn btn-info">Descargar</button></a>
 					</td>
 					
 				</tr>
 				@endforeach
 			</table>
 		</div>
-		{{$Compania->render()}}
+		{{$Contratistas->appends(Request::only(['searchText']))->render()}}
 	</div>
 </div>
 {{-- <div class="row">

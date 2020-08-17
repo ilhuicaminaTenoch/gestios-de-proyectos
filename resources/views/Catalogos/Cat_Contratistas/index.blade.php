@@ -54,7 +54,7 @@
 				@endforeach
 			</table>
 		</div>
-		{{$Contratistas->render()}}
+		{{$Contratistas->appends(Request::only(['searchText']))->render()}}
 	</div>
 </div>
 

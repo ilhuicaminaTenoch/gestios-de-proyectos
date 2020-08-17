@@ -119,7 +119,6 @@ class ContratistaController extends Controller
     public function update(Request $request, $id)
     {
         $Contratistas = Contratista::findOrFail($id);
-
         $Contratistas->nombre = $request->get('nombre');
         $Contratistas->id_compania = $request->get('id_compania');
         $Contratistas->id_puesto = $request->get('id_puesto');

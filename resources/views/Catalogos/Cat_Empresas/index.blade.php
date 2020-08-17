@@ -37,7 +37,7 @@
 				@endforeach
 			</table>
 		</div>
-		{{$Compania->render()}}
+		{{$Compania->appends(Request::only(['searchText']))->render()}}
 	</div>
 </div>
 

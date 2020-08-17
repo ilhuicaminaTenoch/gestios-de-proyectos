@@ -57,7 +57,7 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="form-group">
                         <label for="RFC">Seguro Social</label>
-                        <input type="text" name="nss" class="form-control" placeholder="NNS">
+                        <input type="text" name="nss" class="form-control" placeholder="Seguro Social...">
                 </div>
                 
                 <div class="form-group">

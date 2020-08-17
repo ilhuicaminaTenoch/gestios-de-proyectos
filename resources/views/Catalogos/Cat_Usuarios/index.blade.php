@@ -33,7 +33,7 @@
 				@endforeach
 			</table>
 		</div>
-		{{$usuarios->render()}}
+		{{$usuarios->appends(Request::only(['searchText']))->render()}}
 	</div>
 </div>
 
