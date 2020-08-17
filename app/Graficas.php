@@ -12,5 +12,14 @@ class Graficas
         }
         return $newArray;
     }
+
+    public function columChart(array $data){
+        $newArray = [];
+        foreach($data as $datum){
+            $key = ucwords(strtolower($datum['compania']));
+            $newArray[$key] = $datum['nocontratistas'];
+        }
+        return $newArray;
+    }
    
 }

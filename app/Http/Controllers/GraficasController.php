@@ -46,6 +46,7 @@ class GraficasController extends Controller
         ]);
 
         $pieChart = DB::select('call sp_obtiene_distribucion_tipo(?,?)', [$request->fechaInicial,$request->fechaFinal]);
+        $columChart = DB::select('call sp_obtiene_distribucion_compania(?, ?)', [$request->fechaInicial,$request->fechaFinal]);
         
         $modelGraficas = new Graficas();
         $dataPieChart = $modelGraficas->pieChart(json_decode(json_encode($pieChart), true));
@@ -55,10 +56,10 @@ class GraficasController extends Controller
                 'fechaInicial' => $request->fechaInicial, 
                 'fechaFinal' => $request->fechaFinal
             ],
-            'pieChart' => $dataPieChart
+            'pieChart' => $dataPieChart,
+            'columChart' => $modelGraficas->columChart(json_decode(json_encode($columChart), true))
         ];
-
-        return view('pdfs.chart',  $data);
+        return view('Reportes.graficas.preview',  $data);
     }
 
     public function download($fechaInicial, $fechaFinal)
@@ -70,16 +71,17 @@ class GraficasController extends Controller
         ]);
 
         $pieChart = DB::select('call sp_obtiene_distribucion_tipo(?,?)', [$fechaInicial,$fechaFinal]);
+        $columChart = DB::select('call sp_obtiene_distribucion_compania(?, ?)', [$fechaInicial,$fechaFinal]);
         
         $modelGraficas = new Graficas();
-        $dataPieChart = $modelGraficas->pieChart(json_decode(json_encode($pieChart), true));
         $data = [
             'head' => $queryHead, 
             'params' => [
                 'fechaInicial' => $fechaInicial, 
                 'fechaFinal' => $fechaFinal
             ],
-            'pieChart' => $dataPieChart
+            'pieChart' => $modelGraficas->pieChart(json_decode(json_encode($pieChart), true)),
+            'columChart' => $modelGraficas->columChart(json_decode(json_encode($columChart), true))
         ];
         $render = view('pdfs.chart', $data)->render();
     
