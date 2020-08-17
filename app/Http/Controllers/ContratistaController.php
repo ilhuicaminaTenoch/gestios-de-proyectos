@@ -128,7 +128,6 @@ class ContratistaController extends Controller
         $Contratistas->update();
 
         return Redirect::to('Catalogos/Cat_Contratistas');
-
     }
 
     

@@ -45,6 +45,7 @@
                     <ul class="treeview-menu">
                         <li><a href="/Reportes/HorasHombre"><i class="fa fa-circle-o"></i>Horas Hombre </a></li>
                         <li><a href="/Reportes/altas-bajas"><i class="fa fa-circle-o"></i>Documentacion</a></li>
+                        <li><a href="/graficas/index"><i class="fa fa-circle-o"></i>Graficas</a></li>
                         
                     </ul>
                 </li>
