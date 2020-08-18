@@ -29,13 +29,14 @@
 				</tr>
 				@endforeach
 			</table>
+
 		</div>
 		{{$Contratistas->appends(Request::only(['searchText']))->render()}}
 	</div>
 </div>
-{{-- <div class="row">
+ {{-- <div class="row">
 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 		<h3> <a href="/pdfDownloadH"><button class="btn btn-primary">Descargar</button></a></h3>
 	</div>
-</div>
- --}}@endsection
+</div> --}}
+@endsection

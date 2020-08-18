@@ -68,6 +68,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/Codigos/generate-pdf','ContratistaController@generatePDF');
         Route::get('/Catalogos/Cat_Contratistas/destroy-view/{id_contratista}','ContratistaController@destroyView');
         Route::post('/Catalogos/activo','ContratistaController@activo');
+            
+
 
         Route::get('/Codigos/examen-medico-e-induccion','ContratistaController@examenMedicoInduccion');
         Route::get('/Codigos/reporte-medico-e-induccion','ContratistaController@reporteMedicoInduccion');
@@ -95,7 +97,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 //qr habilidades
         Route::resource('Codigos/QR','HabilidadesController');
-        Route::get('/Codigos/QR/edit/{id_compania}', 'HabilidadesController@Buscar');
+        Route::get('/Codigos/QR/edit/{id_contratista}', 'HabilidadesController@Buscar');
+
         
         Route::get('/pdfDownloadH', 'HabilidadesController@pdfDownloadH');
 

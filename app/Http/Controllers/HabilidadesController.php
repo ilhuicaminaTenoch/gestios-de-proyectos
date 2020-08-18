@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Empresa;
+use App\Contratista;
 
 class HabilidadesController extends Controller
 {
@@ -40,48 +40,57 @@ class HabilidadesController extends Controller
 
     public function Buscar($id)
     {
-        $Contratistas=Contratistas::findOrFail($id);
+        $Contratistas=Contratista::findOrFail($id);
 
         //$Empresa = Empresa::findOrFail($id);
 
-        $consulta = DB::select('call obtiene_QR_Habilidades(?)', array(
+        $Habilidades = DB::select('call obtiene_QR_Habilidades(?)', array(
             $id
         ));
 
-        $data = ['datum' => $consulta];
-        $pdf = PDF::loadView('pdfs.myPDF', $data);
-        return $pdf->download($nombrePdf); 
-        // $data = DB::select('exec obtiene_QR_Habilidades(?)', array($id));
-        // $Habilidades = DB::table('vistahabilidades')->select('id_contratista', 'nombre', 'QR', 'compania')
-        //     ->orderBy('id_contratista', 'asc')
-        //     ->where('id_compania', '=', $id)
-        //     ->get();
+         $pdf = \PDF::loadView('pdf_downloadH', [
+                'Habilidades' => $Habilidades
+            ])->setPaper('a4', 'landscape');
 
-        // $resultados = DB::table('vistahabilidades')->count();
+            return $pdf->download('Habilidades.pdf');
 
-        // if ($resultados > 1) {
-        //     $pdf = \PDF::loadView('pdf_downloadH', [
-        //         'Habilidades' => $Habilidades
-        //     ])->setPaper('a4', 'landscape');
 
-        //     return $pdf->download('Habilidades.pdf');
-        // } else {
-        //     return view("Codigos.QR.mensaje", [
-        //         "errores" => "No hay registros que exportar"
-        //     ]);
-        // }
-    }
+         
+        /*$resultados =$Habilidades->count();
+
+        if ($resultados > 1) {
+            $pdf = \PDF::loadView('pdf_downloadH', [
+                'Habilidades' => $Habilidades
+            ])->setPaper('a4', 'landscape');
+
+            return $pdf->download('Habilidades.pdf');
+
+        } else {
+            return view("Codigos.QR.mensaje", [
+                "errores" => "No hay registros que exportar"
+            ]);
+        }
+*/    }
 
     public function pdfDownloadH()
     {
-        $Habilidades = DB::table('vw_habilidades')->select('id_contratista', 'nombre', 'QR')
-            ->orderBy('id_contratista', 'asc')
-            ->where('id_compania', '=', 3)
-            ->get();
+
+        $Contratistas=Contratistas::findOrFail($id);
+        $consulta = DB::select('call obtiene_QR_Habilidades(?)', array($id));
+
+        $resultados = DB::select('call obtiene_QR_Habilidades(?)', array($id))->count();
+
+        if ($resultados > 1) {
         $pdf = \PDF::loadView('pdf_downloadH', [
-            'Habilidades' => $Habilidades
+            'Habilidades' => $consulta
         ])->setPaper('a4', 'landscape');
 
         return $pdf->download('Habilidades.pdf');
+
+        } else {
+             return view("Codigos.QR.mensaje", [
+                 "errores" => "No hay registros que exportar"
+        ]);
+        }
     }
 }
