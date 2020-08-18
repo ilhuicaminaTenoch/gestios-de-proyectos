@@ -41,56 +41,28 @@ class HabilidadesController extends Controller
     public function Buscar($id)
     {
         $Contratistas=Contratista::findOrFail($id);
-
+        
         //$Empresa = Empresa::findOrFail($id);
-
-        $Habilidades = DB::select('call obtiene_QR_Habilidades(?)', array(
-            $id
-        ));
-
+        
+        $Habilidades = DB::select('call obtiene_QR_Habilidades(?)', array($id));
+        $Habilidades = DB::select('call obtiene_QR_Habilidades(?)', array($id));
+        
          $pdf = \PDF::loadView('pdf_downloadH', [
                 'Habilidades' => $Habilidades
             ])->setPaper('a4', 'landscape');
 
             return $pdf->download('Habilidades.pdf');
+    }
 
+    public function pdfDownloadH(Request $request)
+    {
+        $Contratistas=Contratista::findOrFail($id);
+        $Habilidades = DB::select('call obtiene_QR_Habilidades(?)', array($id));
 
-         
-        /*$resultados =$Habilidades->count();
-
-        if ($resultados > 1) {
-            $pdf = \PDF::loadView('pdf_downloadH', [
+                 $pdf = \PDF::loadView('pdf_downloadH', [
                 'Habilidades' => $Habilidades
             ])->setPaper('a4', 'landscape');
 
             return $pdf->download('Habilidades.pdf');
-
-        } else {
-            return view("Codigos.QR.mensaje", [
-                "errores" => "No hay registros que exportar"
-            ]);
-        }
-*/    }
-
-    public function pdfDownloadH()
-    {
-
-        $Contratistas=Contratistas::findOrFail($id);
-        $consulta = DB::select('call obtiene_QR_Habilidades(?)', array($id));
-
-        $resultados = DB::select('call obtiene_QR_Habilidades(?)', array($id))->count();
-
-        if ($resultados > 1) {
-        $pdf = \PDF::loadView('pdf_downloadH', [
-            'Habilidades' => $consulta
-        ])->setPaper('a4', 'landscape');
-
-        return $pdf->download('Habilidades.pdf');
-
-        } else {
-             return view("Codigos.QR.mensaje", [
-                 "errores" => "No hay registros que exportar"
-        ]);
-        }
     }
 }

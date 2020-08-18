@@ -18,7 +18,7 @@
 <body>
 
 <table class="table table-striped">
-    @foreach($Contratistas as $hab)
+    @foreach($Habilidades as $hab)
         <tr>
             <td>{{ $hab->nombre }}</td>
             <td>{{ $hab->compania }}</td>
