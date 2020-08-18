@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <style>
     .pie-chart {
         width: 600px;
@@ -77,37 +78,35 @@
 
     </style>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
+    <!-- graficas -->
+<script type="text/javascript">
     google.charts.load('current', {
         'packages': ['corechart']
     });
-    google.charts.setOnLoadCallback(drawChart);
-    google.charts.setOnLoadCallback(barChart);
+    google.charts.setOnLoadCallback(columnChart);
+    google.charts.setOnLoadCallback(pieChart);
 
-    function drawChart() {
+    function columnChart() {
 
         var data = google.visualization.arrayToDataTable([
-            ['Task', 'Hours per Day'],
-            ['Work', 11],
-            ['Eat', 2],
-            ['Commute', 2],
-            ['Watch TV', 2],
-            ['Sleep', 7]
+            ['Compania', '# Contratistas',  { role: 'annotation' }],
+            @foreach($columChart as $keyColumn  => $Column)
+                ['{{ $keyColumn }}', {{ $Column }}, '{{ $Column }}'],
+            @endforeach
         ]);
 
         var options = {
-            title: 'My Daily Activities'
+            title: 'Distribución Por Compañía', 
+            width: 900,
+            height: 500,
+            bar: {groupWidth: "95%"},
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
+        var chart = new google.visualization.ColumnChart(document.getElementById('columnChart'));
         chart.draw(data, options);
     }
 
-    function barChart() {
-       
-
-
+    function pieChart() {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
@@ -120,12 +119,11 @@
   
         var options = {
             title: 'Distribución Por Tipo De Compañía',
-            width: 500,
-            height: 400
+            width: 900,
+            height: 500
         };
 
-        // Instantiate and draw the chart for Anthony's pizza.
-        var chart = new google.visualization.PieChart(document.getElementById('barChart'));
+        var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
         chart.draw(data, options);
     }
     </script>
@@ -150,23 +148,16 @@
         </tfoot>
     </table>
     
-
+    
     <table class="chart">
       <tr>
-        <td><div id="piechart"></div></td>
-        <td><div id="barChart"></div></td>
+        <td><div id="pieChart"></div></td>
+      </tr>
+      <tr>
+      <td><div id="columnChart"></div></td>
       </tr>
     </table>
 
-
-
-
-
-
-    <div class="text-center">
-        <a
-            href="{{ route('download', ['fechaInicial' => $params['fechaInicial'], 'fechaFinal' => $params['fechaFinal']]) }}">Descargar Archivo PDF</a>
-    </div>
 </body>
 
 </html>
