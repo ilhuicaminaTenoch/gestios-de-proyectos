@@ -38,7 +38,7 @@ class ContratistaController extends Controller
             $Contratistas = DB::table('contratistas as a')
                 ->join('empresas as b', 'a.id_compania', '=', 'b.id_compania')
                 ->join('puestos as c', 'a.id_puesto', '=', 'c.id_puesto')
-                ->select('a.id_contratista', 'a.nombre', 'b.compania', 'b.id_compania', 'c.puesto', 'c.id_puesto', 'a.tipo', 'a.nss', 'a.codigo', 'a.activo')
+                ->select('a.id_contratista', 'a.nombre', 'b.compania', 'b.id_compania', 'c.puesto', 'c.id_puesto', 'a.tipo', 'a.nss', 'a.activo')
                 ->where('a.nombre', 'LIKE', '%' . $query . '%')
                 ->where('a.activo','=',1)
                 ->orderBy('id_contratista', 'asc')

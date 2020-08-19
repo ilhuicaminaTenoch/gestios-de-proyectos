@@ -37,7 +37,7 @@ public function Buscar($id){
     $Contratistas=DB::table('contratistas as a')
     ->join('empresas as b','a.id_compania','=','b.id_compania')
     ->join('puestos as c','a.id_puesto','=','c.id_puesto')
-    ->select('a.id_contratista','a.nombre','b.compania','b.id_compania','c.puesto','c.id_puesto','a.tipo', 'a.RFC','a.activo')
+    ->select('a.id_contratista','a.nombre','b.compania','b.id_compania','c.puesto','c.id_puesto','a.tipo', 'a.nss','a.activo')
     ->where('b.id_compania','=',$id)
     ->orderBy('a.id_contratista','asc')
     ->get();
@@ -45,7 +45,7 @@ public function Buscar($id){
 	$resultados = DB::table('contratistas as a')
     ->join('empresas as b','a.id_compania','=','b.id_compania')
     ->join('puestos as c','a.id_puesto','=','c.id_puesto')
-    ->select('a.id_contratista','a.nombre','b.compania','b.id_compania','c.puesto','c.id_puesto','a.tipo', 'a.RFC','a.activo')
+    ->select('a.id_contratista','a.nombre','b.compania','b.id_compania','c.puesto','c.id_puesto','a.tipo', 'a.nss','a.activo')
     ->where('b.id_compania','=',$id)->count();
         
     //dd($resultados);

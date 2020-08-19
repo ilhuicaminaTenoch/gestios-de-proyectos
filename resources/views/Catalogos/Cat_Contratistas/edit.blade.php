@@ -92,7 +92,7 @@
                             <label for="inputEmail3" class="col-sm-2 control-label">Seguro Social</label>
 
                             <div class="col-sm-10">
-<<<<<<< HEAD
+
                                 <input type="text" name="nss" class="form-control" value="{{$Contratistas->nss}}" placeholder="Seguro Social...">
                             </div>
                         </div>
@@ -101,9 +101,8 @@
 
                             <div class="col-sm-10">
                                 <input type="text" name="motivos" class="form-control"  placeholder="Motivos...">
-=======
-                                <input type="text" name="nss" class="form-control" value="{{$Contratistas->nss}}" placeholder="NSS">
->>>>>>> c072d40afa4254b21fcafe691b4c64a0635d70a8
+
+                                
                             </div>
                         </div>
                     </div>

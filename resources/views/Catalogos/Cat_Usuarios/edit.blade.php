@@ -48,7 +48,7 @@
                                 <div class="col-md-6">
                                     <select id="id_perfil" name="id_perfil" class="form-control">
                                         @foreach ($perfiles as $per)
-                                            <option value="{{ $per->id_perfil }}">{{ $per->perfil }}</option>
+                                            <option value="{{ $per->id_perfil }}"selected>{{ $per->perfil }}</option>
                                         @endforeach
                                     </select>
                                 </div>

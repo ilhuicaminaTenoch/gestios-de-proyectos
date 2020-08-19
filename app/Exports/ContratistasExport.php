@@ -30,8 +30,8 @@ class ContratistasExport implements FromCollection,WithHeadings,WithTitle
         return [
             'Empresa',
             'Tipo',
-            'Total_Horas_Hombre',
-            'No. Personas'
+            'No. Personas',
+            'Total_Horas_Hombre'
         ];
     }
     public function collection()
