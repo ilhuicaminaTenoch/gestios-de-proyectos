@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use mikehaertl\wkhtmlto\Pdf;
+use PDF;
 
 
 class BarrasController extends Controller
@@ -47,14 +47,9 @@ class BarrasController extends Controller
             ];
         }
 
-        $renderVista = view('pdf_download', ['contratistas' => $aux])->render();
-        $pdf = new Pdf();
-        $pdf->addPage($renderVista);
-        $pdf->saveAs(public_path('Habilidades.pdf'));
-        return response()->download(public_path('Habilidades.pdf'));
 
-
-
+        $pdf = PDF::loadView('pdf_download', ['contratistas' => $aux]);
+        return $pdf->download("habilidades_$id.pdf");
     }
 
     public function pdfDownload($id)

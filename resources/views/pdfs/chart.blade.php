@@ -96,10 +96,10 @@
         ]);
 
         var options = {
-            title: 'Distribución Por Compañía', 
+            title: 'Distribución Por Compañía',
             width: 900,
             height: 500,
-            bar: {groupWidth: "95%"},
+            bar: {groupWidth: "70%"},
         };
 
         var chart = new google.visualization.ColumnChart(document.getElementById('columnChart'));
@@ -110,17 +110,17 @@
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
-        
+
         data.addRows([
             @foreach($pieChart as $key  => $row)
                 ['{{ $key }}', {{ $row }}],
             @endforeach
         ]);
-  
+
         var options = {
             title: 'Distribución Por Tipo De Compañía',
-            width: 900,
-            height: 500
+            width: 350,
+            height: 900
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
@@ -147,8 +147,8 @@
             </tr>
         </tfoot>
     </table>
-    
-    
+
+
     <table class="chart">
       <tr>
         <td><div id="pieChart"></div></td>

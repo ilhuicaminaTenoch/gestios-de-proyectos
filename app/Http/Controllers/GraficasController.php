@@ -6,7 +6,7 @@ use DB;
 use App\Product;
 use App\Graficas;
 use Illuminate\Http\Request;
-use mikehaertl\wkhtmlto\Pdf;
+use PDF;
 
 class GraficasController extends Controller
 {
@@ -81,14 +81,17 @@ class GraficasController extends Controller
             'pieChart' => $modelGraficas->pieChart(json_decode(json_encode($pieChart), true)),
             'columChart' => $modelGraficas->columChart(json_decode(json_encode($columChart), true))
         ];
-        $render = view('pdfs.chart', $data)->render();
+        $pdf = PDF::loadView('pdfs.chart', $data);
+        return $pdf->download("report.pdf");
+        /*$render = view('pdfs.chart', $data)->render();
 
         $pdf = new Pdf();
         $pdf->addPage($render);
         $pdf->setOptions(['javascript-delay' => 5000]);
         $pdf->saveAs(public_path('report.pdf'));
 
-        return response()->download(public_path('report.pdf'));
+        return response()->download(public_path('report.pdf'));*/
+
     }
 
     public function prouductsListing(){
