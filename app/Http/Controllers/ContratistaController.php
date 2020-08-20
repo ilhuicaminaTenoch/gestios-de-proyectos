@@ -153,7 +153,7 @@ class ContratistaController extends Controller
         //$Habilidades =DB::table('gestion')->where('id_contratista','=',$id)->get();
        $Habilidades =DB::table('contratistas as a')
                     ->leftjoin('gestion as d','a.id_contratista','=','d.id_contratista')
-                    ->select('a.id_contratista','a.nombre','a.tipo', 'a.nss','a.codigo', 'a.activo','d.id_gestion','d.induccion','d.examen_medico','d.diciembre','d.febrero','d.abril', 'd.junio','d.agosto', 'd.octubre', 'd.alturas', 'd.armado_a', 'd.plataforma_e', 'd.gruas_i', 'd.montacargas', 'd.equipo_aux', 'd.maquinaria_p', 'd.e_confinados', 'd.t_caliente', 'd.t_electricos', 'd.loto', 'd.apertura_l', 'd.amoniaco', 'd.quimicos', 'd.temperatura_e', 'd.temperatura_a')      
+                    ->select('a.id_contratista','a.nombre','a.tipo', 'a.nss', 'a.activo','d.id_gestion','d.induccion','d.examen_medico','d.diciembre','d.febrero','d.abril', 'd.junio','d.agosto', 'd.octubre', 'd.alturas', 'd.armado_a', 'd.plataforma_e', 'd.gruas_i', 'd.montacargas', 'd.equipo_aux', 'd.maquinaria_p', 'd.e_confinados', 'd.t_caliente', 'd.t_electricos', 'd.loto', 'd.apertura_l', 'd.amoniaco', 'd.quimicos', 'd.temperatura_e', 'd.temperatura_a')      
        ->where('a.id_contratista','=',$id)->get();
             // dd($Habilidades);
             return view("Catalogos.Cat_Contratistas.agregarH",["Contratistas"=>$Contratistas,"Habilidades"=>$Habilidades]);
@@ -167,7 +167,7 @@ class ContratistaController extends Controller
 
         $Habilidades=DB::table('contratistas as a')
                     ->leftjoin('gestion as d','a.id_contratista','=','d.id_contratista')
-                    ->select('a.id_contratista','a.nombre','a.tipo', 'a.nss','a.codigo', 'a.activo','d.id_gestion','d.induccion','d.examen_medico','d.diciembre','d.febrero','d.abril', 'd.junio','d.agosto', 'd.octubre', 'd.alturas', 'd.armado_a', 'd.plataforma_e', 'd.gruas_i', 'd.montacargas', 'd.equipo_aux', 'd.maquinaria_p', 'd.e_confinados', 'd.t_caliente', 'd.t_electricos', 'd.loto', 'd.apertura_l', 'd.amoniaco', 'd.quimicos', 'd.temperatura_e', 'd.temperatura_a')      
+                    ->select('a.id_contratista','a.nombre','a.tipo', 'a.nss', 'a.activo','d.id_gestion','d.induccion','d.examen_medico','d.diciembre','d.febrero','d.abril', 'd.junio','d.agosto', 'd.octubre', 'd.alturas', 'd.armado_a', 'd.plataforma_e', 'd.gruas_i', 'd.montacargas', 'd.equipo_aux', 'd.maquinaria_p', 'd.e_confinados', 'd.t_caliente', 'd.t_electricos', 'd.loto', 'd.apertura_l', 'd.amoniaco', 'd.quimicos', 'd.temperatura_e', 'd.temperatura_a')      
                     ->where('a.id_contratista','=',$id)->get();
            
         $resultD = $request->input('diciembre');
