@@ -50,9 +50,11 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Distribución Por Compañía</h3>
             </div>
-            <div class="box-body" id="columnChart">
-            </div>
+            <div class="box-body" id="columnChart"></div>
             <!-- /.box-body -->
+            <div class="box-footer">
+               <br/><br/><br/><br/><br/>
+            </div><!-- box-footer -->
         </div>
     </div>
 </div>
