@@ -21,10 +21,12 @@
 					<td>{{$compa->id_contratista}}</td>
 					<td>{{$compa->nombre}}</td>
 					<td>{{$compa->compania}}</td>
+                     
 					<td>
 
 						<a href="{{URL::action('HabilidadesController@Buscar',$compa->id_contratista)}}"><button class="btn btn-info">Descargar</button></a>
 					</td>
+
 					
 				</tr>
 				@endforeach

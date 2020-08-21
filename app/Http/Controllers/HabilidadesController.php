@@ -20,10 +20,12 @@ class HabilidadesController extends Controller
 
             $query = trim($request->get('searchText'));
 
+            //$Contratistas = DB::select('call obtiene_busqueda_QR_Habilidades(?)', array($query));
+            
             $Contratistas = DB::table('contratistas as a')
                 ->join('empresas as b', 'a.id_compania', '=', 'b.id_compania')
                 ->join('puestos as c', 'a.id_puesto', '=', 'c.id_puesto')
-                ->select('a.id_contratista', 'a.nombre', 'b.compania', 'b.id_compania', 'c.puesto', 'c.id_puesto', 'a.tipo', 'a.nss', 'a.codigo', 'a.activo')
+                ->select('a.id_contratista', 'a.nombre', 'b.compania', 'b.id_compania', 'c.puesto', 'c.id_puesto', 'a.tipo', 'a.nss', 'a.activo')
                 ->where('a.nombre', 'LIKE', '%' . $query . '%')
                 ->where('a.activo','=',1)
                 ->orderBy('id_contratista', 'asc')
@@ -40,12 +42,10 @@ class HabilidadesController extends Controller
 
     public function Buscar($id)
     {
-        $Contratistas=Contratista::findOrFail($id);
-        
-        //$Empresa = Empresa::findOrFail($id);
-        
+
+        $Contratistas = Contratista::findOrFail($id);
         $Habilidades = DB::select('call obtiene_QR_Habilidades(?)', array($id));
-        $Habilidades = DB::select('call obtiene_QR_Habilidades(?)', array($id));
+            
         
          $pdf = \PDF::loadView('pdf_downloadH', [
                 'Habilidades' => $Habilidades
