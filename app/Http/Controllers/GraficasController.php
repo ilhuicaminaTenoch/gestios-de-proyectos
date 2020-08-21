@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use DB;
-//use PDF;
 use App\Product;
 use App\Graficas;
-use App\Contratista;
 use Illuminate\Http\Request;
-use mikehaertl\wkhtmlto\Pdf;
+use PDF;
 
 class GraficasController extends Controller
 {
@@ -30,7 +28,7 @@ class GraficasController extends Controller
         }
         return view('pdfs.general', ['gender' => json_encode($array)]);
 
-  
+
     }
 
     public function preview(Request $request){
@@ -39,7 +37,7 @@ class GraficasController extends Controller
             'fechaFinal' => 'required|date|after:fechaInicial',
         ]);
 
-        $queryHead = DB::select('call sp_obtiene_distribucion_contra(?,?)', 
+        $queryHead = DB::select('call sp_obtiene_distribucion_contra(?,?)',
         [
             $request->fechaInicial,
             $request->fechaFinal
@@ -47,13 +45,13 @@ class GraficasController extends Controller
 
         $pieChart = DB::select('call sp_obtiene_distribucion_tipo(?,?)', [$request->fechaInicial,$request->fechaFinal]);
         $columChart = DB::select('call sp_obtiene_distribucion_compania(?, ?)', [$request->fechaInicial,$request->fechaFinal]);
-        
+
         $modelGraficas = new Graficas();
         $dataPieChart = $modelGraficas->pieChart(json_decode(json_encode($pieChart), true));
         $data = [
-            'head' => $queryHead, 
+            'head' => $queryHead,
             'params' => [
-                'fechaInicial' => $request->fechaInicial, 
+                'fechaInicial' => $request->fechaInicial,
                 'fechaFinal' => $request->fechaFinal
             ],
             'pieChart' => $dataPieChart,
@@ -64,7 +62,7 @@ class GraficasController extends Controller
 
     public function download($fechaInicial, $fechaFinal)
     {
-        $queryHead = DB::select('call sp_obtiene_distribucion_contra(?,?)', 
+        $queryHead = DB::select('call sp_obtiene_distribucion_contra(?,?)',
         [
             $fechaInicial,
             $fechaFinal
@@ -72,25 +70,28 @@ class GraficasController extends Controller
 
         $pieChart = DB::select('call sp_obtiene_distribucion_tipo(?,?)', [$fechaInicial,$fechaFinal]);
         $columChart = DB::select('call sp_obtiene_distribucion_compania(?, ?)', [$fechaInicial,$fechaFinal]);
-        
+
         $modelGraficas = new Graficas();
         $data = [
-            'head' => $queryHead, 
+            'head' => $queryHead,
             'params' => [
-                'fechaInicial' => $fechaInicial, 
+                'fechaInicial' => $fechaInicial,
                 'fechaFinal' => $fechaFinal
             ],
             'pieChart' => $modelGraficas->pieChart(json_decode(json_encode($pieChart), true)),
             'columChart' => $modelGraficas->columChart(json_decode(json_encode($columChart), true))
         ];
-        $render = view('pdfs.chart', $data)->render();
-    
+        $pdf = PDF::loadView('pdfs.chart', $data);
+        return $pdf->download("report.pdf");
+        /*$render = view('pdfs.chart', $data)->render();
+
         $pdf = new Pdf();
         $pdf->addPage($render);
         $pdf->setOptions(['javascript-delay' => 5000]);
         $pdf->saveAs(public_path('report.pdf'));
-   
-        return response()->download(public_path('report.pdf'));
+
+        return response()->download(public_path('report.pdf'));*/
+
     }
 
     public function prouductsListing(){

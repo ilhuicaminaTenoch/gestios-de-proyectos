@@ -15,19 +15,18 @@
     </style>
 </head>
 <body>
-
 <table class="table table-striped">
     @foreach($contratistas as $contratista)
         <tr>
-            <td>{{ $contratista->nombre }}</td>
-            <td>{{ $contratista->compania }}</td>
+            <td>{{ $contratista['nombre'] }}</td>
+            <td>{{ $contratista['compania'] }}</td>
             <td>
-                <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($contratista->nombre, 'QRCODE', 5,5)}}"
-                     alt="barcode"/>
+                <img src="data:image/png;base64, {{ $contratista['qr'] }} "/>
             </td>
         </tr>
     @endforeach
 </table>
+
 
 </body>
 </html>

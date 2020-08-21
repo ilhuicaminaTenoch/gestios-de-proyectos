@@ -7,7 +7,7 @@
                 <i class="fa fa-text-width"></i>
 
                 <h3 class="box-title">Datos Generales</h3>
-                
+
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -20,12 +20,15 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <a class="btn btn-info" href="{{ route('download', ['fechaInicial' => $params['fechaInicial'], 'fechaFinal' => $params['fechaFinal']]) }}">
+                <!--<a class="btn btn-info" href="{{ route('download', ['fechaInicial' => $params['fechaInicial'], 'fechaFinal' => $params['fechaFinal']]) }}">
                     <i class="fa fa-file-pdf-o"></i> Exportar a PDF
-                </a>
+                </a>-->
+                    <a class="btn btn-info" href="#" onclick="javascript:window.print()">
+                        <i class="fa fa-file-pdf-o"></i> Exportar a PDF
+                    </a>
             </div>
             <!-- box-footer -->
-            
+
         </div>
     </div>
 </div>
@@ -35,7 +38,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Distribución Por Tipo De Compañía</h3>
 
-                
+
             </div>
             <div class="box-body" id="pieChart">
             </div>
@@ -47,9 +50,11 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Distribución Por Compañía</h3>
             </div>
-            <div class="box-body" id="columnChart">
-            </div>
+            <div class="box-body" id="columnChart"></div>
             <!-- /.box-body -->
+            <div class="box-footer">
+               <br/><br/><br/><br/><br/>
+            </div><!-- box-footer -->
         </div>
     </div>
 </div>
