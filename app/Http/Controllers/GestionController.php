@@ -97,30 +97,33 @@ class GestionController extends Controller
         $persons = Gestion::join('contratistas', 'contratistas.id_contratista', '=', 'gestion.id_contratista')
             ->select('contratistas.nombre', 'gestion.induccion', 'gestion.examen_medico', 'gestion.diciembre', 'gestion.febrero',
                 'gestion.abril', 'gestion.junio', 'gestion.agosto', 'gestion.id_contratista', 'gestion.id_gestion')
-            ->where('contratistas.nombre', $name)->get();
+            ->where([
+                ['contratistas.nombre', '=', $name],
+                ['contratistas.activo', '=', 1]
+            ])->get();
 
         return [ 'persons' => $persons];
     }
 
     public function register(Request $request){
         if (!$request->ajax()) return redirect('/');
-        
-        
+
+
         try {
             DB::beginTransaction();
             $contratistas = new Registro();
             $contratistas->id_contratista = $request->id_contratista;
             $contratistas->fecha = $request->fecha;
             $contratistas->save();
-            
+
             DB::commit();
         }catch (\Exception $exception){
             DB::rollBack();
             dd($exception);
         }
-        
-        
-       
-        
+
+
+
+
     }
 }

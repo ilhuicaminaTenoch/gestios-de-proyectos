@@ -50,182 +50,186 @@
                 var url = '/gestion/searchPerson?name=' + name;
                 axios.get(url).then(response => {
                     this.persons = response.data.persons;
+                    //console.log(this.persons);
                     this.messages = this.message(this.persons);
                 });
             },
             message: function (persons) {
-                var alertMedicalExam;
-                var messageInduccion;
-                var alertInduccion;
-                var messageMedicalExam;
-                var alertMedicalExam;
-                var messageSua;
-                var alertSua;
-                var iconInduccion;
-                var iconMedicalExam;
-                var iconSua;
+                var total = persons.length;
+                let messageData = {};
+                if (total >= 1) {
+                    var alertMedicalExam;
+                    var messageInduccion;
+                    var alertInduccion;
+                    var messageMedicalExam;
+                    var alertMedicalExam;
+                    var messageSua;
+                    var alertSua;
+                    var iconInduccion;
+                    var iconMedicalExam;
+                    var iconSua;
 
 
-                let dateNow = moment(new Date());
-                let endMont = new moment().endOf("month");
-                let month = moment(new Date()).format('MM');
-                let monthBd = this.monthDataBase(month);
-                let oneYearInduccion = moment(persons[0]['induccion']);
-                let oneYearMedicalExam = moment(persons[0]['examen_medico']);
+                    let dateNow = moment(new Date());
+                    let endMont = new moment().endOf("month");
+                    let month = moment(new Date()).format('MM');
+                    let monthBd = this.monthDataBase(month);
+                    let oneYearInduccion = moment(persons[0]['induccion']);
+                    let oneYearMedicalExam = moment(persons[0]['examen_medico']);
 
-                let diciembre = persons[0]['diciembre'];
-                let febrero = persons[0]['febrero'];
-                let abril = persons[0]['abril'];
-                let junio = persons[0]['junio'];
-                let agosto = persons[0]['agosto'];
-                let octubre = persons[0]['octubre'];
-
-
-                if (dateNow.diff(oneYearInduccion, 'years', true) > 1) {
-                    messageInduccion = 'Curso de inducción no está vigente';
-                    alertInduccion = 'alert-danger';
-                    iconInduccion = 'fa-ban';
-                } else {
-                    messageInduccion = 'Curso de induccion vigente';
-                    alertInduccion = 'alert-success';
-                    iconInduccion = 'fa-check';
-                }
-
-                if (dateNow.diff(oneYearMedicalExam, 'years', true) > 1) {
-                    messageMedicalExam = 'Examen médico ya no esta vigente';
-                    alertMedicalExam = 'alert-danger';
-                    iconMedicalExam = 'fa-ban';
-                } else {
-                    messageMedicalExam = 'Examen médico vigente';
-                    alertMedicalExam = 'alert-success';
-                    iconMedicalExam = 'fa-check';
-                }
+                    let diciembre = persons[0]['diciembre'];
+                    let febrero = persons[0]['febrero'];
+                    let abril = persons[0]['abril'];
+                    let junio = persons[0]['junio'];
+                    let agosto = persons[0]['agosto'];
+                    let octubre = persons[0]['octubre'];
 
 
-                if (persons[0].hasOwnProperty(monthBd)) { // valida que el mes este en la BD ( diciembre, febrero, abril, junio, agosto, octubre )
-
-                    const monthYesBD = this.monthYesDataBase(month);
-                    
-
-                    switch (monthYesBD) {
-                        case 'diciembre':
-                            if (diciembre == 1) {
-                                messageSua = 'SUA al corriente';
-                                alertSua = 'alert-success';
-                                iconSua = 'fa-check';
-                            } else {
-                                messageSua = 'No has entregado el SUA correspondiente';
-                                alertSua = 'alert-danger';
-                                iconSua = 'fa-ban';
-                            }
-                            break;
-                        case 'febrero':
-                            if (febrero == 1) {
-                                messageSua = 'SUA al corriente';
-                                alertSua = 'alert-success';
-                                iconSua = 'fa-check';
-                            } else {
-                                messageSua = 'No has entregado el SUA correspondiente';
-                                alertSua = 'alert-danger';
-                                iconSua = 'fa-ban';
-                            }
-                            break;
-                        case 'abril':
-                            if (abril == 1) {
-                                messageSua = 'SUA al corriente';
-                                alertSua = 'alert-success';
-                                iconSua = 'fa-check';
-                            } else {
-                                messageSua = 'No has entregado el SUA correspondiente';
-                                alertSua = 'alert-danger';
-                                iconSua = 'fa-ban';
-                            }
-                            break;
-                        case 'junio':
-                            if (junio == 1) {
-                                messageSua = 'SUA al corriente';
-                                alertSua = 'alert-success';
-                                iconSua = 'fa-check';
-                            } else {
-                                messageSua = 'No has entregado el SUA correspondiente';
-                                alertSua = 'alert-danger';
-                                iconSua = 'fa-ban';
-                            }
-                            break;
-                        case 'agosto':
-                            if (agosto == 1) {
-                                messageSua = 'SUA al corriente';
-                                alertSua = 'alert-success';
-                                iconSua = 'fa-check';
-                            } else {
-                                messageSua = 'No has entregado el SUA correspondiente';
-                                alertSua = 'alert-danger';
-                                iconSua = 'fa-ban';
-                            }
-                            break;
-                        case 'octubre':
-                            if (octubre == 1) {
-                                messageSua = 'SUA al corriente';
-                                alertSua = 'alert-success';
-                                iconSua = 'fa-check';
-                            } else {
-                                messageSua = 'No has entregado el SUA correspondiente';
-                                alertSua = 'alert-danger';
-                                iconSua = 'fa-ban';
-                            }
-                            break;
-
-
-                    }
-
-
-                } else { // meses faltantes (enero, marzo, mayo, julio, septiembre y noviembre)
-                    const monthNoBD = this.monthNotDataBase(month);
-
-                    if (persons[0][monthNoBD]) {
-                        messageSua = 'SUA al corriente';
-                        alertSua = 'alert-success';
-                        iconSua = 'fa-check';
+                    if (dateNow.diff(oneYearInduccion, 'years', true) > 1) {
+                        messageInduccion = 'Curso de inducción no está vigente';
+                        alertInduccion = 'alert-danger';
+                        iconInduccion = 'fa-ban';
                     } else {
-                        messageSua = 'No has entregado el SUA correspondiente';
-                        alertSua = 'alert-danger';
-                        iconSua = 'fa-ban';
+                        messageInduccion = 'Curso de induccion vigente';
+                        alertInduccion = 'alert-success';
+                        iconInduccion = 'fa-check';
                     }
-                }
 
-                //insert
-                if (alertInduccion == 'alert-success' && alertMedicalExam == 'alert-success' && alertSua == 'alert-success') {
-                    this.fecha = moment().format("YYYY-MM-DD HH:mm:ss");
-                    this.id = persons[0].id_contratista
-                    this.register(this.id, this.fecha);
-                    this.name = '';
-                } else {
-                    swal("Accesso Denegado!", "No cumple con los criterios de validación", "error");
-                    this.name = '';
-                }
-
-
-                const messageData = {
-                    induccion: {
-                        message: messageInduccion,
-                        activeClass: alertInduccion,
-                        iconClass: iconInduccion
-                    },
-                    medicalExam: {
-                        message: messageMedicalExam,
-                        activeClass: alertMedicalExam,
-                        iconClass: iconMedicalExam
-                    },
-                    sua: {
-                        message: messageSua,
-                        activeClass: alertSua,
-                        iconClass: iconSua
+                    if (dateNow.diff(oneYearMedicalExam, 'years', true) > 1) {
+                        messageMedicalExam = 'Examen médico ya no esta vigente';
+                        alertMedicalExam = 'alert-danger';
+                        iconMedicalExam = 'fa-ban';
+                    } else {
+                        messageMedicalExam = 'Examen médico vigente';
+                        alertMedicalExam = 'alert-success';
+                        iconMedicalExam = 'fa-check';
                     }
-                };
-
-                return messageData;
 
 
+                    if (persons[0].hasOwnProperty(monthBd)) { // valida que el mes este en la BD ( diciembre, febrero, abril, junio, agosto, octubre )
+
+                        const monthYesBD = this.monthYesDataBase(month);
+
+
+                        switch (monthYesBD) {
+                            case 'diciembre':
+                                if (diciembre == 1) {
+                                    messageSua = 'SUA al corriente';
+                                    alertSua = 'alert-success';
+                                    iconSua = 'fa-check';
+                                } else {
+                                    messageSua = 'No has entregado el SUA correspondiente';
+                                    alertSua = 'alert-danger';
+                                    iconSua = 'fa-ban';
+                                }
+                                break;
+                            case 'febrero':
+                                if (febrero == 1) {
+                                    messageSua = 'SUA al corriente';
+                                    alertSua = 'alert-success';
+                                    iconSua = 'fa-check';
+                                } else {
+                                    messageSua = 'No has entregado el SUA correspondiente';
+                                    alertSua = 'alert-danger';
+                                    iconSua = 'fa-ban';
+                                }
+                                break;
+                            case 'abril':
+                                if (abril == 1) {
+                                    messageSua = 'SUA al corriente';
+                                    alertSua = 'alert-success';
+                                    iconSua = 'fa-check';
+                                } else {
+                                    messageSua = 'No has entregado el SUA correspondiente';
+                                    alertSua = 'alert-danger';
+                                    iconSua = 'fa-ban';
+                                }
+                                break;
+                            case 'junio':
+                                if (junio == 1) {
+                                    messageSua = 'SUA al corriente';
+                                    alertSua = 'alert-success';
+                                    iconSua = 'fa-check';
+                                } else {
+                                    messageSua = 'No has entregado el SUA correspondiente';
+                                    alertSua = 'alert-danger';
+                                    iconSua = 'fa-ban';
+                                }
+                                break;
+                            case 'agosto':
+                                if (agosto == 1) {
+                                    messageSua = 'SUA al corriente';
+                                    alertSua = 'alert-success';
+                                    iconSua = 'fa-check';
+                                } else {
+                                    messageSua = 'No has entregado el SUA correspondiente';
+                                    alertSua = 'alert-danger';
+                                    iconSua = 'fa-ban';
+                                }
+                                break;
+                            case 'octubre':
+                                if (octubre == 1) {
+                                    messageSua = 'SUA al corriente';
+                                    alertSua = 'alert-success';
+                                    iconSua = 'fa-check';
+                                } else {
+                                    messageSua = 'No has entregado el SUA correspondiente';
+                                    alertSua = 'alert-danger';
+                                    iconSua = 'fa-ban';
+                                }
+                                break;
+
+
+                        }
+
+
+                    } else { // meses faltantes (enero, marzo, mayo, julio, septiembre y noviembre)
+                        const monthNoBD = this.monthNotDataBase(month);
+
+                        if (persons[0][monthNoBD]) {
+                            messageSua = 'SUA al corriente';
+                            alertSua = 'alert-success';
+                            iconSua = 'fa-check';
+                        } else {
+                            messageSua = 'No has entregado el SUA correspondiente';
+                            alertSua = 'alert-danger';
+                            iconSua = 'fa-ban';
+                        }
+                    }
+
+                    //insert
+                    if (alertInduccion == 'alert-success' && alertMedicalExam == 'alert-success' && alertSua == 'alert-success') {
+                        this.fecha = moment().format("YYYY-MM-DD HH:mm:ss");
+                        this.id = persons[0].id_contratista
+                        this.register(this.id, this.fecha);
+                        this.name = '';
+                    } else {
+                        swal("Accesso Denegado!", "No cumple con los criterios de validación", "error");
+                        this.name = '';
+                    }
+
+
+                     const messageData = {
+                        induccion: {
+                            message: messageInduccion,
+                            activeClass: alertInduccion,
+                            iconClass: iconInduccion
+                        },
+                        medicalExam: {
+                            message: messageMedicalExam,
+                            activeClass: alertMedicalExam,
+                            iconClass: iconMedicalExam
+                        },
+                        sua: {
+                            message: messageSua,
+                            activeClass: alertSua,
+                            iconClass: iconSua
+                        }
+                    };
+                    return messageData;
+                }else{
+                    swal("ERROR!", "El contratista se encuentra dado de baja", "error");
+                }
             },
             monthDataBase(month) {
                 let monthString = '';
@@ -308,7 +312,7 @@
             register(id_contratista, fecha) {
                 var url = '/gestion/register?id_contratista=' + id_contratista + '&fecha=' + fecha;
                 axios.get(url).then(response => {
-                    
+
                     swal("Acceso Permitido!", "Se registro el acceso correctamente", "success");
 
                 });
