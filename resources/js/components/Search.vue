@@ -1,33 +1,74 @@
 <template>
-    <div class="box box-success">
-        <div class="box-header with-border">
-            <h3 class="box-title">Buscador de personal</h3>
-        </div>
-        <div class="box-body">
-            <input class="form-control input-lg" type="text" placeholder="Codigo" @keyup.enter="searchPerson(name)"
-                   v-model="name">
-        </div>
-        <!-- /.box-body -->
-        <div class="box box-solid">
+    <div>
+        <div class="box box-success">
             <div class="box-header with-border">
-                <h3 class="box-title" v-for="person in persons" :key="persons.id_contratista"
-                    v-text="person.nombre"></h3>
+                <h3 class="box-title">Buscador de personal</h3>
             </div>
-            <!-- /.box-header -->
-            <div class="box-body" v-if="persons.length">
-                <div class="alert alert-dismissible"
-                     v-for="(key,index) in Object.keys(messages)"
-                     v-bind:class="messages[key]['activeClass']"
-                >
-                    <button type="button" class="close" aria-hidden="true">×</button>
-                    <h4><i class="icon fa" v-bind:class="messages[key]['iconClass']"></i> Alerta!</h4>
-                    {{ messages[key]['message'] }}
-                </div>
+            <div class="box-body">
+                <input class="form-control input-lg" type="text" placeholder="Codigo" @keyup.enter="searchPerson(name)"
+                       v-model="name">
             </div>
             <!-- /.box-body -->
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title" v-for="person in persons" :key="persons.id_contratista"
+                        v-text="person.nombre"></h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" v-if="persons.length">
+                    <div class="alert alert-dismissible"
+                         v-for="(key,index) in Object.keys(messages)"
+                         v-bind:class="messages[key]['activeClass']"
+                    >
+                        <button type="button" class="close" aria-hidden="true">×</button>
+                        <h4><i class="icon fa" v-bind:class="messages[key]['iconClass']"></i> Alerta!</h4>
+                        {{ messages[key]['message'] }}
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+        <div class="modal fade" id="modal-default">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Registro de Entrada y Salida</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <form role="form">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Rol</label>
+                                        <select class="form-control" v-model="entradaSalida">
+                                            <option value="1" selected>Entrada</option>
+                                            <option value="2" selected>Salida</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </form>
+                        </div>
+                        <div class="card">
+                            <div class="callout callout-success">
+                                <h4>Registro</h4>
+                                <p>This is a green callout.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" @click="register(id, entradaSalida)">Guardar</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -42,6 +83,7 @@
                 persons: [],
                 messages: [],
                 messageRegister: '',
+                entradaSalida: 1,
             }
         },
         methods: {
@@ -198,11 +240,11 @@
                     }
 
                     //insert
-                    if (alertInduccion == 'alert-success' && alertMedicalExam == 'alert-success' && alertSua == 'alert-success') {
+                    if (alertInduccion === 'alert-success' && alertMedicalExam === 'alert-success' && alertSua === 'alert-success') {
                         this.fecha = moment().format("YYYY-MM-DD HH:mm:ss");
                         this.id = persons[0].id_contratista
-                        this.register(this.id, this.fecha);
                         this.name = '';
+                        $('#modal-default').modal('show');
                     } else {
                         swal("Accesso Denegado!", "No cumple con los criterios de validación", "error");
                         this.name = '';
@@ -309,11 +351,15 @@
             },
 
 
-            register(id_contratista, fecha) {
-                var url = '/gestion/register?id_contratista=' + id_contratista + '&fecha=' + fecha;
+            register(id_contratista, bandera) {
+                var url = '/gestion/register?id_contratista=' + id_contratista + '&bandera=' + bandera;
                 axios.get(url).then(response => {
-
-                    swal("Acceso Permitido!", "Se registro el acceso correctamente", "success");
+                    let resultado = response.data;
+                    if (resultado === 1){
+                        //swal("Registro", "Se registro entrada", "success");
+                    }else{
+                        //swal("Registro", "Se registro salida", "success");
+                    }
 
                 });
             }

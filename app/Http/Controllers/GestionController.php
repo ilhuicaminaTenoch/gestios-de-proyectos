@@ -107,20 +107,8 @@ class GestionController extends Controller
 
     public function register(Request $request){
         if (!$request->ajax()) return redirect('/');
-
-
-        try {
-            DB::beginTransaction();
-            $contratistas = new Registro();
-            $contratistas->id_contratista = $request->id_contratista;
-            $contratistas->fecha = $request->fecha;
-            $contratistas->save();
-
-            DB::commit();
-        }catch (\Exception $exception){
-            DB::rollBack();
-            dd($exception);
-        }
+        $resultado = 'resultado';
+        return DB::statement(DB::raw('CALL sp_ingresa_registros(?,?,?)'),[$request->id_contratista, $request->bandera, $resultado] );
 
 
 
