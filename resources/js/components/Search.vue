@@ -44,26 +44,27 @@
                             <form role="form">
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label>Rol</label>
                                         <select class="form-control" v-model="entradaSalida">
-                                            <option value="1" selected>Entrada</option>
-                                            <option value="2" selected>Salida</option>
+                                            <option value="0">Selecciona una opcion</option>
+                                            <option value="1">Entrada</option>
+                                            <option value="2">Salida</option>
                                         </select>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
                             </form>
                         </div>
-                        <div class="card">
-                            <div class="callout callout-success">
-                                <h4>Registro</h4>
-                                <p>This is a green callout.</p>
+                        <div class="card" v-if="entradaSalida !== 0">
+                            <div class="callout callout-success" v-show="name">
+                                <h4 v-if="resultado[0].resultado === 0">Debes registrar antes la salida</h4>
+                                <h4 v-else-if="resultado[0].resultado === 1">Se registro la entrada correctamente</h4>
+                                <h4 v-else-if="resultado[0].resultado === 2">se registro la salida correctamente</h4>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" @click="register(id, entradaSalida)">Guardar</button>
+                        <button type="button" class="btn btn-primary" @click="register(id, entradaSalida, name)">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -72,9 +73,9 @@
 </template>
 
 <script>
-    import moment from "moment";
+import moment from "moment";
 
-    export default {
+export default {
         data() {
             return {
                 id: 0,
@@ -82,8 +83,8 @@
                 fecha: '',
                 persons: [],
                 messages: [],
-                messageRegister: '',
-                entradaSalida: 1,
+                entradaSalida: 0,
+                resultado:0,
             }
         },
         methods: {
@@ -284,6 +285,7 @@
                         break;
                     case '03':
                         monthString = 'marzo'
+                        break;
                     case '04':
                         monthString = 'abril';
                         break;
@@ -316,17 +318,17 @@
             },
             monthNotDataBase(month) {
                 let monthString = '';
-                if (month == '12' || month == '01') {
+                if (month === '12' || month === '01') {
                     monthString = 'diciembre';
-                } else if (month == '02' || month == '03') {
+                } else if (month === '02' || month === '03') {
                     monthString = 'febrero';
-                } else if (month == '04' || month == '05') {
+                } else if (month === '04' || month === '05') {
                     monthString = 'abril';
-                } else if (month == '06' || month == '07') {
+                } else if (month === '06' || month === '07') {
                     monthString = 'junio';
-                } else if (month == '08' || month == '09') {
+                } else if (month === '08' || month === '09') {
                     monthString = 'agosto';
-                } else if (month == '10' || month == '11') {
+                } else if (month === '10' || month === '11') {
                     monthString = 'octubre';
                 }
                 return monthString;
@@ -334,17 +336,17 @@
 
             monthYesDataBase(month) {
                 let monthString = '';
-                if (month == '01' || month == '02') {
+                if (month === '01' || month === '02') {
                     monthString = 'diciembre';
-                } else if (month == '03' || month == '04') {
+                } else if (month === '03' || month === '04') {
                     monthString = 'febrero';
-                } else if (month == '05' || month == '06') {
+                } else if (month === '05' || month === '06') {
                     monthString = 'abril';
-                } else if (month == '07' || month == '08') {
+                } else if (month === '07' || month === '08') {
                     monthString = 'junio';
-                } else if (month == '09' || month == '10') {
+                } else if (month === '09' || month === '10') {
                     monthString = 'agosto';
-                } else if (month == '11' || month == '12') {
+                } else if (month === '11' || month === '12') {
                     monthString = 'octubre';
                 }
                 return monthString;
@@ -352,16 +354,15 @@
 
 
             register(id_contratista, bandera) {
-                var url = '/gestion/register?id_contratista=' + id_contratista + '&bandera=' + bandera;
-                axios.get(url).then(response => {
-                    let resultado = response.data;
-                    if (resultado === 1){
-                        //swal("Registro", "Se registro entrada", "success");
-                    }else{
-                        //swal("Registro", "Se registro salida", "success");
-                    }
+                if (bandera !== 0) {
+                    var url = '/gestion/register?id_contratista=' + id_contratista + '&bandera=' + bandera;
+                    let nombre = this.persons[0].nombre;
+                    axios.get(url).then(response => {
+                        this.resultado = response.data;
+                        this.name = nombre;
 
-                });
+                    });
+                }
             }
         }
     }
