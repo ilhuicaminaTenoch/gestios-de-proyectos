@@ -21,10 +21,18 @@
 			<label>Seleccionar fechas:</label>
 			<div class="form-group">
 				<div class="input-group input-daterange">
-					<input type="date" class="form-control" value="" name="fechaInicial" id="fechaInicial">
+					<input type="datetime-local" class="form-control" id="fechaInicial" name="fechaInicial" value="">
+
 					<div class="input-group-addon">a</div>
-					<input type="date" class="form-control" value="" name="fechaFinal" id="fechaFinal">
+					<input type="datetime-local" class="form-control" value="" name="fechaFinal" id="fechaFinal">
 				</div>
+			</div>
+			<div class="form-group">
+				<label>Agrupado por:</label>
+				<select class="form-control" id="agrupacion" name="agrupacion">
+                    <option value="1">Nombre</option>
+                    <option value="2">Compania</option>
+                  </select>
 			</div>
 			<div class="form-group">
 				<button class="btn btn-primary" type="submit">Generar</button>

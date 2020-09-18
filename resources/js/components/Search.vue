@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" @click="cleanAll()">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -359,6 +359,16 @@ export default {
 
                     });
                 }
+            },
+
+            cleanAll(){
+                this.entradaSalida = 0;
+                this.resultado = 0;
+                this.persons = [];
+                this.messages = [];
+                this.fecha = '';
+                this.name = '';
+                this.id = '';
             }
         }
     }

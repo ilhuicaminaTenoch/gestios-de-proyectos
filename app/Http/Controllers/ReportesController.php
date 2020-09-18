@@ -31,10 +31,11 @@ class ReportesController extends Controller
         $request->validate([
             'fechaInicial' => 'required|date',
             'fechaFinal' => 'required|date|after:fechaInicial',
+            'agrupacion' => 'required'
         ]);
 
        
-        return Excel::download(new ContratistasExport($input['fechaInicial'],$input['fechaFinal']), 'HorasHombre.xlsx');
+        return Excel::download(new ContratistasExport($input['fechaInicial'],$input['fechaFinal'], $input['agrupacion']), 'HorasHombre.xlsx');
 
     }
 
