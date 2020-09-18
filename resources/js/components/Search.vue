@@ -44,18 +44,15 @@
                             <form role="form">
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <select class="form-control" v-model="entradaSalida">
-                                            <option value="0">Selecciona una opcion</option>
-                                            <option value="1">Entrada</option>
-                                            <option value="2">Salida</option>
-                                        </select>
+                                        <button type="button" class="btn btn-block btn-primary"  @click="register(id, 1)">Entrada</button>
+                                        <button type="button" class="btn btn-block btn-info"  @click="register(id, 2)">Salida</button>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
                             </form>
                         </div>
                         <div class="card" v-if="entradaSalida !== 0">
-                            <div class="callout callout-success" v-show="name">
+                            <div class="callout callout-success">
                                 <h4 v-if="resultado[0].resultado === 0">Debes registrar antes la salida</h4>
                                 <h4 v-else-if="resultado[0].resultado === 1">Se registro la entrada correctamente</h4>
                                 <h4 v-else-if="resultado[0].resultado === 2">se registro la salida correctamente</h4>
@@ -64,7 +61,6 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" @click="register(id, entradaSalida, name)">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -359,7 +355,7 @@ export default {
                     let nombre = this.persons[0].nombre;
                     axios.get(url).then(response => {
                         this.resultado = response.data;
-                        this.name = nombre;
+                        this.entradaSalida = 1;
 
                     });
                 }
