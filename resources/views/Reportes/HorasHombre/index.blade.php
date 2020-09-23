@@ -30,8 +30,8 @@
 			<div class="form-group">
 				<label>Agrupado por:</label>
 				<select class="form-control" id="agrupacion" name="agrupacion">
-                    <option value="1">Nombre</option>
-                    <option value="2">Compania</option>
+                    <option value="1">Compañia</option>
+                    <option value="2">Nombre</option>
                   </select>
 			</div>
 			<div class="form-group">
