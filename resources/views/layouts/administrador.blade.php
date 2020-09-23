@@ -46,6 +46,7 @@
                         <li><a href="/Reportes/HorasHombre"><i class="fa fa-circle-o"></i>Horas Hombre </a></li>
                         <li><a href="/Reportes/altas-bajas"><i class="fa fa-circle-o"></i>Altas/Bajas Contratistas</a></li>
                         <li><a href="/graficas/index"><i class="fa fa-circle-o"></i>Distr. por tipo de compañia</a></li>
+                        <li><a href="/graficas/tiempo-real"><i class="fa fa-circle-o"></i>Graficas en tiempo real</a></li>
                         
                     </ul>
                 </li>

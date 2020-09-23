@@ -35,6 +35,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/graficas/preview', 'GraficasController@preview');
             Route::get('/graficas/download/{fechaInicial}/{fechaFinal}', 'GraficasController@download')->name('download');
             Route::get("/graficas/products", "GraficasController@prouductsListing");
+            Route::get('/graficas/tiempo-real','GraficasController@tiempoReal');
+            Route::post('/graficas/preview-tiempo-real', 'GraficasController@previewTiempoReal');
+
 
         Route::get('Default', 'ReportesController@principal');
         //Gestiones
@@ -89,6 +92,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('Reportes/HorasHombre/index','ReportesController@store');
         Route::get('Reportes/altas-bajas','ReportesController@altasBajas');
         Route::post('Reportes/consulta-altas-bajas','ReportesController@consultaAltasBajas');
+        
 
 
 //PDF

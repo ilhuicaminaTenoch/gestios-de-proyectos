@@ -98,4 +98,37 @@ class GraficasController extends Controller
         $products = Product::all();
         return view("pdfs.products", compact("products"));
     }
+
+    public function tiempoReal(){
+        return view('Reportes.graficas.tiempo-real');
+    }
+
+    public function previewTiempoReal(Request $request){
+        $request->validate([
+            'fechaInicial' => 'required|date',
+            'fechaFinal' => 'required|date|after:fechaInicial',
+        ]);
+
+        $queryHead = DB::select('call sp_obtiene_distribucion_compania_real(?,?)',
+        [
+            $request->fechaInicial,
+            $request->fechaFinal
+        ]);
+
+        $pieChart = DB::select('call sp_obtiene_distribucion_tipo_real(?,?)', [$request->fechaInicial,$request->fechaFinal]);
+        $columChart = DB::select('call sp_obtiene_distribucion_contra_real(?, ?)', [$request->fechaInicial,$request->fechaFinal]);
+
+        $modelGraficas = new Graficas();
+        $dataPieChart = $modelGraficas->pieChart(json_decode(json_encode($pieChart), true));
+        $data = [
+            'head' => $queryHead,
+            'params' => [
+                'fechaInicial' => $request->fechaInicial,
+                'fechaFinal' => $request->fechaFinal
+            ],
+            'pieChart' => $dataPieChart,
+            'columChart' => $modelGraficas->columChart(json_decode(json_encode($columChart), true))
+        ];
+        return view('Reportes.graficas.preview-tiempo-real',  $data);
+    }
 }
