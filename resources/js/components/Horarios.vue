@@ -10,14 +10,22 @@
                 <form role="form">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Nombre</label>
-                            <input
-                                type="text"
-                                v-model="nombre"
-                                class="form-control"
-                                id="exampleInputEmail1"
-                                placeholder="Contratista"
-                            />
+                            <label for="exampleInputEmail1">Compañia</label>
+                            <select v-model="comboCompanias" class="form-control">
+                                <option value="0" selected>Selecciona un opcion</option>
+                                <option v-for="compania in companias" v-bind:value="compania.id_compania" :key="compania.id_compania">
+                                    {{ compania.compania }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipos">Tipo</label>
+                            <select v-model="comboTipos" class="form-control">
+                                <option value="0" selected>Selecciona un opcion</option>
+                                <option value="1">Tipo 1</option>
+                                <option value="2">Tipo 2</option>
+                                <option value="3">Ambos</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1"
@@ -50,7 +58,8 @@
                                 consultaHorarios(
                                     fechaInicio,
                                     fechaTermino,
-                                    nombre
+                                    comboCompanias,
+                                    comboTipos
                                 )
                             "
                         >
@@ -121,7 +130,9 @@
 export default {
     data() {
         return {
-            nombre: "",
+            companias: [],
+            comboCompanias: 0,
+            comboTipos: 0,
             fechaInicio: "",
             fechaTermino: "",
             contratistas: [],
@@ -171,28 +182,35 @@ export default {
         checkForm() {
             this.errorForm = 0;
             this.errors = [];
-            if (!this.nombre) this.errors.push("El nombre es obligatorio.");
-            if(!this.fechaInicio) this.errors.push('La fecha inicial no pudde estar vacia.');
-            if(!this.fechaTermino) this.errors.push('La fecha fianl no puede estar vacia');
+            if (this.comboCompanias == 0) this.errors.push("La compañia es obligatorio.");
+            if (this.comboTipos == 0) this.errors.push("El tipo es obligatorio.");
+            if(!this.fechaInicio) this.errors.push('La fecha inicial no pude estar vacia.');
+            if(!this.fechaTermino) this.errors.push('La fecha final no puede estar vacia');
 
             if (this.errors.length) this.errorForm = 1;
 
             return this.errorForm;
         },
-        consultaHorarios(fechaInicio, fechaTermino, nombre) {
+        consultaHorarios(fechaInicio, fechaTermino, nombre, compania, tipo) {
             if (this.checkForm()) {
                 return;
             }
-            const url = "/Codigos/verifica-horarios?fechaInicio=" +fechaInicio +"&fechaTermino=" +fechaTermino +"&nombre=" +nombre;
+            const url = "/Codigos/verifica-horarios?fechaInicio=" +fechaInicio +"&fechaTermino=" +fechaTermino +"&compania=" +compania+"&tipo="+tipo;
             axios.get(url).then(response => {
                 this.contratistas = response.data;
-                this.nuevaUrl = "/Codigos/generate-pdf?data="+Buffer.from('fechaInicio=' +fechaInicio +'&fechaTermino='+fechaTermino +"&nombre=" +nombre).toString('base64'); 
+                this.nuevaUrl = "/Codigos/generate-pdf?data="+Buffer.from('fechaInicio=' +fechaInicio +'&fechaTermino='+fechaTermino +"&compania=" +compania+"&tipo="+tipo).toString('base64'); 
                 if(this.contratistas.length > 0) this.activeClass = '';
+            });
+        },
+        obtieneCompanias(){
+            const url ="/Codigos/obtiene-companias";
+            axios.get(url).then(response => {
+                this.companias = response.data.empresas;
             });
         }
     },
     mounted() {
-        //this.consultaHorarios("2020-07-01", "2020-07-02", "");
+        this.obtieneCompanias();
     }
 };
 </script>

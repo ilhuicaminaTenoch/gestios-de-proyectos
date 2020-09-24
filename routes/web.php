@@ -67,6 +67,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/Catalogos/Cat_Contratistas/agregarH/{id_contratista}','ContratistaController@agregarH');
         Route::post('/Catalogos/Cat_Contratistas/{id_contratista}','ContratistaController@updateHabilidad');
         Route::get('/Codigos/horarios','ContratistaController@horarios');
+        Route::get('/Codigos/obtiene-companias','ContratistaController@obtieneCompanias');
         Route::get('/Codigos/verifica-horarios','ContratistaController@consultaHorarios');
         Route::get('/Codigos/generate-pdf','ContratistaController@generatePDF');
         Route::get('/Catalogos/Cat_Contratistas/destroy-view/{id_contratista}','ContratistaController@destroyView');

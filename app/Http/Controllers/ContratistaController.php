@@ -4,19 +4,20 @@ namespace App\Http\Controllers;
 
 use DB;
 use PDF;
+use App\Empresa;
 use App\Gestion;
 use App\Utilities;
+
+
 use App\Contratista;
-
-
 use App\Http\Requests;
 use Milon\Barcode\DNS1D;
 use Milon\Barcode\DNS2D;
+
 use Illuminate\Http\Request;
-
 use App\Exports\ContratistasExport;
-use Maatwebsite\Excel\Facades\Excel;
 
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
@@ -319,9 +320,11 @@ class ContratistaController extends Controller
         $nombre = $request->nombre;
         $fechaInicial = $request->fechaInicio;
         $fechaFinal = $request->fechaTermino;
+        $compania = $request->compania;
+        $tipo = $request->tipo;
 
         $model = new Contratista();
-        $sp = DB::select('call sp_reporte_horariosC(?,?,?)', [$fechaInicial, $fechaFinal, $nombre]);
+        $sp = DB::select('call sp_reporte_horariosC(?,?,?)', [$fechaInicial, $fechaFinal, $nombre, $compania, $tipo]);
         return $sp;
     }
 
@@ -331,6 +334,8 @@ class ContratistaController extends Controller
         $fechaInicial = explode('=', $separaVariables[0]);
         $fechaFinal = explode('=', $separaVariables[1]);
         $nombre = explode('=', $separaVariables[2]);
+        $compania = explode('=', $separaVariables[3]);
+        $tipo = explode('=', $separaVariables[4]);
 
         $nombrePdf = 'horarios_contratistas_'.date('Y-m-d_H:i:s').'.pdf';
         $model = new Contratista();
@@ -384,6 +389,22 @@ class ContratistaController extends Controller
         $pdf = PDF::loadView('pdfs.reporte_medico_induccion', $data);
         return $pdf->download($nombrePdf);
 
+
+    }
+
+    public function obtieneCompanias(Request $request){
+        if (!$request->ajax()) return redirect('/');
+
+        //$empresas = new Empresa();
+        $empresas = DB::table('contratistas')
+                        ->join('registros', 'contratistas.id_contratista', '=', 'registros.id_contratista')
+                        ->join('empresas', 'contratistas.id_compania', '=', 'empresas.id_compania')
+                        ->where('empresas.activo', '1')
+                        ->select('empresas.compania', 'empresas.id_compania')
+                        ->get();
+        return [
+            'empresas' => $empresas
+        ];
 
     }
 }
