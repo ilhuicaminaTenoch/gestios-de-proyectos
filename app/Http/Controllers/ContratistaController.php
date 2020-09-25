@@ -396,9 +396,7 @@ class ContratistaController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         //$empresas = new Empresa();
-        $empresas = DB::table('contratistas')
-                        ->join('registros', 'contratistas.id_contratista', '=', 'registros.id_contratista')
-                        ->join('empresas', 'contratistas.id_compania', '=', 'empresas.id_compania')
+        $empresas = DB::table('empresas')
                         ->where('empresas.activo', '1')
                         ->select('empresas.compania', 'empresas.id_compania')
                         ->get();

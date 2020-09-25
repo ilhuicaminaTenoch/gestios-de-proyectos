@@ -34,7 +34,7 @@ class GraficasController extends Controller
     public function preview(Request $request){
         $request->validate([
             'fechaInicial' => 'required|date',
-            'fechaFinal' => 'required|date|after:fechaInicial',
+            'fechaFinal' => 'required|date',
         ]);
 
         $queryHead = DB::select('call sp_obtiene_distribucion_contra(?,?)',
@@ -106,20 +106,21 @@ class GraficasController extends Controller
     public function previewTiempoReal(Request $request){
         $request->validate([
             'fechaInicial' => 'required|date',
-            'fechaFinal' => 'required|date|after:fechaInicial',
+            'fechaFinal' => 'required|date',
         ]);
 
-        $queryHead = DB::select('call sp_obtiene_distribucion_compania_real(?,?)',
+        $queryHead = DB::select('call sp_obtiene_distribucion_contra_real(?,?)',
         [
             $request->fechaInicial,
             $request->fechaFinal
         ]);
 
         $pieChart = DB::select('call sp_obtiene_distribucion_tipo_real(?,?)', [$request->fechaInicial,$request->fechaFinal]);
-        $columChart = DB::select('call sp_obtiene_distribucion_contra_real(?, ?)', [$request->fechaInicial,$request->fechaFinal]);
+        $columChart = DB::select('call sp_obtiene_distribucion_compania_real(?, ?)', [$request->fechaInicial,$request->fechaFinal]);
 
         $modelGraficas = new Graficas();
         $dataPieChart = $modelGraficas->pieChart(json_decode(json_encode($pieChart), true));
+
         $data = [
             'head' => $queryHead,
             'params' => [
@@ -129,6 +130,7 @@ class GraficasController extends Controller
             'pieChart' => $dataPieChart,
             'columChart' => $modelGraficas->columChart(json_decode(json_encode($columChart), true))
         ];
+
         return view('Reportes.graficas.preview-tiempo-real',  $data);
     }
 }
