@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use App\Exports\ContratistasExport;
 
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ContratistasCompania;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
@@ -324,7 +325,11 @@ class ContratistaController extends Controller
         $tipo = $request->tipo;
 
         $model = new Contratista();
-        $sp = DB::select('call sp_reporte_horariosC(?,?,?)', [$fechaInicial, $fechaFinal, $nombre, $compania, $tipo]);
+        //DB::enableQueryLog(); // Enable query log
+
+        $sp = DB::select('call sp_reporte_horariosC(?,?,?,?)', [$fechaInicial, $fechaFinal, $compania, $tipo]);
+        
+        //dd(DB::getQueryLog()); // Show results of log;
         return $sp;
     }
 
@@ -333,16 +338,11 @@ class ContratistaController extends Controller
         $separaVariables = explode('&', $data);
         $fechaInicial = explode('=', $separaVariables[0]);
         $fechaFinal = explode('=', $separaVariables[1]);
-        $nombre = explode('=', $separaVariables[2]);
-        $compania = explode('=', $separaVariables[3]);
-        $tipo = explode('=', $separaVariables[4]);
-
-        $nombrePdf = 'horarios_contratistas_'.date('Y-m-d_H:i:s').'.pdf';
-        $model = new Contratista();
-        $consulta = DB::select('call sp_reporte_horariosC(?,?,?)', [$fechaInicial[1], $fechaFinal[1], $nombre[1]]);
-        $data = ['datum' => $consulta];
-        $pdf = PDF::loadView('pdfs.myPDF', $data);
-        return $pdf->download($nombrePdf);
+        $compania = explode('=', $separaVariables[2]);
+        $tipo = explode('=', $separaVariables[3]);
+        return Excel::download(new ContratistasCompania($fechaInicial[1], $fechaFinal[1], $compania[1], $tipo[1]), 'HorasHombre.xlsx');
+        
+        
     }   
 
     public function examenMedicoInduccion(Request $request){
@@ -399,6 +399,7 @@ class ContratistaController extends Controller
         $empresas = DB::table('empresas')
                         ->where('empresas.activo', '1')
                         ->select('empresas.compania', 'empresas.id_compania')
+                        ->orderBy('empresas.compania', 'asc')
                         ->get();
         return [
             'empresas' => $empresas

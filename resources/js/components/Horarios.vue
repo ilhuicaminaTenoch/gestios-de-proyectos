@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Consulta Contratistas</h3>
@@ -88,7 +88,7 @@
             </div>
             <!-- /.box -->
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Contratistas encontrados</h3>
@@ -98,11 +98,13 @@
                     <table class="table">
                         <tbody>
                             <tr>
+                                <th>Compañia</th>
                                 <th>Contratista</th>
                                 <th>Fecha inicio</th>
                                 <th>Fecha termino</th>
                             </tr>
-                            <tr v-for="contratista in contratistas" :key="contratista.dia">
+                            <tr v-for="contratista in contratistas" :key="contratista.ID">
+                                <td v-text="contratista.compania"></td>
                                 <td v-text="contratista.contratista"></td>
                                 <td v-text="contratista.fecha_inicial"></td>
                                 <td v-text="contratista.fecha_final"></td>
@@ -118,7 +120,7 @@
                         v-bind:href="nuevaUrl"
                         role="button"
                         aria-disabled="true"
-                        >Exportar a PDF</a
+                        >Exportar XML</a
                     >
                 </div>
             </div>
@@ -182,8 +184,8 @@ export default {
         checkForm() {
             this.errorForm = 0;
             this.errors = [];
-            if (this.comboCompanias == 0) this.errors.push("La compañia es obligatorio.");
-            if (this.comboTipos == 0) this.errors.push("El tipo es obligatorio.");
+            if (this.comboCompanias === 0) this.errors.push("La compañia es obligatorio.");
+            if (this.comboTipos === 0) this.errors.push("El tipo es obligatorio.");
             if(!this.fechaInicio) this.errors.push('La fecha inicial no pude estar vacia.');
             if(!this.fechaTermino) this.errors.push('La fecha final no puede estar vacia');
 
@@ -191,14 +193,15 @@ export default {
 
             return this.errorForm;
         },
-        consultaHorarios(fechaInicio, fechaTermino, nombre, compania, tipo) {
+        consultaHorarios(fechaInicio, fechaTermino, compania, tipo) {
             if (this.checkForm()) {
                 return;
             }
             const url = "/Codigos/verifica-horarios?fechaInicio=" +fechaInicio +"&fechaTermino=" +fechaTermino +"&compania=" +compania+"&tipo="+tipo;
+            
             axios.get(url).then(response => {
                 this.contratistas = response.data;
-                this.nuevaUrl = "/Codigos/generate-pdf?data="+Buffer.from('fechaInicio=' +fechaInicio +'&fechaTermino='+fechaTermino +"&compania=" +compania+"&tipo="+tipo).toString('base64'); 
+                this.nuevaUrl = "/Codigos/generate-pdf?data="+Buffer.from('fechaInicio=' +fechaInicio +'&fechaTermino='+fechaTermino +"&compania=" +compania+"&tipo="+tipo).toString('base64');
                 if(this.contratistas.length > 0) this.activeClass = '';
             });
         },
