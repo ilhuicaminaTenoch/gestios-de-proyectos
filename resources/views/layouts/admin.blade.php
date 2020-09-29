@@ -221,6 +221,21 @@
 
 <script src="{{asset('js/app.js')}}"></script>
 
+<!-- views/catalogos/cat_contratistas/edit.blade-->
+<script>
+    $(document).ready(function(){
+        $(".optionsRadios").click(function(evento){
+            var valor = $(this).val();
+            if(valor == '1'){
+                $("#grupo-fechas").css("display", "block");
+            }else{
+                $("#grupo-fechas").css("display", "none");
+                $("#inicio").val('');
+                $("#fin").val('');
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

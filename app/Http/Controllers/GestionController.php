@@ -96,7 +96,8 @@ class GestionController extends Controller
         $name = $request->name;
         $persons = Gestion::join('contratistas', 'contratistas.id_contratista', '=', 'gestion.id_contratista')
             ->select('contratistas.nombre', 'gestion.induccion', 'gestion.examen_medico', 'gestion.diciembre', 'gestion.febrero',
-                'gestion.abril', 'gestion.junio', 'gestion.agosto', 'gestion.id_contratista', 'gestion.id_gestion')
+                'gestion.abril', 'gestion.junio', 'gestion.agosto', 'gestion.id_contratista', 'gestion.id_gestion',
+                'contratistas.suspendido', 'contratistas.fechaISuspencion', 'contratistas.fechaFSuspencion')
             ->where([
                 ['contratistas.nombre', '=', $name],
                 ['contratistas.activo', '=', 1]

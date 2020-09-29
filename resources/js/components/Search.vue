@@ -94,6 +94,7 @@ export default {
                 });
             },
             message: function (persons) {
+                moment.locale('es');
                 var total = persons.length;
                 let messageData = {};
                 if (total >= 1) {
@@ -107,6 +108,9 @@ export default {
                     var iconInduccion;
                     var iconMedicalExam;
                     var iconSua;
+                    var messageSuspension;
+                    var alertSuspension;
+                    var iconSuspension;
 
 
                     let dateNow = moment(new Date());
@@ -236,19 +240,29 @@ export default {
                         }
                     }
 
-                    //insert
-                    if (alertInduccion === 'alert-success' && alertMedicalExam === 'alert-success' && alertSua === 'alert-success') {
-                        this.fecha = moment().format("YYYY-MM-DD HH:mm:ss");
-                        this.id = persons[0].id_contratista
-                        this.name = '';
-                        $('#modal-default').modal('show');
-                    } else {
-                        swal("Accesso Denegado!", "No cumple con los criterios de validación", "error");
-                        this.name = '';
+                    //VALIDA SUSPENSION
+                    const suspension = persons[0]['suspendido'];
+                    const dateStart = moment(persons[0]['fechaISuspencion']).format("MMMM Do YYYY");
+                    const dateEnd = moment(persons[0]['fechaFSuspencion']).format("MMMM Do YYYY");
+                
+                    if(suspension === 1){
+                        messageSuspension = "Se encuentra suspendido(a) de "+dateStart+ " a "+dateEnd+" y no se le permitirá el acceso."; 
+                        alertSuspension = "alert-danger";
+                        iconSuspension = "fa-ban";
+                    }else{
+                        //insert
+                        if (alertInduccion === 'alert-success' && alertMedicalExam === 'alert-success' && alertSua === 'alert-success') {
+                            this.fecha = moment().format("YYYY-MM-DD HH:mm:ss");
+                            this.id = persons[0].id_contratista
+                            this.name = '';
+                            $('#modal-default').modal('show');
+                        } else {
+                            swal("Accesso Denegado!", "No cumple con los criterios de validación", "error");
+                            this.name = '';
+                        }
                     }
-
-
-                     const messageData = {
+            
+                    const messageData = {
                         induccion: {
                             message: messageInduccion,
                             activeClass: alertInduccion,
@@ -263,6 +277,11 @@ export default {
                             message: messageSua,
                             activeClass: alertSua,
                             iconClass: iconSua
+                        },
+                        suspension:{
+                            message: messageSuspension,
+                            activeClass: alertSuspension,
+                            iconClass: iconSuspension
                         }
                     };
                     return messageData;
@@ -347,7 +366,6 @@ export default {
                 }
                 return monthString;
             },
-
 
             register(id_contratista, bandera) {
                 if (bandera !== 0) {
