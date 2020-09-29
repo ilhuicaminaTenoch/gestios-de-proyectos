@@ -260,6 +260,9 @@ export default {
                             swal("Accesso Denegado!", "No cumple con los criterios de validación", "error");
                             this.name = '';
                         }
+                        messageSuspension = "Se encuentra reanudado"; 
+                        alertSuspension = "alert-success";
+                        iconSuspension = "fa-check";
                     }
             
                     const messageData = {
