@@ -99,12 +99,14 @@
                         <tbody>
                             <tr>
                                 <th>Compañia</th>
+                                <th>Tipo</th>
                                 <th>Contratista</th>
                                 <th>Fecha inicio</th>
                                 <th>Fecha termino</th>
                             </tr>
                             <tr v-for="contratista in contratistas" :key="contratista.ID">
                                 <td v-text="contratista.compania"></td>
+                                <td v-text="contratista.Tipo"></td>
                                 <td v-text="contratista.contratista"></td>
                                 <td v-text="contratista.fecha_inicial"></td>
                                 <td v-text="contratista.fecha_final"></td>
@@ -120,7 +122,7 @@
                         v-bind:href="nuevaUrl"
                         role="button"
                         aria-disabled="true"
-                        >Exportar XML</a
+                        >Exportar Excel</a
                     >
                 </div>
             </div>

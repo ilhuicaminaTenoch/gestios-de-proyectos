@@ -110,8 +110,24 @@ class ContratistaController extends Controller
 
     public function edit($id)
     {
-        $Contratistas = Contratista::findOrFail($id);
+        $Contratistas = DB::table('contratistas')
+                        ->select(
+                            DB::raw("DATE_FORMAT(fechaISuspencion, '%Y-%m-%d') as fechaISuspencion"), 
+                            DB::raw("DATE_FORMAT(fechaFSuspencion, '%Y-%m-%d') as fechaFSuspencion"),
+                            'id_contratista',
+                            'nombre',
+                            'id_compania',
+                            'id_puesto',
+                            'tipo',
+                            'nss',
+                            'activo',
+                            'motivos',
+                            'suspendido'
+                        )
+                        ->where('id_contratista', '=', $id)
+                        ->get();
         //dd($Contratistas);
+        
         $Compania = DB::table('empresas')->where('activo', '=', '1')->get();
         $Puesto = DB::table('puestos')->where('activo', '=', '1')->get();
         return view("Catalogos.Cat_Contratistas.edit", ["Contratistas" => $Contratistas, "Compania" => $Compania, "Puesto" => $Puesto]);
@@ -120,12 +136,20 @@ class ContratistaController extends Controller
 
     public function update(Request $request, $id)
     {
+        /*$request->validate([
+            'fechaISuspencion' => 'required|date',
+            'fechaFSuspencion' => 'required|date',
+        ]);*/
+
         $Contratistas = Contratista::findOrFail($id);
         $Contratistas->nombre = $request->get('nombre');
         $Contratistas->id_compania = $request->get('id_compania');
         $Contratistas->id_puesto = $request->get('id_puesto');
         $Contratistas->tipo = $request->get('tipo');
         $Contratistas->nss = $request->get('nss');
+        $Contratistas->suspendido = $request->get('optionsRadios');
+        $Contratistas->fechaISuspencion = $request->get('inicio');
+        $Contratistas->fechaFSuspencion = $request->get('fin');
         $Contratistas->activo = '1';
         $Contratistas->update();
 

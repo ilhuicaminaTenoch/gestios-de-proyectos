@@ -18,7 +18,10 @@ class Contratista extends Model
         'RFC',
         'activo',
         'codigo',
-        'motivos'
+        'motivos',
+        'suspendido',
+        'fechaISuspencion',
+        'fechaFSuspencion'
     ];
 
     protected $guarded=[
