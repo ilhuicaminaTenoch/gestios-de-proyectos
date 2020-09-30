@@ -46,6 +46,21 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/gestion/register', 'GestionController@register');
 
         Route::get('/home', 'HomeController@index')->name('home');
+
+        //RESPONSABLES
+
+        Route::resource('/Catalogos/Cat_Responsables','ResponsableController');
+        Route::post('/Cat_Responsables/create','ResponsableController@store');
+        Route::get('/Catalogos/Cat_Responsables/destroy/{id_responsable}','ResponsableController@destroy');
+
+
+//AREAS
+
+        Route::resource('/Catalogos/Cat_Areas','AreaController');
+        Route::post('/Cat_Areas/create','AreaController@store');
+        Route::get('/Catalogos/Cat_Areas/destroy/{id_area}','AreaController@destroy');
+
+
 //PUESTOS
         Route::resource('/Catalogos/Cat_Puestos','PuestoController');
         Route::post('/Cat_Puestos/create','PuestoController@store');

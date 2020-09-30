@@ -17,6 +17,9 @@
                         <li><a href="/Catalogos/Cat_Puestos"><i class="fa fa-circle-o"></i> Puestos</a></li>
                         <li><a href="/Catalogos/Cat_Empresas"><i class="fa fa-circle-o"></i> Compañias</a></li>
                         <li><a href="/Catalogos/Cat_Usuarios"><i class="fa fa-circle-o"></i> Usuarios</a></li>
+                        <li><a href="/Catalogos/Cat_Areas"><i class="fa fa-circle-o"></i> Áreas</a></li>
+                        <li><a href="/Catalogos/Cat_Responsables"><i class="fa fa-circle-o"></i> Responsables</a></li>
+
                     </ul>
                 </li>
 
