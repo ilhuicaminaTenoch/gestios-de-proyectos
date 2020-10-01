@@ -147,10 +147,10 @@ export default {
                         alertMedicalExam = 'alert-success';
                         iconMedicalExam = 'fa-check';
                     }
+                  
 
 
                     if (persons[0].hasOwnProperty(monthBd)) { // valida que el mes este en la BD ( diciembre, febrero, abril, junio, agosto, octubre )
-
                         const monthYesBD = this.monthYesDataBase(month);
 
 
