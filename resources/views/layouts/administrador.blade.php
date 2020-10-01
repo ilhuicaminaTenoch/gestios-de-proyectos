@@ -63,7 +63,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="/gestion"><i class="fa fa-circle-o"></i> Ingreso </a></li>
-                        <li><a href="/gestion/test"><i class="fa fa-circle-o"></i> Prueba ingreso pruebas </a></li>
+                        <li><a href="/gestion/test"><i class="fa fa-circle-o"></i> Prueba ingreso</a></li>
                     </ul>
                 </li>
 
