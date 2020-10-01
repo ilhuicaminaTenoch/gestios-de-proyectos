@@ -72,6 +72,7 @@
 import moment from "moment";
 
 export default {
+        props:['type'],
         data() {
             return {
                 id: 0,
@@ -81,6 +82,7 @@ export default {
                 messages: [],
                 entradaSalida: 0,
                 resultado:0,
+                urlRegister: this.type
             }
         },
         methods: {
@@ -89,7 +91,6 @@ export default {
                 var url = '/gestion/searchPerson?name=' + name;
                 axios.get(url).then(response => {
                     this.persons = response.data.persons;
-                    //console.log(this.persons);
                     this.messages = this.message(this.persons);
                 });
             },
@@ -147,7 +148,7 @@ export default {
                         alertMedicalExam = 'alert-success';
                         iconMedicalExam = 'fa-check';
                     }
-                  
+
 
 
                     if (persons[0].hasOwnProperty(monthBd)) { // valida que el mes este en la BD ( diciembre, febrero, abril, junio, agosto, octubre )
@@ -244,9 +245,9 @@ export default {
                     const suspension = persons[0]['suspendido'];
                     const dateStart = moment(persons[0]['fechaISuspencion']).format("MMMM Do YYYY");
                     const dateEnd = moment(persons[0]['fechaFSuspencion']).format("MMMM Do YYYY");
-                
+
                     if(suspension === 1){
-                        messageSuspension = "Se encuentra suspendido(a) de "+dateStart+ " a "+dateEnd+" y no se le permitirá el acceso."; 
+                        messageSuspension = "Se encuentra suspendido(a) de "+dateStart+ " a "+dateEnd+" y no se le permitirá el acceso.";
                         alertSuspension = "alert-danger";
                         iconSuspension = "fa-ban";
                     }else{
@@ -260,11 +261,11 @@ export default {
                             swal("Accesso Denegado!", "No cumple con los criterios de validación", "error");
                             this.name = '';
                         }
-                        messageSuspension = "Se encuentra reanudado"; 
+                        messageSuspension = "Se encuentra reanudado";
                         alertSuspension = "alert-success";
                         iconSuspension = "fa-check";
                     }
-            
+
                     const messageData = {
                         induccion: {
                             message: messageInduccion,
@@ -351,7 +352,6 @@ export default {
                 }
                 return monthString;
             },
-
             monthYesDataBase(month) {
                 let monthString = '';
                 if (month === '01' || month === '02') {
@@ -369,10 +369,9 @@ export default {
                 }
                 return monthString;
             },
-
             register(id_contratista, bandera) {
                 if (bandera !== 0) {
-                    var url = '/gestion/register?id_contratista=' + id_contratista + '&bandera=' + bandera;
+                    var url = '/gestion/register?id_contratista=' + id_contratista + '&bandera=' + bandera + '&controllerMethod=' + this.urlRegister;
                     let nombre = this.persons[0].nombre;
                     axios.get(url).then(response => {
                         this.resultado = response.data;
@@ -381,7 +380,6 @@ export default {
                     });
                 }
             },
-
             cleanAll(){
                 this.entradaSalida = 0;
                 this.resultado = 0;

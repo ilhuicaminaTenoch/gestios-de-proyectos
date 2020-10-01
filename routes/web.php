@@ -44,7 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/gestion', 'GestionController@index');
         Route::get('/gestion/searchPerson', 'GestionController@searchBarCode');
         Route::get('/gestion/register', 'GestionController@register');
-
+        Route::get('/gestion/test', 'GestionController@test');
         Route::get('/home', 'HomeController@index')->name('home');
 
         //RESPONSABLES
@@ -87,14 +87,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/Codigos/generate-pdf','ContratistaController@generatePDF');
         Route::get('/Catalogos/Cat_Contratistas/destroy-view/{id_contratista}','ContratistaController@destroyView');
         Route::post('/Catalogos/activo','ContratistaController@activo');
-            
+
 
 
         Route::get('/Codigos/examen-medico-e-induccion','ContratistaController@examenMedicoInduccion');
         Route::get('/Codigos/reporte-medico-e-induccion','ContratistaController@reporteMedicoInduccion');
         Route::get('/Codigos/reporte-pdf-medico-induccion','ContratistaController@reportePdfMedicoInduccion');
 
-         
+
 // Route::get('/Catalogos/Cat_Contratistas/{id_compania}/agregarH','ContratistaController@agregarH')
 // ->name('Cat_Contratistas.updateHabilidad');
 
@@ -108,7 +108,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('Reportes/HorasHombre/index','ReportesController@store');
         Route::get('Reportes/altas-bajas','ReportesController@altasBajas');
         Route::post('Reportes/consulta-altas-bajas','ReportesController@consultaAltasBajas');
-        
+
 
 
 //PDF
@@ -119,7 +119,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('Codigos/QR','HabilidadesController');
         Route::get('/Codigos/QR/edit/{id_contratista}', 'HabilidadesController@Buscar');
 
-        
+
         Route::get('/pdfDownloadH', 'HabilidadesController@pdfDownloadH');
 
     });

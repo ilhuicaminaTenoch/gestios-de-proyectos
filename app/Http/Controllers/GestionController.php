@@ -21,73 +21,12 @@ class GestionController extends Controller
      */
     public function index()
     {
-        return view('Gestion.BarCode.index');
+        return view('Gestion.BarCode.index', ['type' => 'register']);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function test()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('Gestion.BarCode.index', ['type' => 'test']);
     }
 
     public function searchBarCode(Request $request){
@@ -107,14 +46,16 @@ class GestionController extends Controller
     }
 
     public function register(Request $request){
-        if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) {
+            return redirect('/');
+        }
         $resultado = 'resultado';
-        $test =  DB::statement('CALL sp_ingresa_registros(?, ?, @resultado)',[$request->id_contratista, $request->bandera, $resultado] );
+        $method = $request->controllerMethod;
+        if ($method == 'register'){
+            DB::statement('CALL sp_ingresa_registros(?, ?, @resultado)',[$request->id_contratista, $request->bandera, $resultado] );
+        }else{
+            DB::statement('CALL sp_ingresa_registros_prueba(?, ?, @resultado)',[$request->id_contratista, $request->bandera, $resultado] );
+        }
         return DB::select('select @resultado as resultado');
-
-
-
-
-
     }
 }
