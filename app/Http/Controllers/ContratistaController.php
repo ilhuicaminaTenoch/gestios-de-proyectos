@@ -61,10 +61,7 @@ class ContratistaController extends Controller
 
     public function store(Request $request)
     {
-        $barra = new DNS2D();
-
         $Contratistas = new Contratista();
-
         $validator = Validator::make($request->all(), [
             'nombre' => 'required',
             'id_compania' => 'required',
@@ -74,19 +71,14 @@ class ContratistaController extends Controller
                 'required',
                 'unique:contratistas,nss',
                 function ($attribute, $value, $fail) use ($request){
-                    $isExist = DB::table('contratistas')->where([
-                        ['nss','=', $request->nss],
-                        ['activo', '=', '0']
-                    ])->exists();
+                    $isExist = DB::select('call sp_verifica_contratista(?,?)', [$request->nombre, $request->nss]);
 
-                    $query = DB::table('contratistas')->select('motivos','nombre')->where([
-                        ['nss','=', $request->nss],
-                        ['activo', '=', '0']
-                    ])->get();
-
-                    if($isExist){
-                        $fail("El contratista {$query[0]->nombre} ya se encuentra resgitrado. Solo que fue dado de baja por: {$query[0]->motivos}" );
+                    if (count($isExist) > 0){
+                        if($isExist[0]->tipo_baja == 1){
+                            $fail("El contratista {$isExist[0]->nombre} se dio de baja por no conformidad por los siguientes motivos : {$isExist[0]->motivos}" );
+                        }
                     }
+
                 }
             ],
         ]);
@@ -96,6 +88,7 @@ class ContratistaController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
+
 
         $Contratistas->nombre = $request->nombre;
         $Contratistas->id_compania = $request->id_compania;
