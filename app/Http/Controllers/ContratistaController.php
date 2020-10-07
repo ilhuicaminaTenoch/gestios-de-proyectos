@@ -83,7 +83,7 @@ class ContratistaController extends Controller
                         ['nss','=', $request->nss],
                         ['activo', '=', '0']
                     ])->get();
-                    
+
                     if($isExist){
                         $fail("El contratista {$query[0]->nombre} ya se encuentra resgitrado. Solo que fue dado de baja por: {$query[0]->motivos}" );
                     }
@@ -96,7 +96,7 @@ class ContratistaController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
-        
+
         $Contratistas->nombre = $request->nombre;
         $Contratistas->id_compania = $request->id_compania;
         $Contratistas->id_puesto = $request->id_puesto;
@@ -112,7 +112,7 @@ class ContratistaController extends Controller
     {
         $Contratistas = DB::table('contratistas')
                         ->select(
-                            DB::raw("DATE_FORMAT(fechaISuspencion, '%Y-%m-%d') as fechaISuspencion"), 
+                            DB::raw("DATE_FORMAT(fechaISuspencion, '%Y-%m-%d') as fechaISuspencion"),
                             DB::raw("DATE_FORMAT(fechaFSuspencion, '%Y-%m-%d') as fechaFSuspencion"),
                             'id_contratista',
                             'nombre',
@@ -127,7 +127,7 @@ class ContratistaController extends Controller
                         ->where('id_contratista', '=', $id)
                         ->get();
         //dd($Contratistas);
-        
+
         $Compania = DB::table('empresas')->where('activo', '=', '1')->get();
         $Puesto = DB::table('puestos')->where('activo', '=', '1')->get();
         return view("Catalogos.Cat_Contratistas.edit", ["Contratistas" => $Contratistas, "Compania" => $Compania, "Puesto" => $Puesto]);
@@ -156,7 +156,7 @@ class ContratistaController extends Controller
         return Redirect::to('Catalogos/Cat_Contratistas');
     }
 
-    
+
     public function destroyView($id, Request $request)
     {
         $Contratistas = DB::table('contratistas')->where('id_contratista', $id)->first();
@@ -165,10 +165,7 @@ class ContratistaController extends Controller
 
     public function activo(Request $request)
     {
-       $Contratistas = Contratista::findOrFail($request->input('idContratista'));
-        $Contratistas->activo = '0';
-        $Contratistas->motivos = $request->input('motivo');
-        $Contratistas->update();
+        DB::select('call sp_bajas_contratistas(?,?,?)', [$request->input('idContratista'), $request->input('tipoBaja'), $request->input('motivo')]);
 
         return Redirect::to('Catalogos/Cat_Contratistas');
     }
@@ -179,7 +176,7 @@ class ContratistaController extends Controller
         //$Habilidades =DB::table('gestion')->where('id_contratista','=',$id)->get();
        $Habilidades =DB::table('contratistas as a')
                     ->leftjoin('gestion as d','a.id_contratista','=','d.id_contratista')
-                    ->select('a.id_contratista','a.nombre','a.tipo', 'a.nss', 'a.activo','d.id_gestion','d.induccion','d.examen_medico','d.diciembre','d.febrero','d.abril', 'd.junio','d.agosto', 'd.octubre', 'd.alturas', 'd.armado_a', 'd.plataforma_e', 'd.gruas_i', 'd.montacargas', 'd.equipo_aux', 'd.maquinaria_p', 'd.e_confinados', 'd.t_caliente', 'd.t_electricos', 'd.loto', 'd.apertura_l', 'd.amoniaco', 'd.quimicos', 'd.temperatura_e', 'd.temperatura_a')      
+                    ->select('a.id_contratista','a.nombre','a.tipo', 'a.nss', 'a.activo','d.id_gestion','d.induccion','d.examen_medico','d.diciembre','d.febrero','d.abril', 'd.junio','d.agosto', 'd.octubre', 'd.alturas', 'd.armado_a', 'd.plataforma_e', 'd.gruas_i', 'd.montacargas', 'd.equipo_aux', 'd.maquinaria_p', 'd.e_confinados', 'd.t_caliente', 'd.t_electricos', 'd.loto', 'd.apertura_l', 'd.amoniaco', 'd.quimicos', 'd.temperatura_e', 'd.temperatura_a')
        ->where('a.id_contratista','=',$id)->get();
             // dd($Habilidades);
             return view("Catalogos.Cat_Contratistas.agregarH",["Contratistas"=>$Contratistas,"Habilidades"=>$Habilidades]);
@@ -189,13 +186,13 @@ class ContratistaController extends Controller
     {
 
         $Contratistas = Contratista::findOrFail($id);
-        $valida = DB::table('gestion')->where('id_contratista', '=',$id)->count();  
+        $valida = DB::table('gestion')->where('id_contratista', '=',$id)->count();
 
         $Habilidades=DB::table('contratistas as a')
                     ->leftjoin('gestion as d','a.id_contratista','=','d.id_contratista')
-                    ->select('a.id_contratista','a.nombre','a.tipo', 'a.nss', 'a.activo','d.id_gestion','d.induccion','d.examen_medico','d.diciembre','d.febrero','d.abril', 'd.junio','d.agosto', 'd.octubre', 'd.alturas', 'd.armado_a', 'd.plataforma_e', 'd.gruas_i', 'd.montacargas', 'd.equipo_aux', 'd.maquinaria_p', 'd.e_confinados', 'd.t_caliente', 'd.t_electricos', 'd.loto', 'd.apertura_l', 'd.amoniaco', 'd.quimicos', 'd.temperatura_e', 'd.temperatura_a')      
+                    ->select('a.id_contratista','a.nombre','a.tipo', 'a.nss', 'a.activo','d.id_gestion','d.induccion','d.examen_medico','d.diciembre','d.febrero','d.abril', 'd.junio','d.agosto', 'd.octubre', 'd.alturas', 'd.armado_a', 'd.plataforma_e', 'd.gruas_i', 'd.montacargas', 'd.equipo_aux', 'd.maquinaria_p', 'd.e_confinados', 'd.t_caliente', 'd.t_electricos', 'd.loto', 'd.apertura_l', 'd.amoniaco', 'd.quimicos', 'd.temperatura_e', 'd.temperatura_a')
                     ->where('a.id_contratista','=',$id)->get();
-           
+
         $resultD = $request->input('diciembre');
 
         if($resultD=='on')
@@ -238,7 +235,7 @@ class ContratistaController extends Controller
             $resultO=0;
 
         if ($valida!=0) {
-            
+
             $afectadas=DB::table('gestion')
         ->where('id_contratista',$id)
         ->update(['diciembre'=>$resultD
@@ -266,7 +263,7 @@ class ContratistaController extends Controller
                 ,'temperatura_e'=>$request->get('temperatura_e')
                 ,'temperatura_a'=>$request->get('temperatura_a')
                 ]);
-         
+
         }
         else
         {
@@ -300,12 +297,12 @@ class ContratistaController extends Controller
             //     ]);
             //es un insert
             DB::insert('INSERT INTO gestion (id_contratista,diciembre,febrero,abril,junio,agosto,octubre,
-                        induccion,examen_medico,alturas,armado_a,plataforma_e,gruas_i,montacargas,equipo_aux, 
+                        induccion,examen_medico,alturas,armado_a,plataforma_e,gruas_i,montacargas,equipo_aux,
                        maquinaria_p,e_confinados,t_caliente,t_electricos,loto,apertura_l,amoniaco,quimicos,
                        temperatura_e,temperatura_a) VALUES (:id_contratista,:diciembre,:febrero,:abril,
-                        :junio,:agosto,:octubre,:induccion,:examen_medico,:alturas,:armado_a,:plataforma_e, 
+                        :junio,:agosto,:octubre,:induccion,:examen_medico,:alturas,:armado_a,:plataforma_e,
                         :gruas_i,:montacargas,:equipo_aux,:maquinaria_p,:e_confinados,:t_caliente,:t_electricos,
-                        :loto,:apertura_l,:amoniaco,:quimicos,:temperatura_e,:temperatura_a)', ['id_contratista' =>$id,'diciembre'=>$resultD,'febrero'=>$resultF,'abril'=>$resultA 
+                        :loto,:apertura_l,:amoniaco,:quimicos,:temperatura_e,:temperatura_a)', ['id_contratista' =>$id,'diciembre'=>$resultD,'febrero'=>$resultF,'abril'=>$resultA
                     ,'junio'=>$resultJ
                 ,'agosto'=>$resultAg
                 ,'octubre'=>$resultO
@@ -331,7 +328,7 @@ class ContratistaController extends Controller
         }
 
         //dd($resultD);
-        
+
         return Redirect::to('Catalogos/Cat_Contratistas');
     }
 
@@ -352,7 +349,7 @@ class ContratistaController extends Controller
         //DB::enableQueryLog(); // Enable query log
 
         $sp = DB::select('call sp_reporte_horariosC(?,?,?,?)', [$fechaInicial, $fechaFinal, $compania, $tipo]);
-        
+
         //dd(DB::getQueryLog()); // Show results of log;
         return $sp;
     }
@@ -365,9 +362,9 @@ class ContratistaController extends Controller
         $compania = explode('=', $separaVariables[2]);
         $tipo = explode('=', $separaVariables[3]);
         return Excel::download(new ContratistasCompania($fechaInicial[1], $fechaFinal[1], $compania[1], $tipo[1]), 'HorasHombre.xlsx');
-        
-        
-    }   
+
+
+    }
 
     public function examenMedicoInduccion(Request $request){
         return view('Codigos.examenMedicoInduccion');
@@ -377,7 +374,7 @@ class ContratistaController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $mes = $request->mes;
-       
+
 
         $model = new Contratista();
         $results = DB::select('call sp_reporte_vencimiento_accesos(?)', [$mes]);
@@ -397,13 +394,13 @@ class ContratistaController extends Controller
                 'to'            => $paginator->lastItem()
             ],
             'results' => $paginator->items()
-        ];        
+        ];
     }
 
     public function reportePdfMedicoInduccion(Request $request){
         $utilities = new Utilities();
         $variables = $utilities->decodeVars($request->data);
-    
+
         $nombrePdf = 'reporte_medico_induccion'.date('Y-m-d_H:i:s').'.pdf';
         $model = new Contratista();
         $consulta = DB::select('call sp_reporte_vencimiento_accesos(?)', [
