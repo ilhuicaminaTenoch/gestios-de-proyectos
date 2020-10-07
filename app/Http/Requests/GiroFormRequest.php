@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\Request;
 
-class EmpresaFormRequest extends FormRequest
+class GiroFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +25,7 @@ class EmpresaFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'compania'=>'required',
-            'id_giro'=>'required',
-            'id_responsable'=>'required',
-            'id_proyecto'=>'required',
-            'id_area'=>'required'
+            'giro'=>'required'
         ];
     }
 }

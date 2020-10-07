@@ -15,6 +15,11 @@ class Empresa extends Model
     protected $fillable=[
     	
     	'compania',
-    	'activo'
+    	'activo',
+    	'id_giro',
+    	'id_responsable',
+    	'id_proyecto',
+    	'id_area'
+
     ];
 }

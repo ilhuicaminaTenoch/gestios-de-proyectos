@@ -21,6 +21,41 @@
 				
 			</div>
 			<div class="form-group">
+                    <label>Giro</label>
+                    <select id="id_giro" name="id_giro" class="form-control">
+                        @foreach ($Giro as $gir)
+                            <option value="{{ $gir->id_giro }}">{{ $gir->giro }}</option>
+                        @endforeach
+                    </select>
+            </div>
+            <div class="form-group">
+                    <label>Responsable</label>
+                    <select id="id_responsable" name="id_responsable" class="form-control">
+                        @foreach ($Responsable as $resp)
+                            <option value="{{ $resp->id_responsable }}">{{ $resp->responsable }}</option>
+                        @endforeach
+                    </select>
+            </div>
+			<div class="form-group">
+                    <label>Proyecto</label>
+                    <select id="id_proyecto" name="id_proyecto" class="form-control">
+                        @foreach ($Proyecto as $pro)
+                            <option value="{{ $pro->id_proyecto }}">{{ $pro->proyecto }}</option>
+                        @endforeach
+                    </select>
+            </div>
+            <div class="form-group">
+                    <label>Área</label>
+                    <select id="id_area" name="id_area" class="form-control">
+                        @foreach ($Area as $are)
+                            <option value="{{ $are->id_area }}">{{ $are->area }}</option>
+                        @endforeach
+                    </select>
+            </div>
+
+
+
+			<div class="form-group">
 				<button class="btn btn-primary" type="submit">Guardar</button>
 				<a href="/Catalogos/Cat_Empresas" class="btn btn-danger">Cancelar</a>
 			</div>

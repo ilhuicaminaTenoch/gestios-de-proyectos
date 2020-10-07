@@ -109,6 +109,8 @@
                         <li><a href="/Catalogos/Cat_Usuarios"><i class="fa fa-circle-o"></i> Usuarios</a></li>
                         <li><a href="/Catalogos/Cat_Areas"><i class="fa fa-circle-o"></i> Áreas</a></li>
                         <li><a href="/Catalogos/Cat_Responsables"><i class="fa fa-circle-o"></i> Responsables</a></li>
+                        <li><a href="/Catalogos/Cat_Giros"><i class="fa fa-circle-o"></i> Giros</a></li>
+                        <li><a href="/Catalogos/Cat_Tipo_Proyecto"><i class="fa fa-circle-o"></i> Proyectos</a></li>
                     </ul>
                 </li>
 

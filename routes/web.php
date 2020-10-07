@@ -47,6 +47,21 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/gestion/test', 'GestionController@test');
         Route::get('/home', 'HomeController@index')->name('home');
 
+
+//GIROS
+
+        Route::resource('/Catalogos/Cat_Tipo_Proyecto','TipoProyectoController');
+        Route::post('/Cat_Tipo_Proyecto/create','TipoProyectoController@store');
+        Route::get('/Catalogos/Cat_Tipo_Proyecto/destroy/{id_proyecto}','TipoProyectoController@destroy');
+
+
+//GIROS
+
+        Route::resource('/Catalogos/Cat_Giros','GiroController');
+        Route::post('/Cat_Giros/create','GiroController@store');
+        Route::get('/Catalogos/Cat_Giros/destroy/{id_giro}','GiroController@destroy');
+
+
         //RESPONSABLES
 
         Route::resource('/Catalogos/Cat_Responsables','ResponsableController');

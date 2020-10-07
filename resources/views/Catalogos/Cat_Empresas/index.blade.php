@@ -14,6 +14,10 @@
 				<thead>
 					<th>Id</th>
 					<th>Compañia</th>
+					<th>Giro</th>
+					<th>Responsable</th>
+					<th>Proyecto</th>
+					<th>Área</th>
 					<th>Activo</th>
 					<th>Opciones</th>
 				</thead>
@@ -21,6 +25,11 @@
 				<tr>
 					<td>{{$emp->id_compania}}</td>
 					<td>{{$emp->compania}}</td>
+					<td>{{$emp->giro}}</td>
+					<td>{{$emp->responsable}}</td>
+					<td>{{$emp->proyecto}}</td>
+					<td>{{$emp->area}}</td>
+					
 					@if ($emp->activo==1)
 						<td>Activo</td>
 					@else
