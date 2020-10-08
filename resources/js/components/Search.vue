@@ -44,8 +44,8 @@
                             <form role="form">
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <button type="button" class="btn btn-block btn-primary"  @click="register(id, 1)">Entrada</button>
-                                        <button type="button" class="btn btn-block btn-info"  @click="register(id, 2)">Salida</button>
+                                        <button type="button" class="btn btn-block btn-success"  @click="register(id, 1)">Entrada</button>
+                                        <button type="button" class="btn btn-block btn-danger"  @click="register(id, 2)">Salida</button>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
