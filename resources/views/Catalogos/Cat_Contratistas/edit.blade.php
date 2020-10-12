@@ -23,7 +23,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                
+
                 {!!Form::model($Contratistas,['method'=>'PATCH', 'route'=>['Cat_Contratistas.update',$Contratistas[0]->id_contratista], 'class'=>'form-horizontal'])!!}
                 {{Form::token()}}
                     <div class="box-body">
@@ -103,7 +103,7 @@
                             <div class="col-sm-10">
                                 <input type="text" name="motivos" class="form-control"  placeholder="Motivos...">
 
-                                
+
                             </div>
                         </div>
 
@@ -113,11 +113,6 @@
                                     <input type="radio" class="optionsRadios" name="optionsRadios" value="1" @if($Contratistas[0]->suspendido == 1) checked @endif >
                                     Suspender
                                 </label>
-                                <label class="col-sm-2 control-label">
-                                    <input type="radio" class="optionsRadios" name="optionsRadios" value="0" @if($Contratistas[0]->suspendido == 0) checked @endif>
-                                    Reanudar
-                                </label>
-                                
                             </div>
                         </div>
                         <div id="grupo-fechas" @if($Contratistas[0]->suspendido == 1) style="display:block;" @else style="display:none;" @endif>
@@ -140,8 +135,8 @@
                 {!!Form::close()!!}
             </div>
         </div>
-        
-       
+
+
     </div>
 
 @endsection

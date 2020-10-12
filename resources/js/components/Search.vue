@@ -20,9 +20,9 @@
                          v-for="(key,index) in Object.keys(messages)"
                          v-bind:class="messages[key]['activeClass']"
                     >
-                        <button type="button" class="close" aria-hidden="true">×</button>
-                        <h4><i class="icon fa" v-bind:class="messages[key]['iconClass']"></i> Alerta!</h4>
-                        {{ messages[key]['message'] }}
+                            <button type="button" class="close" aria-hidden="true">×</button>
+                            <h4><i class="icon fa" v-bind:class="messages[key]['iconClass']"></i> Alerta!</h4>
+                            {{ messages[key]['message'] }}
                     </div>
                 </div>
                 <!-- /.box-body -->
@@ -246,24 +246,45 @@ export default {
                     const dateStart = moment(persons[0]['fechaISuspencion']).format("MMMM Do YYYY");
                     const dateEnd = moment(persons[0]['fechaFSuspencion']).format("MMMM Do YYYY");
 
+
+
+
                     if(suspension === 1){
-                        messageSuspension = "Se encuentra suspendido(a) de "+dateStart+ " a "+dateEnd+" y no se le permitirá el acceso.";
-                        alertSuspension = "alert-danger";
-                        iconSuspension = "fa-ban";
-                    }else{
-                        //insert
-                        if (alertInduccion === 'alert-success' && alertMedicalExam === 'alert-success' && alertSua === 'alert-success') {
-                            this.fecha = moment().format("YYYY-MM-DD HH:mm:ss");
-                            this.id = persons[0].id_contratista
-                            this.name = '';
-                            $('#modal-default').modal('show');
-                        } else {
-                            swal("Accesso Denegado!", "No cumple con los criterios de validación", "error");
-                            this.name = '';
+                        const stringDateNow = moment(new Date()).format('YYYY-MM-DD');
+                        const stringDateEndSuspencion = moment(persons[0]['fechaFSuspencion']).format("YYYY-MM-DD");
+
+                        dateNow = moment(stringDateNow);
+                        const dataEndSuspencion = moment(stringDateEndSuspencion);
+
+                        console.log('Dias suspendidos: '+dataEndSuspencion.diff(dateNow, 'days'));
+                        if (dataEndSuspencion.diff(dateNow, 'days') === 0) {
+                            var url = '/gestion/update-suspension?id_contratista=' + persons[0]['id_contratista'] + '&bandera=0' + '&controllerMethod=' + this.urlRegister;
+                            axios.get(url).then(response => {
+                                console.log('se hizo update');
+                            });
+                            messageSuspension = "Reactivado";
+                            alertSuspension = "alert-success";
+                            iconSuspension = "fa-check";
+                        }else{
+                            messageSuspension = "Se encuentra suspendido(a) de "+dateStart+ " a "+dateEnd+" y no se le permitirá el acceso.";
+                            alertSuspension = "alert-danger";
+                            iconSuspension = "fa-ban";
                         }
-                        messageSuspension = "Se encuentra reanudado";
+                    }else {
+                        messageSuspension = "Reactivado";
                         alertSuspension = "alert-success";
                         iconSuspension = "fa-check";
+                    }
+
+                    //insert
+                    if (alertInduccion === 'alert-success' && alertMedicalExam === 'alert-success' && alertSua === 'alert-success' &&  alertSuspension === 'alert-success') {
+                        this.fecha = moment().format("YYYY-MM-DD HH:mm:ss");
+                        this.id = persons[0].id_contratista
+                        this.name = '';
+                        $('#modal-default').modal('show');
+                    } else {
+                        swal("Accesso Denegado!", "No cumple con los criterios de validación", "error");
+                        this.name = '';
                     }
 
                     const messageData = {
@@ -388,7 +409,26 @@ export default {
                 this.fecha = '';
                 this.name = '';
                 this.id = '';
-            }
+            },
+            /*updateSuspencion(persons){
+                if (persons[0]['suspendido']){
+                    const stringDateNow = moment(new Date()).format('YYYY-MM-DD');
+                    const stringDateEndSuspencion = moment(persons[0]['fechaFSuspencion']).format("YYYY-MM-DD");
+
+                    const dateNow = moment(stringDateNow);
+                    const dataEndSuspencion = moment(stringDateEndSuspencion);
+
+                    console.log(dataEndSuspencion.diff(dateNow, 'days'));
+                    if (dataEndSuspencion.diff(dateNow, 'days') === 0) {
+                        console.log('entro');
+                        var url = '/gestion/update-suspension?id_contratista=' + persons[0]['id_contratista'] + '&bandera=0' + '&controllerMethod=' + this.urlRegister;
+                        axios.get(url).then(response => {
+                            console.log(response);
+                        });
+                    }
+
+                }
+            }*/
         }
     }
 </script>

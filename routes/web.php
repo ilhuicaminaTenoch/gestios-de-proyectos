@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/gestion', 'GestionController@index');
         Route::get('/gestion/searchPerson', 'GestionController@searchBarCode');
         Route::get('/gestion/register', 'GestionController@register');
+        Route::get('/gestion/update-suspension', 'GestionController@updateSusupension');
         Route::get('/gestion/test', 'GestionController@test');
         Route::get('/home', 'HomeController@index')->name('home');
 

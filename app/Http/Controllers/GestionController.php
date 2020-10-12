@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contratista;
 use App\Gestion;
 use App\Registro;
 use Illuminate\Http\Request;
@@ -57,5 +58,18 @@ class GestionController extends Controller
             DB::statement('CALL sp_ingresa_registros_prueba(?, ?, @resultado)',[$request->id_contratista, $request->bandera, $resultado] );
         }
         return DB::select('select @resultado as resultado');
+    }
+
+    public function updateSusupension(Request $request){
+        if (!$request->ajax()) {
+            return redirect('/');
+        }
+        $contratista = Contratista::find($request->id_contratista);
+
+        $contratista->suspendido = $request->bandera;
+        $contratista->fechaISuspencion = '';
+        $contratista->fechaFSuspencion = '';
+        $contratista->update();
+
     }
 }
