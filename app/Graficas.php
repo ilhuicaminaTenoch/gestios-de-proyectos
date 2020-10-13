@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App;
 
 class Graficas
@@ -21,5 +21,14 @@ class Graficas
         }
         return $newArray;
     }
-   
+
+    public function columChartContratistas(array $dataCharts){
+        $newArray = [];
+        foreach($dataCharts as $datumChart){
+            $key = "Area {$datumChart['area']}";
+            $newArray[$key] = $datumChart['nocontratistas'];
+        }
+        return $newArray;
+    }
+
 }

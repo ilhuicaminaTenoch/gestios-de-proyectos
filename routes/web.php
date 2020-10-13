@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
             //GRAFICAS
             Route::get('/graficas/index', 'GraficasController@index');
             Route::post('/graficas/preview', 'GraficasController@preview');
-            Route::get('/graficas/download/{fechaInicial}/{fechaFinal}', 'GraficasController@download')->name('download');
+            Route::get('/graficas/download/{fechaInicial}', 'GraficasController@download')->name('download');
             Route::get("/graficas/products", "GraficasController@prouductsListing");
             Route::get('/graficas/tiempo-real','GraficasController@tiempoReal');
             Route::post('/graficas/preview-tiempo-real', 'GraficasController@previewTiempoReal');

@@ -122,7 +122,7 @@
                         <li><a href="/Codigos/Barras"><i class="fa fa-circle-o"></i> Códigos de Acceso</a></li>
                         <li><a href="/Codigos/QR"><i class="fa fa-circle-o"></i> Códigos de Habilidades</a>
                         </li>
-                       
+
                     </ul>
                 </li>
                 <li class="treeview">
@@ -133,11 +133,11 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="/Reportes/HorasHombre"><i class="fa fa-circle-o"></i>Horas Hombre </a></li>
-                        
+
                     </ul>
                 </li>
 
-               
+
 
                 <li class="treeview">
                     <a href="#">
@@ -148,7 +148,7 @@
                         <li><a href="/gestion"><i class="fa fa-circle-o"></i> Ingreso </a></li>
                     </ul>
                 </li>
-               
+
                 <li>
                     <a href="#">
                         <i class="fa fa-info-circle"></i> <span>Acerca De...</span>
@@ -227,6 +227,7 @@
     });
     google.charts.setOnLoadCallback(columnChart);
     google.charts.setOnLoadCallback(pieChart);
+    google.charts.setOnLoadCallback(columArea);
 
     function columnChart() {
 
@@ -251,19 +252,36 @@
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
-        
+
         data.addRows([
             @foreach($pieChart as $key  => $row)
                 ['{{ $key }}', {{ $row }}],
             @endforeach
         ]);
-  
+
         var options = {
             width: 600,
             height: 400,
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
+        chart.draw(data, options);
+    }
+    function columArea() {
+        var data = google.visualization.arrayToDataTable([
+            ['Area', '# Contratistas',  { role: 'annotation' }],
+                @foreach($columArea as $keyColumn  => $Column)
+            ['{{ $keyColumn }}', {{ $Column }}, '{{ $Column }}'],
+            @endforeach
+        ]);
+
+        var options = {
+            width: 900,
+            height: 500,
+            bar: {groupWidth: "70%"},
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('columArea'));
         chart.draw(data, options);
     }
     </script>

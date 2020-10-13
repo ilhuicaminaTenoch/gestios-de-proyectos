@@ -22,8 +22,6 @@
 			<div class="form-group">
 				<div class="input-group input-daterange">
 					<input type="date" class="form-control" value="" name="fechaInicial" id="fechaInicial">
-					<div class="input-group-addon">a</div>
-					<input type="date" class="form-control" value="" name="fechaFinal" id="fechaFinal">
 				</div>
 			</div>
 			<div class="form-group">
@@ -34,8 +32,8 @@
 </div>
 <div class="row">
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-		
+
 	</div>
 </div>
-		    
+
 @endsection

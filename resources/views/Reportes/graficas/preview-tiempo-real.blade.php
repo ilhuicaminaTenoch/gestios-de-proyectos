@@ -48,6 +48,15 @@
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header with-border">
+                <h3 class="box-title">Distribución Por Areas</h3>
+            </div>
+            <div class="box-body" id="columArea"></div>
+            <!-- /.box-body -->
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
                 <h3 class="box-title">Distribución Por Compañía</h3>
             </div>
             <div class="box-body" id="columnChart"></div>

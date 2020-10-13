@@ -391,7 +391,7 @@ export default {
                 return monthString;
             },
             register(id_contratista, bandera) {
-                if (bandera !== 0) {
+                //if (bandera !== 0) {
                     var url = '/gestion/register?id_contratista=' + id_contratista + '&bandera=' + bandera + '&controllerMethod=' + this.urlRegister;
                     let nombre = this.persons[0].nombre;
                     axios.get(url).then(response => {
@@ -399,7 +399,7 @@ export default {
                         this.entradaSalida = 1;
 
                     });
-                }
+                //}
             },
             cleanAll(){
                 this.entradaSalida = 0;
