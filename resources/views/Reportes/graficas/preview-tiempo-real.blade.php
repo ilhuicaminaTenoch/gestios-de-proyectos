@@ -20,7 +20,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <!--<a class="btn btn-info" href="{{ route('download', ['fechaInicial' => $params['fechaInicial'], 'fechaFinal' => $params['fechaFinal']]) }}">
+                <!--<a class="btn btn-info" href="{{ route('download', ['fechaInicial' => $params['fechaInicial']]) }}">
                     <i class="fa fa-file-pdf-o"></i> Exportar a PDF
                 </a>-->
                     <a class="btn btn-info" href="#" onclick="javascript:window.print()">

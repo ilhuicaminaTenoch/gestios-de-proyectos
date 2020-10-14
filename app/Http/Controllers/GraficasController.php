@@ -6,6 +6,7 @@ use DB;
 use App\Product;
 use App\Graficas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use PDF;
 
 class GraficasController extends Controller
@@ -106,15 +107,25 @@ class GraficasController extends Controller
     }
 
     public function previewTiempoReal(Request $request){
-        $request->validate([
-            'fechaInicial' => 'required|date'
-        ]);
+        $validator = Validator::make($request->all(), [
+            'fechaInicial' => [
+                'required',
+                function ($attribute, $value, $fail) use ($request){
+                    $isExist = DB::select('call sp_obtiene_distribucion_contra_real(?)', [$request->fechaInicial]);
+                    if ($isExist[0]->EMPRESA == 0){
+                        $fail('No se encontraron datos');
+                    }
+                }
+            ]
 
-        $queryHead = DB::select('call sp_obtiene_distribucion_contra_real(?)',
-        [
-            $request->fechaInicial
         ]);
+        if ($validator->fails()) {
+            return redirect('graficas/tiempo-real')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
+        $queryHead = DB::select('call sp_obtiene_distribucion_contra_real(?)', [$request->fechaInicial]);
         $pieChart = DB::select('call sp_obtiene_distribucion_tipo_real(?)', [$request->fechaInicial]);
         $columChart = DB::select('call sp_obtiene_distribucion_compania_real(?)', [$request->fechaInicial]);
         $columChartAreaVsContratistas = DB::select('call sp_obtiene_distribucion_area_real(?)', [$request->fechaInicial]);

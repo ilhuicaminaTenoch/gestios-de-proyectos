@@ -16,8 +16,7 @@
 </div>
 <div class="row">
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-		{!!Form::open(array('url'=> '/graficas/preview-tiempo-real','method'=>'POST','autocomplete'=>'off'))!!}
-			{{Form::token()}}
+		{!!Form::open(array('url'=> '/graficas/preview-tiempo-real','method'=>'GET','autocomplete'=>'off'))!!}
 			<label>Seleccionar fechas:</label>
 			<div class="form-group">
 				<div class="input-group input-daterange">
