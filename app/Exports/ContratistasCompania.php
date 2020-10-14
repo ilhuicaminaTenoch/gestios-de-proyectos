@@ -16,7 +16,7 @@ class ContratistasCompania implements FromCollection,WithHeadings,WithTitle
     protected $fechaFinal;
     protected $compania;
     protected $tipo;
-    
+
     public function __construct($fechaInicial, $fechaFinal, $compania, $tipo){
         $this->fechaInicial = $fechaInicial;
         $this->fechaFinal = $fechaFinal;
@@ -32,17 +32,16 @@ class ContratistasCompania implements FromCollection,WithHeadings,WithTitle
     public function headings(): array
     {
         return [
-            'ID',
+            'Compania',
+            'Tipo',
+            'Contratista',
             'Fecha inicial',
             'Fecha final',
-            'Contratista',
-            'Tipo',
-            'Compania'
         ];
     }
     public function collection()
-    { 
+    {
        $data = collect(DB::select('call sp_reporte_horariosC(?,?,?,?)' ,[$this->fechaInicial, $this->fechaFinal, $this->compania, $this->tipo]));
-       if(count($data) > 0) return $data;   
+       if(count($data) > 0) return $data;
     }
 }
