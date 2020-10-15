@@ -14,7 +14,7 @@
 		@endif
 	</div>
 </div>
-		<form action="/Catalogos/Cat_Contratistas/{{ $Contratistas->id_contratista }}" method="post" enctype="multipart/form-data">
+		<form action="/Catalogos/Cat_Contratistas/{{$idContratista}}" method="post" enctype="multipart/form-data">
 			{{ csrf_field() }}
 
 		<div class="row">

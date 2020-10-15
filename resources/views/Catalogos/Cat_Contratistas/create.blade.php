@@ -14,9 +14,10 @@
             @endif
         </div>
     </div>
-    <div class="row">
+            <div class="row">    
         {!!Form::open(array('url'=>'Catalogos/Cat_Contratistas','method'=>'POST','autocomplete'=>'off'))!!}
         {{Form::token()}}
+        
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
@@ -65,7 +66,9 @@
                     <a href="/Catalogos/Cat_Contratistas" class="btn btn-danger">Cancelar</a>
                 </div>
             </div>
-        {!!Form::close()!!}
 
+            
+        {!!Form::close()!!}
+    
     </div>
 @endsection

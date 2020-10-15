@@ -103,6 +103,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/Codigos/generate-pdf','ContratistaController@generatePDF');
         Route::get('/Catalogos/Cat_Contratistas/destroy-view/{id_contratista}','ContratistaController@destroyView');
         Route::post('/Catalogos/activo','ContratistaController@activo');
+        Route::get('/Catalogos/Cat_Contratistas/agregarHNuevo/{id_contratista}','ContratistaController@agregarH');
 
 
 

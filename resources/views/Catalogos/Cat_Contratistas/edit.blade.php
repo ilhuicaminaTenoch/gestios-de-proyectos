@@ -97,16 +97,7 @@
                                 <input type="text" name="nss" class="form-control" value="{{$Contratistas[0]->nss}}" placeholder="Seguro Social...">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Motivos</label>
-
-                            <div class="col-sm-10">
-                                <input type="text" name="motivos" class="form-control"  placeholder="Motivos...">
-
-
-                            </div>
-                        </div>
-
+                        
                         <div class="form-group">
                             <div class="radio">
                                 <label class="col-sm-2 control-label">
