@@ -251,22 +251,28 @@ export default {
 
                     if(suspension === 1){
                         const stringDateNow = moment(new Date()).format('YYYY-MM-DD');
-                        const stringDateEndSuspencion = moment(persons[0]['fechaFSuspencion']).format("YYYY-MM-DD");
-
+                        const stringDateEnd = moment(persons[0]['fechaFSuspencion']).format("YYYY-MM-DD");
+                        const stringDateInit = moment(persons[0]['fechaISuspencion']).format("YYYY-MM-DD");
                         dateNow = moment(stringDateNow);
-                        const dataEndSuspencion = moment(stringDateEndSuspencion);
 
-                        console.log('Dias suspendidos: '+dataEndSuspencion.diff(dateNow, 'days'));
-                        if (dataEndSuspencion.diff(dateNow, 'days') === 0) {
+
+
+                        if(dateNow.isBefore(stringDateInit)){ //dateNow < dateInit
+                            //console.log('sin problemas');
                             var url = '/gestion/update-suspension?id_contratista=' + persons[0]['id_contratista'] + '&bandera=0' + '&controllerMethod=' + this.urlRegister;
                             axios.get(url).then(response => {
                                 console.log('se hizo update');
                             });
+                            messageSuspension = "Sin problemas";
+                            alertSuspension = "alert-success";
+                            iconSuspension = "fa-check";
+                        }else if(dateNow.isAfter(stringDateEnd)){ //dateNow > dateEnd
                             messageSuspension = "Reactivado";
                             alertSuspension = "alert-success";
                             iconSuspension = "fa-check";
                         }else{
-                            messageSuspension = "Se encuentra suspendido(a) de "+dateStart+ " a "+dateEnd+" y no se le permitirá el acceso.";
+                           // console.log('contratista suspendido');
+                            messageSuspension = "El contratosta esta suspendido. de "+ dateStart + " y "+ dateEnd;
                             alertSuspension = "alert-danger";
                             iconSuspension = "fa-ban";
                         }
