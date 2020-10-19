@@ -29,17 +29,30 @@ class ContratistasExport implements FromCollection,WithHeadings,WithTitle
 
     public function headings(): array
     {
-        return [
-            'Empresa',
-            'Tipo',
-            'No. Personas',
-            'Total_Horas_Hombre'
-        ];
+        if ($this->agrupacion == 1 ){
+            return [
+                'Empresa',
+                'Tipo',
+                'No. Personas',
+                'Total Horas Hombre'
+            ];
+        }else{
+            return [
+                'Empresa',
+                'Tipo',
+                'Fecha inicial',
+                'Fecha final',
+                'Horas trabajadas',
+                'Nombre'
+            ];
+        }
     }
     public function collection()
     { 
+
        $fe = $this->fechaInicial;
        $fs = $this->fechaFinal;
+       //dd($fe['date']);
        $data = collect(DB::select('call sp_reporte_horas_hombre_dos(?,?,?,?,?)' ,[$fe['date'], $fs['date'], $fe['time'], $fs['time'], $this->agrupacion]));
        if(count($data) > 0) return $data;   
     }

@@ -34,7 +34,7 @@ class ReportesController extends Controller
             'agrupacion' => 'required'
         ]);
 
-       
+       //dd($input['fechaFinal']);
         return Excel::download(new ContratistasExport($input['fechaInicial'],$input['fechaFinal'], $input['agrupacion']), 'HorasHombre.xlsx');
 
     }

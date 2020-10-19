@@ -75,7 +75,6 @@ class ContratistaController extends Controller
                 'unique:contratistas,nss',
                 function ($attribute, $value, $fail) use ($request){
                     $isExist = DB::select('call sp_verifica_contratista(?,?)', [$request->nombre, $request->nss]);
-
                     if (count($isExist) > 0){
                         if($isExist[0]->tipo_baja == 1){
                             $fail("El contratista {$isExist[0]->nombre} se dio de baja por no conformidad por los siguientes motivos : {$isExist[0]->motivos}" );
@@ -86,6 +85,7 @@ class ContratistaController extends Controller
             ],
         ]);
 
+//dd($validator);
         if ($validator->fails()) {
             return redirect('Catalogos/Cat_Contratistas/create')
                         ->withErrors($validator)
@@ -118,8 +118,7 @@ class ContratistaController extends Controller
         //dd($Contratistas);
 
         return view("Catalogos.Cat_Contratistas.agregarHNuevo",["idContratista"=>$idcontratista,"Habilidades"=>$Habilidades]);
-        //return view("Catalogos/Cat_Contratistas/agregarH/" ,["Contratistas"=>$Contratistas->id_contratista=$request->id_contratista] );
-        //return Redirect ::to("Catalogos/Cat_Contratistas/agregarH" ,["Contratistas"=>$Contratistas]);        
+                
         //return Redirect::to('Catalogos/Cat_Contratistas');
     }
 
