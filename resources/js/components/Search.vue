@@ -55,7 +55,7 @@
                             <div class="callout callout-success">
                                 <h4 v-if="resultado[0].resultado === 0">Debes registrar antes la salida</h4>
                                 <h4 v-else-if="resultado[0].resultado === 1">Se registro la entrada correctamente</h4>
-                                <h4 v-else-if="resultado[0].resultado === 2">se registro la salida correctamente</h4>
+                                <h4 v-else-if="resultado[0].resultado === 2">Se registro la salida correctamente</h4>
                             </div>
                         </div>
                     </div>
@@ -253,7 +253,8 @@ export default {
                         const stringDateNow = moment(new Date()).format('YYYY-MM-DD');
                         const stringDateEnd = moment(persons[0]['fechaFSuspencion']).format("YYYY-MM-DD");
                         const stringDateInit = moment(persons[0]['fechaISuspencion']).format("YYYY-MM-DD");
-                        dateNow = moment(stringDateNow);
+                        //dateNow = moment(stringDateNow);
+                        dateNow =moment('2020-10-23');
                         const url = '/gestion/update-suspension?id_contratista=' + persons[0]['id_contratista'] + '&bandera=0' + '&controllerMethod=' + this.urlRegister;
 
 
@@ -274,7 +275,7 @@ export default {
                             iconSuspension = "fa-check";
                         }else{
                            // console.log('contratista suspendido');
-                            messageSuspension = "El contratosta esta suspendido. de "+ dateStart + " y "+ dateEnd;
+                            messageSuspension = "El contratista se encuentra suspendido. de "+ dateStart + " y "+ dateEnd;
                             alertSuspension = "alert-danger";
                             iconSuspension = "fa-ban";
                         }

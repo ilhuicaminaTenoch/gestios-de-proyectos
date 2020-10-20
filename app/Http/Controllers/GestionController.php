@@ -67,8 +67,8 @@ class GestionController extends Controller
         $contratista = Contratista::find($request->id_contratista);
 
         $contratista->suspendido = $request->bandera;
-        $contratista->fechaISuspencion = '';
-        $contratista->fechaFSuspencion = '';
+        $contratista->fechaISuspencion = NULL;
+        $contratista->fechaFSuspencion = NULL;
         $contratista->update();
 
     }
