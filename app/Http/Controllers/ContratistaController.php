@@ -40,7 +40,7 @@ class ContratistaController extends Controller
             $Contratistas = DB::table('contratistas as a')
                 ->join('empresas as b', 'a.id_compania', '=', 'b.id_compania')
                 ->join('puestos as c', 'a.id_puesto', '=', 'c.id_puesto')
-                //->leftjoin('gestion as d','a.id_contratista','=','d.id_contratista')                  
+                //->leftjoin('gestion as d','a.id_contratista','=','d.id_contratista')
                 ->select('a.id_contratista', 'a.nombre', 'b.compania', 'b.id_compania', 'c.puesto', 'c.id_puesto', 'a.tipo', 'a.nss', 'a.activo')
                 ->where('a.nombre', 'LIKE', '%' . $query . '%')
                 ->where('a.activo','=',1)
@@ -100,7 +100,7 @@ class ContratistaController extends Controller
         $Contratistas->nss = $request->nss;
         $Contratistas->activo = '1';
         $Contratistas->save();
-        
+
         $Contratistas = DB::table('contratistas as a')
         ->select('a.id_contratista', 'a.nombre', 'a.tipo', 'a.nss', 'a.activo')
         ->orderBy('id_contratista', 'desc')
@@ -113,12 +113,12 @@ class ContratistaController extends Controller
                     ->leftjoin('gestion as d','a.id_contratista','=','d.id_contratista')
                     ->select('a.id_contratista','a.nombre','a.tipo', 'a.nss', 'a.activo','d.id_gestion','d.induccion','d.examen_medico','d.diciembre','d.febrero','d.abril', 'd.junio','d.agosto', 'd.octubre', 'd.alturas', 'd.armado_a', 'd.plataforma_e', 'd.gruas_i', 'd.montacargas', 'd.equipo_aux', 'd.maquinaria_p', 'd.e_confinados', 'd.t_caliente', 'd.t_electricos', 'd.loto', 'd.apertura_l', 'd.amoniaco', 'd.quimicos', 'd.temperatura_e', 'd.temperatura_a')
        ->where('a.id_contratista','=',$idcontratista)->get();
-       
+
 
         //dd($Contratistas);
 
         return view("Catalogos.Cat_Contratistas.agregarHNuevo",["idContratista"=>$idcontratista,"Habilidades"=>$Habilidades]);
-                
+
         //return Redirect::to('Catalogos/Cat_Contratistas');
     }
 
@@ -169,7 +169,7 @@ class ContratistaController extends Controller
 
 
         return Redirect::to('Catalogos/Cat_Contratistas');
-        
+
     }
 
 
@@ -181,7 +181,7 @@ class ContratistaController extends Controller
 
     public function activo(Request $request)
     {
-        DB::select('call sp_bajas_contratistas(?,?,?)', [$request->input('idContratista'), $request->input('tipoBaja'), $request->input('motivo')]);
+        DB::statement('call sp_bajas_contratistas(?,?,?)', [$request->input('idContratista'), $request->input('tipoBaja'), $request->input('motivo')]);
 
         return Redirect::to('Catalogos/Cat_Contratistas');
     }
