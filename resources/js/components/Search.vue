@@ -253,8 +253,7 @@ export default {
                         const stringDateNow = moment(new Date()).format('YYYY-MM-DD');
                         const stringDateEnd = moment(persons[0]['fechaFSuspencion']).format("YYYY-MM-DD");
                         const stringDateInit = moment(persons[0]['fechaISuspencion']).format("YYYY-MM-DD");
-                        //dateNow = moment(stringDateNow);
-                        dateNow =moment('2020-10-23');
+                        dateNow = moment(stringDateNow);
                         const url = '/gestion/update-suspension?id_contratista=' + persons[0]['id_contratista'] + '&bandera=0' + '&controllerMethod=' + this.urlRegister;
 
 
