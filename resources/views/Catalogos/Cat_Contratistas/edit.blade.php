@@ -97,7 +97,7 @@
                                 <input type="text" name="nss" class="form-control" value="{{$Contratistas[0]->nss}}" placeholder="Seguro Social...">
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <div class="radio">
                                 <label class="col-sm-2 control-label">
@@ -126,7 +126,21 @@
                 {!!Form::close()!!}
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <i class="fa fa-bullhorn"></i>
 
+                    <h3 class="box-title">Codigo QR</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="text-align: center">
+                    <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($Contratistas[0]->nombre, 'QRCODE', 10,10)}}"
+                         alt="barcode"/>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
 
     </div>
 
