@@ -24,8 +24,7 @@
             <td>{{ $hab->compania }}</td>
 
             <td>
-                <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($hab->QR, 'QRCODE', 3,3)}}"
-                     alt="barcode"/>
+                <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate($hab->QR)) !!} ">
             </td>
         </tr>
     @endforeach
