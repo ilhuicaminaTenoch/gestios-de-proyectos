@@ -22,9 +22,9 @@
         <tr>
             <td>{{ $hab->nombre }}</td>
             <td>{{ $hab->compania }}</td>
-            
+
             <td>
-                <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($hab->QR, 'QRCODE', 5,5)}}"
+                <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($hab->QR, 'QRCODE', 3,3)}}"
                      alt="barcode"/>
             </td>
         </tr>
