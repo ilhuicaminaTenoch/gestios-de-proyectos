@@ -13,6 +13,7 @@
                             <label for="exampleInputEmail1">Compañia</label>
                             <select v-model="comboCompanias" class="form-control">
                                 <option value="0" selected>Selecciona un opcion</option>
+                                <option value="00" selected>Todas</option>
                                 <option v-for="compania in companias" v-bind:value="compania.id_compania" :key="compania.id_compania">
                                     {{ compania.compania }}
                                 </option>
@@ -56,6 +57,7 @@
                             class="btn btn-primary"
                             v-on:click="
                                 consultaHorarios(
+                                    1,
                                     fechaInicio,
                                     fechaTermino,
                                     comboCompanias,
@@ -91,7 +93,20 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Contratistas encontrados</h3>
+                    <h3 class="box-title">Contratistas encontrado</h3>
+                    <div class="box-tools">
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                            <li v-if="pagination.current_page > 1">
+                                <a href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,fechaInicio, fechaTermino, comboCompanias, comboTipos)">«</a>
+                            </li>
+                            <li v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
+                                <a href="#" @click.prevent="cambiarPagina(page, fechaInicio, fechaTermino, comboCompanias,comboTipos)" v-text="page"></a>
+                            </li>
+                            <li v-if="pagination.current_page < pagination.last_page">
+                                <a href="#" @click.prevent="cambiarPagina(pagination.current_page + 1, fechaInicio, fechaTermino, comboCompanias,comboTipos)">»</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body no-padding">
@@ -161,6 +176,7 @@ export default {
             return this.pagination.current_page;
         },
         //Calcula los elementos de la paginación
+        //Calcula los elementos de la paginación
         pagesNumber: function() {
             if (!this.pagination.to) {
                 return [];
@@ -183,6 +199,11 @@ export default {
     },
 
     methods: {
+        cambiarPagina(page, fechaInicio, fechaTermino, compania, tipo){
+            let me = this;
+            me.pagination.current_page = page;
+            me.consultaHorarios(page,fechaInicio, fechaTermino, compania, tipo);
+        },
         checkForm() {
             this.errorForm = 0;
             this.errors = [];
@@ -195,14 +216,15 @@ export default {
 
             return this.errorForm;
         },
-        consultaHorarios(fechaInicio, fechaTermino, compania, tipo) {
+        consultaHorarios(page, fechaInicio, fechaTermino, compania, tipo) {
             if (this.checkForm()) {
                 return;
             }
-            const url = "/Codigos/verifica-horarios?fechaInicio=" +fechaInicio +"&fechaTermino=" +fechaTermino +"&compania=" +compania+"&tipo="+tipo;
-            
+            const url = "/Codigos/verifica-horarios?fechaInicio=" +fechaInicio +"&fechaTermino=" +fechaTermino +"&compania=" +compania+"&tipo="+tipo+"&page="+page;
+
             axios.get(url).then(response => {
-                this.contratistas = response.data;
+                this.contratistas = response.data.results;
+                this.pagination = response.data.pagination;
                 this.nuevaUrl = "/Codigos/generate-pdf?data="+Buffer.from('fechaInicio=' +fechaInicio +'&fechaTermino='+fechaTermino +"&compania=" +compania+"&tipo="+tipo).toString('base64');
                 if(this.contratistas.length > 0) this.activeClass = '';
             });

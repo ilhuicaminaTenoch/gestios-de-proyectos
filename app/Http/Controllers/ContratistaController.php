@@ -364,10 +364,26 @@ class ContratistaController extends Controller
         $model = new Contratista();
         //DB::enableQueryLog(); // Enable query log
 
-        $sp = DB::select('call sp_reporte_horariosC(?,?,?,?)', [$fechaInicial, $fechaFinal, $compania, $tipo]);
+        $results = DB::select('call sp_reporte_horariosC(?,?,?,?)', [$fechaInicial, $fechaFinal, $compania, $tipo]);
 
-        //dd($sp); // Show results of log;
-        return $sp;
+        $page = request('page', 1);
+        $pageSize = 10;
+        $offset = ($page * $pageSize) - $pageSize;
+        $data = array_slice($results, $offset, $pageSize, true);
+        $paginator = new \Illuminate\Pagination\LengthAwarePaginator($data, count($results), $pageSize, $page);
+        return [
+            'pagination' => [
+                'total'         => $paginator->total(),
+                'current_page'  => $paginator->currentPage(),
+                'per_page'      => $paginator->perPage(),
+                'last_page'     => $paginator->lastPage(),
+                'from'          => $paginator->firstItem(),
+                'to'            => $paginator->lastItem()
+            ],
+            'results' => $paginator->items()
+        ];
+
+
     }
 
     public function generatePDF(Request $request){
