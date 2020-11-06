@@ -132,7 +132,7 @@ export default {
                 let octubre = persons[0]['octubre'];
 
 
-                if (dateNow.diff(oneYearInduccion, 'years', true) > 1) {
+                if (dateNow.diff(oneYearInduccion, 'years', true) > 1 || persons[0]['induccion'] == null) {
                     messageInduccion = 'Curso de inducción no está vigente';
                     alertInduccion = 'alert-danger';
                     iconInduccion = 'fa-ban';
@@ -142,7 +142,7 @@ export default {
                     iconInduccion = 'fa-check';
                 }
 
-                if (dateNow.diff(oneYearMedicalExam, 'years', true) > 1) {
+                if (dateNow.diff(oneYearMedicalExam, 'years', true) > 1 || persons[0]['examen_medico'] == null) {
                     messageMedicalExam = 'Examen médico ya no esta vigente';
                     alertMedicalExam = 'alert-danger';
                     iconMedicalExam = 'fa-ban';
