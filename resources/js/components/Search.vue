@@ -131,7 +131,6 @@ export default {
                 let agosto = persons[0]['agosto'];
                 let octubre = persons[0]['octubre'];
 
-
                 if (dateNow.diff(oneYearInduccion, 'years', true) > 1) {
                     messageInduccion = 'Curso de inducción no está vigente';
                     alertInduccion = 'alert-danger';
