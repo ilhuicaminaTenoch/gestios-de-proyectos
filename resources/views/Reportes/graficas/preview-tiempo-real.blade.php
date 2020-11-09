@@ -62,7 +62,7 @@
             <div class="box-body" id="columnChart"></div>
             <!-- /.box-body -->
             <div class="box-footer">
-               <br/><br/><br/><br/><br/>
+                <div id="table_div"></div>
             </div><!-- box-footer -->
         </div>
     </div>

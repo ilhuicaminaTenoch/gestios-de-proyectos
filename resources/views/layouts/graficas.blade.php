@@ -223,11 +223,12 @@
 <!-- graficas -->
 <script type="text/javascript">
     google.charts.load('current', {
-        'packages': ['corechart']
+        'packages': ['corechart', 'table']
     });
     google.charts.setOnLoadCallback(columnChart);
     google.charts.setOnLoadCallback(pieChart);
     google.charts.setOnLoadCallback(columArea);
+    google.charts.setOnLoadCallback(drawTable);
 
     function columnChart() {
 
@@ -284,6 +285,20 @@
         var chart = new google.visualization.ColumnChart(document.getElementById('columArea'));
         chart.draw(data, options);
     }
+    function drawTable() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Empresa');
+        data.addColumn('number', 'Contratistas');
+        data.addRows([
+                @foreach($columChart as $keyColumn  => $Column)
+            ['{{ $keyColumn }}', {v: {{ $Column }}, f: '{{ $Column }}'}],
+            @endforeach
+        ]);
+
+        var table = new google.visualization.Table(document.getElementById('table_div'));
+
+        table.draw(data, {showRowNumber: true, width: '50%', height: '50%'});
+      }
     </script>
 
 

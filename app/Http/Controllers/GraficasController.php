@@ -51,6 +51,7 @@ class GraficasController extends Controller
         $modelGraficas = new Graficas();
         $dataPieChart = $modelGraficas->pieChart(json_decode(json_encode($pieChart), true));
         $dataColumAreaVsContratistas = $modelGraficas->columChartContratistas(json_decode(json_encode($columChartAreaVsContratistas), true));
+        $dataColumChart = $modelGraficas->columChart(json_decode(json_encode($columChart), true));
         $data = [
             'head' => $queryHead,
             'params' => [
@@ -58,7 +59,7 @@ class GraficasController extends Controller
                 'fechaFinal' => $request->fechaFinal
             ],
             'pieChart' => $dataPieChart,
-            'columChart' => $modelGraficas->columChart(json_decode(json_encode($columChart), true)),
+            'columChart' => $dataColumChart,
             'columArea' => $dataColumAreaVsContratistas
         ];
         return view('Reportes.graficas.preview',  $data);
