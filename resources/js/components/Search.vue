@@ -152,10 +152,9 @@ export default {
                     iconMedicalExam = 'fa-check';
                 }
 
-
+                
                 if (persons[0].hasOwnProperty(monthBd)) { // valida que el mes este en la BD ( diciembre, febrero, abril, junio, agosto, octubre )
                     const monthYesBD = this.monthYesDataBase(month);
-
 
                     switch (monthYesBD) {
                         case 'diciembre':
@@ -230,13 +229,16 @@ export default {
 
 
                 } else { // meses faltantes (enero, marzo, mayo, julio, septiembre y noviembre)
-                    const monthNoBD = this.monthNotDataBase(month);
 
-                    if (persons[0][monthNoBD]) {
+                    const monthNoBD = this.monthNotDataBase(month);
+                    if (persons[0][monthNoBD]=="1") {
                         messageSua = 'SUA al corriente';
                         alertSua = 'alert-success';
                         iconSua = 'fa-check';
+                        console.log("IF ");
+
                     } else {
+                    
                         messageSua = 'No has entregado el SUA correspondiente';
                         alertSua = 'alert-danger';
                         iconSua = 'fa-ban';
